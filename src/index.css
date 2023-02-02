@@ -1,0 +1,178 @@
+html {
+  display: none;
+}
+
+* {
+  overscroll-behavior: none;
+}
+
+html,body,div,span,applet,object,
+h1,h2,h3,h4,h5,h6,p,pre,a,abbr,acronym,
+address,big,cite,code,del,dfn,img,ins,kbd,q,samp,small,
+strike,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,
+form,label,legend,table,caption,tbody,tfoot,thead,
+tr,th,td,article,aside,canvas,details,embed,figure,
+figcaption,footer,header,hgroup,menu,nav,output,ruby,
+section,summary,time,mark,audio,video,input {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  text-decoration: none;
+}
+
+a {
+  color: inherit;
+}
+
+u {
+  text-decoration: underline;
+}
+
+#root {
+  position: relative;
+}
+
+.text-button-a,
+.text-button-b {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 215px;
+  height: 40px;
+  text-transform: uppercase;
+  font-family: ProximaNova;
+  font-size: 14px;
+  font-weight: bold;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: 1px;
+  text-align: center;
+  color: #37424a;
+  border: solid 1px #37424a;
+  transition: color 150ms ease-in, background-color 150ms ease-in;
+  cursor: pointer;
+}
+
+.text-button-a.disabled,
+.text-button-b.disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.text-button-a:not(.disabled):hover {
+  background-color: #37424a;
+  color: white;
+}
+
+.text-button-b {
+  background-color: #37424a;
+  color: white;
+}
+
+.text-button-b:not(.disabled):hover {
+  background-color: #1b2024;
+}
+
+.section-title {
+  text-transform: uppercase;
+  width: 100%;
+  font-family: ProximaNova;
+  font-size: 26px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.6;
+  letter-spacing: 2.5px;
+  text-align: center;
+  color: #000000;
+}
+
+.mobile-webview {
+  padding-top: 16px;
+  position: absolute;
+  top: 0;
+  z-index: 100000;
+  background-color: #ffffff;
+  width: 100%;
+}
+
+.mobile-webview .text-button-a {
+  margin: 0 auto;
+  width: 258px;
+}
+
+@media (min-width: 768px) and (max-width: 1180px) {
+  .section-title {
+    margin: 0 auto;
+    font-size: 25px;
+    line-height: 1.08;
+    letter-spacing: 2.5px;
+  }
+}
+
+@media (max-width: 767px) {
+  .section-title {
+    margin: 0 auto;
+    font-size: 25px;
+    line-height: 1.08;
+    letter-spacing: 0.9px;
+  }
+
+  .mobile-webview {
+    top: -50px;
+  }
+}
+
+.buorg-mainmsg {
+  font-family: GothamRounded;
+  font-size: 18px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.28;
+  letter-spacing: 0.2px;
+  color: #000000;
+  margin-top: 21px;
+}
+
+#buorg {
+  background-color: white;
+  border: none;
+  box-shadow: 0 1px 6px 1px rgb(0 0 0 / 7%);
+  background-color: #f0f0f0;
+}
+
+a#buorgul {
+  background: #37424a;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 215px;
+  height: 40px;
+  text-transform: uppercase;
+  font-family: ProximaNova;
+  font-size: 14px;
+  font-weight: bold;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: 1px;
+  text-align: center;
+  border: solid 1px #37424a;
+  transition: color 150ms ease-in, background-color 150ms ease-in;
+  cursor: pointer;
+  margin: 16px auto 10px;
+  border-radius: 0;
+}
+
+a#buorgul:hover {
+  background-color: #1b2024;
+}
