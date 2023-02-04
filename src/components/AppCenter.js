@@ -31,7 +31,7 @@ class App extends Component {
       return (
         <BrowserRouter basename="/login">
           <Switch>
-            <Route path="/" component={() => <NavigatorBar />} exact />
+            <Route path="/" component={() => <Login />} exact />
             <Route component={() => <Redirect to="/" />} />
           </Switch>
         </BrowserRouter>
