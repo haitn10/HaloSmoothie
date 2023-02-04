@@ -1,17 +1,17 @@
 import {
+  Avatar,
   Button,
-  Card,
   Container,
-  FormControl,
-  Input,
-  InputLabel,
-  Typography,
+  Grid,
+  Paper,
+  TextField,
 } from "@material-ui/core";
 import { Component } from "react";
 
 import { connect } from "react-redux";
 import { login } from "../profile/action";
-import ConfirmModal from '../common/CofirmModal'
+import ConfirmModal from "../common/CofirmModal";
+import { LockOutlined } from "@material-ui/icons";
 
 class Login extends Component {
   state = {
@@ -37,59 +37,63 @@ class Login extends Component {
       <Container
         component="main"
         style={{
-          height: "100vh",
-          display: "flex",
           justifyContent: "center",
           alignItems: "center",
         }}
+        onKeyPress={(e) => (e.key === "Enter" ? this.onLogin() : {})}
       >
         <ConfirmModal
           open={this.state.errorMessage}
           title="Info"
-          onDismiss={() => this.setState({ errorMessage: '' })}
+          onDismiss={() => this.setState({ errorMessage: "" })}
         />
-        <Card
-          style={{
-            width: "40%",
-            height: "50vh",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        > 
-          <Typography component="h1" variant="h5" className="text-center">
-            Login
-          </Typography>
-          <FormControl style={{ width: "22vw", marginTop: "1.5em" }}>
-            <InputLabel>Email address</InputLabel>
-            <Input
-              margin="dense"
+        <Grid>
+          <Paper
+            elevation={10}
+            style={{
+              padding: 20,
+              height: "60vh",
+              width: 280,
+              margin: "50px auto",
+            }}
+          >
+            <Grid align="center">
+              <Avatar style={{ backgroundColor: "#2ECC71" }}>
+                <LockOutlined />
+              </Avatar>
+              <h2>Sign In</h2>
+            </Grid>
+            <TextField
+              label="Email"
+              placeholder="Enter email"
+              type="text"
+              style={{ marginTop: "20px", width: "100%" }}
+              required
               value={this.state.email}
               onChange={(e) => this.setState({ email: e.target.value })}
-              autoFocus
             />
-          </FormControl>
-          <FormControl style={{ width: "22vw", marginTop: "1.5em" }}>
-            <InputLabel>Password</InputLabel>
-            <Input
+            <TextField
               security="*"
+              label="Password"
+              placeholder="Enter password"
               type="password"
-              margin="dense"
+              style={{ marginTop: "20px", width: "100%" }}
+              required
               value={this.state.password}
               onChange={(e) => this.setState({ password: e.target.value })}
             />
-          </FormControl>
-
-          <Button
-            variant="contained"
-            color="primary"
-            style={{ width: "17vw", marginTop: "3em", marginBottom: "2em" }}
-            onClick={this.onLogin}
-          >
-            Sign In
-          </Button>
-        </Card>
+            <Button
+              style={{ marginTop: "40px", width: "100%" }}
+              type="submit"
+              color="primary"
+              variant="contained"
+              onLoad={this.state.isLoggingIn}
+              onClick={this.onLogin}
+            >
+              Sign In
+            </Button>
+          </Paper>
+        </Grid>
       </Container>
     );
   }

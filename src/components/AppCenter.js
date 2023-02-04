@@ -2,7 +2,8 @@ import { Component } from "react";
 import { connect } from "react-redux";
 import { getProfile } from "./profile/action";
 import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
-import Header from "./Header";
+import NavigatorBar from "./common/NavigatorBar"
+import Login from "./login/index";
 
 class App extends Component {
   state = {
@@ -30,7 +31,7 @@ class App extends Component {
       return (
         <BrowserRouter basename="/login">
           <Switch>
-            <Route path="/" component={() => <Header />} exact />
+            <Route path="/" component={() => <NavigatorBar />} exact />
             <Route component={() => <Redirect to="/" />} />
           </Switch>
         </BrowserRouter>
