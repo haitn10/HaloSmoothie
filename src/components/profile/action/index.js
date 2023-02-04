@@ -2,6 +2,7 @@ import Axios from "axios";
 import { baseURL } from "../../../api";
 
 export const LOGIN = "LOGIN";
+export const LOG_OUT = 'LOG_OUT';
 export const GET_PROFILE = "GET_PROFILE";
 export const SET_PROFILE_STATE = "SET_PROFILE_STATE";
 
