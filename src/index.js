@@ -5,7 +5,7 @@ import createStore from "./redux/createStore";
 import AppCenter from "./components/AppCenter";
 
 
-import './index.css';
+// import './index.css';
 
 const store = createStore();
 
