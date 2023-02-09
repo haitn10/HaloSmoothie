@@ -1,20 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { Provider } from "react-redux";
-import createStore from "./redux/createStore";
+import "./styles/index.css";
 import AppCenter from "./components/AppCenter";
 
-
-// import './index.css';
-
-const store = createStore();
-
-
 ReactDOM.render(
-  <Provider store={store}>
-    <React.StrictMode>
-      <AppCenter />
-    </React.StrictMode>
-  </Provider>,
+  <React.StrictMode>
+    <AppCenter />
+  </React.StrictMode>,
   document.getElementById("root")
 );

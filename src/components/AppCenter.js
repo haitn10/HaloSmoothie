@@ -1,52 +1,46 @@
-import { Component } from "react";
-import { connect } from "react-redux";
-import { getProfile } from "./profile/action";
-import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
-import NavigatorBar from "./common/NavigatorBar"
-import Login from "./login/index";
+//import system
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { useMemo } from "react";
 
-class App extends Component {
-  state = {
-    isFetching: true,
-  };
+//import libararies
+import { CssBaseline, ThemeProvider, createTheme } from "@mui/material";
 
-  componentDidMount() {
-    this.getDependencies();
-  }
+//import src
+import Dashboard from "../pages/dashboard";
+import Layout from "./Layout";
+import Products from "../pages/products";
+import Users from "../pages/users";
+import Materials from "../pages/materials";
+import Offices from "../pages/offices";
+import Cupons from "../pages/cupons";
+import Settings from "../pages/settings";
+import { themeSettings } from "../theme";
+import { useSelector } from "react-redux";
 
-  getDependencies = async () => {
-    try {
-      await this.state.getProfile();
-      this.setState({ isFetching: false });
-    } catch (e) {
-      this.setState({ isFetching: false });
-    }
-  };
-
-  render() {
-    if (this.state.isFetching) {
-      return <div />;
-    }
-    if (!this.state.profile) {
-      return (
-        <BrowserRouter basename="/login">
-          <Switch>
-            <Route path="/" component={() => <NavigatorBar />} exact />
-            <Route component={() => <Redirect to="/" />} />
-          </Switch>
-        </BrowserRouter>
-      );
-    }
-  }
+function AppCenter() {
+  // const mode = useSelector((state) => state.global.mode)
+  const theme = useMemo(() => createTheme(themeSettings()), []);
+  return (
+    <div className="app">
+      <BrowserRouter>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <Routes>
+            <Route element={<Layout />}>
+              <Route path="/" element={<Navigate to="/dashboard" replace />} />
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/products" element={<Products />} />
+              <Route path="/materials" element={<Materials />} />
+              <Route path="/offices" element={<Offices />} />
+              <Route path="/cupons" element={<Cupons />} />
+              <Route path="/users" element={<Users />} />
+              <Route path="/settings" element={<Settings />} />
+            </Route>
+          </Routes>
+        </ThemeProvider>
+      </BrowserRouter>
+    </div>
+  );
 }
-const mapState = (state) => {
-  return {
-    profile: state.profile,
-  };
-};
 
-const mapDispatch = (dispatch) => ({
-  getProfile: () => dispatch(getProfile()),
-});
-
-export default connect(mapState, mapDispatch)(App);
+export default AppCenter;
