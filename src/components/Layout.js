@@ -1,5 +1,6 @@
 import { Box, useMediaQuery } from "@mui/material";
 import React, { useState } from "react";
+import { Outlet } from "react-router-dom";
 import Navbar from "./Navbar";
 
 //import src
@@ -22,6 +23,7 @@ const Layout = () => {
           isSidebarOpen={isSidebarOpen}
           setIsSidebarOpen={setIsSidebarOpen}
         />
+        <Outlet />
       </Box>
     </Box>
   );
