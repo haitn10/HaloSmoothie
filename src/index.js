@@ -6,11 +6,14 @@ import { configureStore } from "@reduxjs/toolkit";
 import globalReducer from "./styles/state";
 import { setupListeners } from "@reduxjs/toolkit/query";
 import { Provider } from "react-redux";
+import { api } from "./api/index";
 
 const store = configureStore({
   reducer: {
     global: globalReducer,
+    [api.reducerPath]: api.reducer,
   },
+  middleware: (getDefault) => getDefault().concat(api.middleware),
 });
 setupListeners(store.dispatch);
 
