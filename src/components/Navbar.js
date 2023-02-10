@@ -1,12 +1,6 @@
 import React, { useState } from "react";
 import FlexBetween from "./FlexBetween";
-import {
-  LightModeOutlined,
-  DarkModeOutlined,
-  Menu as MenuIcon,
-  ArrowDropDownOutlined,
-  SettingsOutlined,
-} from "@mui/icons-material";
+import { Menu as MenuIcon, ArrowDropDownOutlined } from "@mui/icons-material";
 import {
   AppBar,
   Box,
@@ -16,18 +10,16 @@ import {
   MenuItem,
   Toolbar,
   Typography,
-  useTheme,
 } from "@mui/material";
 
 const Navbar = ({ isSidebarOpen, setIsSidebarOpen }) => {
-  const theme = useTheme();
   const [anchorEl, setAnchorEl] = useState(null);
   const isOpen = Boolean(anchorEl);
   const handleClick = (event) => setAnchorEl(event.currentTarget);
   const handleClose = () => setAnchorEl(null);
 
   return (
-    <AppBar sx={{ position: "static", background: "#37424A", boxShadow: "none" }}>
+    <AppBar sx={{ position: "static", background: "none", boxShadow: "none" }}>
       <Toolbar sx={{ justifyContent: "space-between" }}>
         {/* LEFT SIDE */}
         <FlexBetween>
@@ -37,52 +29,30 @@ const Navbar = ({ isSidebarOpen, setIsSidebarOpen }) => {
         </FlexBetween>
 
         {/* RIGHT SIDE */}
-        <FlexBetween>
         <FlexBetween gap="1.5rem">
-          <IconButton onClick={() => {}}>
-            {theme.palette.mode === "dark" ? (
-              <DarkModeOutlined sx={{ fontSize: "25px" }} />
-            ) : (
-              <LightModeOutlined sx={{ fontSize: "25px" }} />
-            )}
-          </IconButton>
-        </FlexBetween>
           <Button
             onClick={handleClick}
             sx={{
               display: "flex",
-              justifyContent: "space-between",
               alignItems: "center",
               textTransform: "none",
               gap: "1rem",
             }}
           >
-            <Box
-              component="img"
-              alt="profile"
-              src="#"
-              height="32px"
-              width="32px"
-              borderRadius="50%"
-              sx={{ objectFit: "cover" }}
-            />
             <Box textAlign="left">
               <Typography
                 fontWeight="bold"
                 fontSize="0.85rem"
-                sx={{ color: theme.palette.secondary[100] }}
+                sx={{ color: "#4e6c50" }}
               >
-                HaiTN
+                Administrator
               </Typography>
-              <Typography
-                fontSize="0.75rem"
-                sx={{ color: theme.palette.secondary[200] }}
-              >
-                FPT Student
+              <Typography fontSize="0.75rem" sx={{ color: "#4e6c50" }}>
+                #a123
               </Typography>
             </Box>
             <ArrowDropDownOutlined
-              sx={{ color: theme.palette.secondary[300], fontSize: "25px" }}
+              sx={{ color: "#4e6c50", fontSize: "25px" }}
             />
           </Button>
           <Menu
@@ -90,6 +60,11 @@ const Navbar = ({ isSidebarOpen, setIsSidebarOpen }) => {
             open={isOpen}
             onClose={handleClose}
             anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+            transformOrigin={{ horizontal: "left", vertical: "top" }}
+            sx={{
+              verflow: "visible",
+              width: "200px",
+            }}
           >
             <MenuItem onClick={handleClose}>Log Out</MenuItem>
           </Menu>
