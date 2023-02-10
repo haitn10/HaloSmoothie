@@ -5,7 +5,9 @@ import {
   Drawer,
   IconButton,
   List,
+  ListItem,
   ListItemButton,
+  ListItemIcon,
   ListItemText,
   Typography,
 } from "@mui/material";
@@ -50,10 +52,10 @@ const Sidebar = ({
         >
           <Box width="100%">
             <Box m="1.5rem 2rem 2rem 3rem">
-              <FlexBetween color="#fff">
+              <FlexBetween color={theme.palette.secondary.main}>
                 <Box display="flex" alignItems="center" gap="0.5rem">
-                  <Typography variant="h4" fontWeight="bold">
-                    LOGO
+                  <Typography variant="h5" fontWeight="bold">
+                    HaloSmothie
                   </Typography>
                 </Box>
                 {!isNonMobile && (
@@ -67,32 +69,40 @@ const Sidebar = ({
               {navItems.map(({ text, icon }) => {
                 const lcText = text.toLowerCase();
                 return (
-                  <ListItemButton
-                    onClick={() => {
-                      navigate(`/${lcText}`);
-                      setActive(lcText);
-                    }}
-                    sx={{
-                      backgroundColor:
-                        active === lcText
-                          ? theme.palette.secondary[300]
-                          : "transparent",
-                      color: active === lcText ? "#fff" : "#fff",
-                    }}
-                  >
+                  <ListItem key={text} disablePadding>
                     <ListItemButton
+                      onClick={() => {
+                        navigate(`/${lcText}`);
+                        setActive(lcText);
+                      }}
                       sx={{
-                        ml: "2rem",
-                        color: active === lcText ? "#fff" : "#fff",
+                        backgroundColor:
+                          active === lcText
+                            ? theme.palette.secondary[300]
+                            : "transparent",
+                        color:
+                          active === lcText
+                            ? theme.palette.primary[600]
+                            : theme.palette.secondary[100],
                       }}
                     >
-                      {icon}
+                      <ListItemIcon
+                        sx={{
+                          ml: "2rem",
+                          color:
+                            active === lcText
+                              ? theme.palette.primary[600]
+                              : theme.palette.secondary[200],
+                        }}
+                      >
+                        {icon}
+                      </ListItemIcon>
+                      <ListItemText primary={text} color="#ffff" />
+                      {active === lcText && (
+                        <ChevronRightOutlined sx={{ ml: "auto" }} />
+                      )}
                     </ListItemButton>
-                    <ListItemText primary={text} />
-                    {active === lcText && (
-                      <ChevronRightOutlined sx={{ ml: "auto" }} />
-                    )}
-                  </ListItemButton>
+                  </ListItem>
                 );
               })}
             </List>
