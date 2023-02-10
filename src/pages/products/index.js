@@ -1,8 +1,13 @@
+import { Box } from '@mui/material'
 import React from 'react'
+import Header from '../../components/Header'
 
 const Products = () => {
   return (
-    <div>Products</div>
+    <Box>
+
+      <Header title="Products" subtitle="See your list of products"/>
+    </Box>
   )
 }
 
