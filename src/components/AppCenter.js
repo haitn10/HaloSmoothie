@@ -8,7 +8,6 @@ import { CssBaseline, ThemeProvider, createTheme } from "@mui/material";
 //import src
 import Dashboard from "../pages/dashboard";
 import Layout from "./Layout";
-import Settings from "../pages/settings";
 import { themeSettings } from "../theme";
 import { useSelector } from "react-redux";
 import Data from "./Data";
@@ -17,6 +16,7 @@ import cupons from "../data/cupons";
 import materials from "../data/materials";
 import offices from "../data/offices";
 import users from "../data/users";
+import Accounts from "../pages/accounts";
 
 function AppCenter() {
   const mode = useSelector((state) => state.global.mode);
@@ -35,7 +35,7 @@ function AppCenter() {
               <Route path="/offices" element={<Data value={offices} />} />
               <Route path="/cupons" element={<Data value={cupons} />} />
               <Route path="/users" element={<Data value={users} />} />
-              <Route path="/settings" element={<Settings />} />
+              <Route path="/settings" element={<Accounts />} />
             </Route>
           </Routes>
         </ThemeProvider>
