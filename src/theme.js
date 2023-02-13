@@ -1,9 +1,9 @@
 // color design tokens export
 export const tokensDark = {
   grey: {
-    0: "#ffffff", // manually adjusted
-    10: "#f6f6f6", // manually adjusted
-    50: "#f0f0f0", // manually adjusted
+    0: "#fff", // background color
+    10: "#f6f6f6", 
+    50: "#f0f0f0", // mài khi click
     100: "#e0e0e0",
     200: "#c2c2c2",
     300: "#a3a3a3",
@@ -13,54 +13,29 @@ export const tokensDark = {
     700: "#3d3d3d",
     800: "#292929",
     900: "#141414",
-    1000: "#678983", // manually adjusted
+    1000: "#eee", // màu nav
   },
   primary: {
     100: "#dce2dc",
     200: "#b8c4b9",
     300: "#95a796",
-    400: "#ffffff",
+    400: "#fff", //màu chữ active 
     500: "#4e6c50",
     600: "#3e5640",
     700: "#2f4130",
     800: "#1f2b20",
     900: "#101610",
   },
-  // primary: {
-  //   // blue
-  //   100: "#d3d4de",
-  //   200: "#a6a9be",
-  //   300: "#7a7f9d",
-  //   400: "#4d547d",
-  //   500: "#21295c",
-  //   600: "#191F45", // manually adjusted
-  //   700: "#141937",
-  //   800: "#0d1025",
-  //   900: "#070812",
-  // },
-  // secondary: {
-  //   // yellow
-  //   50: "#f0f0f0", // manually adjusted
-  //   100: "#dce2dc",
-  //   200: "#b8c4b9",
-  //   300: "#95a796",
-  //   400: "#718973",
-  //   500: "#4e6c50",
-  //   600: "#3e5640",
-  //   700: "#2f4130",
-  //   800: "#1f2b20",
-  //   900: "#101610",
-  // },
   secondary: {
-    100: "#ffffff",
+    100: "#ffffff", 
     200: "#4e6c50",
     300: "#ffffff",
     400: "#718973",
     500: "#2f4130",
-    600: "#ffffff",
-    700: "#999999",
-    800: "#ffffff",
-    900: "#333333",
+    600: "#ffffff",//logo
+    700: "#999999",//background active color
+    800: "#181818",//icon and letter colums
+    900: "#181818",//color chữ
   },
 };
 
