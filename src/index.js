@@ -1,5 +1,5 @@
 import React from "react";
-import ReactDOM from "react-dom";
+import ReactDOM from "react-dom/client";
 import "./styles/index.css";
 import AppCenter from "./components/AppCenter";
 import { configureStore } from "@reduxjs/toolkit";

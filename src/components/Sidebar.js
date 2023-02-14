@@ -9,12 +9,12 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
-  Typography,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import navItems from "../contexts/navitems";
 import FlexBetween from "./FlexBetween";
+import Logo from "../images/logo.png";
 
 const Sidebar = ({
   drawerWidth,
@@ -52,18 +52,24 @@ const Sidebar = ({
         >
           <Box width="100%">
             <Box m="1.5rem 2rem 2rem 3rem">
-              <FlexBetween color={theme.palette.secondary.main}>
-                <Box display="flex" alignItems="center" gap="0.5rem">
-                  <Typography variant="h5" fontWeight="bold">
-                    HaloSmothie
-                  </Typography>
+            {isNonMobile && (
+                <Box color={theme.palette.secondary.main}>
+                  <Box display="flex" alignItems="center" justifyContent='center'>
+                    <img src={Logo} alt="logo" width={100} height={100} />
+                  </Box>
                 </Box>
-                {!isNonMobile && (
+              )}
+              {!isNonMobile && (
+                <FlexBetween color={theme.palette.secondary.main}>
+                  <Box display="flex" alignItems="center">
+                    <img src={Logo} alt="logo" width={100} height={100} />
+                  </Box>
+
                   <IconButton onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
                     <ChevronLeft />
                   </IconButton>
-                )}
-              </FlexBetween>
+                </FlexBetween>
+              )}
             </Box>
             <List>
               {navItems.map(({ text, icon }) => {
