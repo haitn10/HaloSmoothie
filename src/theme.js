@@ -1,7 +1,7 @@
 // color design tokens export
 export const tokensDark = {
   grey: {
-    0: "#F9FAFC", // background color
+    0: "#eee", // background color
     10: "#f6f6f6", 
     50: "#f0f0f0", // mài khi click
     100: "#e0e0e0",
@@ -13,7 +13,7 @@ export const tokensDark = {
     700: "#3d3d3d",
     800: "#292929",
     900: "#141414",
-    1000: "#eee", // màu nav
+    1000: "#fff", // màu nav
   },
   primary: {
     100: "#dce2dc",
@@ -33,9 +33,9 @@ export const tokensDark = {
     400: "#718973",
     500: "#2f4130",
     600: "#ffffff",//logo
-    700: "#999999",//background active color
-    800: "#181818",//icon and letter colums
-    900: "#181818",//color chữ
+    700: "#10654E",//background active color
+    800: "#10654E",//icon and letter colums
+    900: "#10654E",//color chữ
   },
 };
 

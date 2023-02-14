@@ -17,6 +17,7 @@ import materials from "../data/materials";
 import offices from "../data/offices";
 import users from "../data/users";
 import Accounts from "../pages/accounts";
+import Login from "../pages/login";
 
 function AppCenter() {
   const mode = useSelector((state) => state.global.mode);
@@ -27,6 +28,7 @@ function AppCenter() {
         <ThemeProvider theme={theme}>
           <CssBaseline />
           <Routes>
+            <Route path="/login" element={<Login />} />
             <Route element={<Layout />}>
               <Route path="/" element={<Navigate to="/dashboard" replace />} />
               <Route path="/dashboard" element={<Dashboard />} />
