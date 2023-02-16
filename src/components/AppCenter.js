@@ -20,30 +20,46 @@ import Accounts from "../pages/accounts";
 import Login from "../pages/login";
 
 function AppCenter() {
-  const mode = useSelector((state) => state.global.mode);
+  const { mode, profile } = useSelector((state) => state.global);
   const theme = useMemo(() => createTheme(themeSettings(mode)), [mode]);
-  return (
-    <div className="app">
-      <BrowserRouter>
-        <ThemeProvider theme={theme}>
-          <CssBaseline />
-          <Routes>
-            <Route path="/login" element={<Login />} />
-            <Route element={<Layout />}>
-              <Route path="/" element={<Navigate to="/dashboard" replace />} />
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/products" element={<Data value={products} />} />
-              <Route path="/materials" element={<Data value={materials} />} />
-              <Route path="/offices" element={<Data value={offices} />} />
-              <Route path="/cupons" element={<Data value={cupons} />} />
-              <Route path="/users" element={<Data value={users} />} />
-              <Route path="/settings" element={<Accounts />} />
-            </Route>
-          </Routes>
-        </ThemeProvider>
-      </BrowserRouter>
-    </div>
-  );
+  if (!profile) {
+    return (
+      <div className="app">
+        <BrowserRouter>
+          <ThemeProvider theme={theme}>
+            <CssBaseline />
+            <Routes>
+              <Route path="/*" element={<Navigate to="/login" />} exact />
+              <Route path="/login" element={<Login />} />
+            </Routes>
+          </ThemeProvider>
+        </BrowserRouter>
+      </div>
+    );
+  }
+  if (profile) {
+    return (
+      <div className="app">
+        <BrowserRouter>
+          <ThemeProvider theme={theme}>
+            <CssBaseline />
+            <Routes>
+              <Route element={<Layout />}>
+              <Route path="/*" element={<Navigate to="/dashboard" />} exact />
+                <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/products" element={<Data value={products} />} />
+                <Route path="/materials" element={<Data value={materials} />} />
+                <Route path="/offices" element={<Data value={offices} />} />
+                <Route path="/cupons" element={<Data value={cupons} />} />
+                <Route path="/users" element={<Data value={users} />} />
+                <Route path="/settings" element={<Accounts />} />
+              </Route>
+            </Routes>
+          </ThemeProvider>
+        </BrowserRouter>
+      </div>
+    );
+  }
 }
 
 export default AppCenter;
