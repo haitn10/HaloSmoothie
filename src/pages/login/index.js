@@ -1,25 +1,30 @@
 import React, { useState } from "react";
 import { Box, Button, TextField } from "@mui/material";
 import Logo from "../../images/logo.png";
+import { useDispatch } from "react-redux";
+import { login } from "../../state";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
-
-  const onSubmit = async () => {
-    try {
-      // await login(email, password);
-    } catch (e) {
-      setErrorMessage(e);
-    }
+  const [profile, setProfile] = useState(null);
+  // const [errorMessage, setErrorMessage] = useState("");
+  const onLogin = async (e) => {
+    e.preventDefault();
+    setProfile(await dispatch(login({ email, password })));
   };
+  if (profile) {
+    navigate("/dashboard");
+  }
 
   return (
     <Box
       component="main"
       paddingTop={10}
-      onKeyPress={(e) => (e.key === "Enter" ? this.onLogin() : {})}
+      onKeyPress={(e) => (e.key === "Enter" ? onLogin : {})}
     >
       {/* <ConfirmModal
         open={this.state.errorMessage}
@@ -77,7 +82,7 @@ const Login = () => {
             color="success"
             sx={{ marginTop: "30px", borderRadius: "10px" }}
             type="submit"
-            onClick={() => onSubmit()}
+            onClick={onLogin}
           >
             Login
           </Button>

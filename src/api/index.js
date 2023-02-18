@@ -1,10 +1,12 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-export const baseURL = "http://localhost:3100";
+// export const baseURL = "http://localhost:3100";
+
+export const baseURL = "http://localhost:5000";
 
 export const api = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: process.env.REACT_APP_BASE_URL }),
-  reducerPath: "adminApi",
+  reducerPath: "api",
   tagTypes: [
     "User",
     "Products",
@@ -17,6 +19,13 @@ export const api = createApi({
     "Dashboard",
   ],
   endpoints: (build) => ({
+    login: build.mutation({
+      query: (credentials) => ({
+        url: `login`,
+        method: "POST",
+        body: credentials,
+      }),
+    }),
     getUser: build.query({
       query: (id) => `general/user/${id}`,
       providesTags: ["User"],
