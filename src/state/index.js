@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { baseURL } from "api";
 import axios from "axios";
 
 const profile = localStorage.getItem("profile");
@@ -10,9 +11,10 @@ const initialState = {
 };
 
 export const login = createAsyncThunk(
-  "auth/login",
+  "api/auth/staff",
   async (data, { rejectWithValue }) => {
-    const response = await fetch("http://localhost:5000/login", {
+    const response = await fetch(`${baseURL}/api/auth/staff`, {
+    // const response = await fetch(`${baseURL}/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -25,7 +27,8 @@ export const login = createAsyncThunk(
     if (response.status < 200 || response.status >= 300) {
       return rejectWithValue(jsonData);
     }
-    axios.default.header = {Authorziration: "Bearer " + jsonData.accessToken}
+    axios.default.header = {Authorziration: "Bearer " + jsonData.serviceToken}
+    // axios.default.header = {Authorziration: "Bearer " + jsonData.accessToken}
     console.log(axios.default.header);
     return jsonData;
   }

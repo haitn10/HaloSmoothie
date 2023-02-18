@@ -2,7 +2,8 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 // export const baseURL = "http://localhost:3100";
 
-export const baseURL = "http://localhost:5000";
+// export const baseURL = "http://localhost:5000";
+export const baseURL = "https://api-halosmoothie.azurewebsites.net";
 
 export const api = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: process.env.REACT_APP_BASE_URL }),
