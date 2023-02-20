@@ -1,6 +1,6 @@
 import { Box, Container, Grid } from "@mui/material";
-import { AccountProfileDetails } from "../../components/Details-account/detail-profile";
-import { AccountProfile } from "../../components/Details-account/profile";
+import { AccountProfileDetails } from "../../components/accounts/detail-profile";
+import { AccountProfile } from "../../components/accounts/profile";
 
 const Accounts = () => (
   <>

@@ -12,9 +12,9 @@ import {
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import navItems from "../contexts/navitems";
+import navItems from "../../contexts/navitems";
 import FlexBetween from "./FlexBetween";
-import Logo from "../images/logo.png";
+import Logo from "../../images/logo.png";
 
 const Sidebar = ({
   drawerWidth,

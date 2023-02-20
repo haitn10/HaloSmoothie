@@ -7,10 +7,10 @@ import { CssBaseline, ThemeProvider, createTheme } from "@mui/material";
 
 //import src
 import Dashboard from "../pages/dashboard";
-import Layout from "./Layout";
+import Layout from "./common/Layout";
 import { themeSettings } from "../theme";
 import { useSelector } from "react-redux";
-import Data from "./Data";
+import Data from "./chart/Data";
 import products from "../data/products";
 import cupons from "../data/cupons";
 import materials from "../data/materials";

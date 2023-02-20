@@ -11,7 +11,7 @@ import {
   Toolbar,
   Typography,
 } from "@mui/material";
-import { logout } from "../state";
+import { logout } from "../../state";
 import { useDispatch } from "react-redux";
 import { useCallback } from "react";
 

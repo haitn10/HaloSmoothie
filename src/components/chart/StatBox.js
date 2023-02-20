@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, Typography, useTheme } from "@mui/material";
-import FlexBetween from "./FlexBetween";
+import FlexBetween from "../common/FlexBetween";
 
 const StatBox = ({ title, value, increase, icon, description }) => {
   const theme = useTheme();

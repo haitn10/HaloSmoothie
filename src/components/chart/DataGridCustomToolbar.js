@@ -7,7 +7,7 @@ import {
   GridToolbarExport,
   GridToolbarColumnsButton,
 } from "@mui/x-data-grid";
-import FlexBetween from "./FlexBetween";
+import FlexBetween from "../common/FlexBetween";
 
 const DataGridCustomToolbar = ({ searchInput, setSearchInput, setSearch }) => {
   return (

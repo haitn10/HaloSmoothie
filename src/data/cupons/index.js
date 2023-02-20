@@ -1,4 +1,4 @@
-import Actions from "../../components/Actions";
+import Actions from "../../components/chart/Actions";
 
 const cupons = [
   {

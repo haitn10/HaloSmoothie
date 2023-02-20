@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Box, useTheme } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
-import DataGridCustomToolbar from "../components/DataGridCustomToolbar";
+import DataGridCustomToolbar from "./DataGridCustomToolbar";
 
 const data = [
   {

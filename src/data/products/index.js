@@ -1,6 +1,6 @@
 import { ImageListItem } from "@mui/material";
 import moment from "moment";
-import Actions from "../../components/Actions";
+import Actions from "../../components/chart/Actions";
 
 const products = [
   {

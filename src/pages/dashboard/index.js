@@ -1,11 +1,11 @@
 import { Email, PersonAdd, PointOfSale, Traffic } from "@mui/icons-material";
 import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
 import React from "react";
-import StatBox from "../../components/StatBox";
-import OverviewChart from "../../components/OverviewChart";
+import StatBox from "../../components/chart/StatBox";
+import OverviewChart from "../../components/chart/OverviewChart";
 import { DataGrid } from "@mui/x-data-grid";
 import { useGetDashboardQuery } from "../../api";
-import BreakdownChart from "../../components/BreakdownChart";
+import BreakdownChart from "../../components/chart/BreakdownChart";
 
 const Dashboard = () => {
   const theme = useTheme();
