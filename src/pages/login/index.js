@@ -8,16 +8,17 @@ import { useNavigate } from "react-router-dom";
 const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [profile, setProfile] = useState(null);
   // const [errorMessage, setErrorMessage] = useState("");
   const onLogin = async (e) => {
     e.preventDefault();
-    setProfile(await dispatch(login({ username, password })));
+    setProfile(await dispatch(login({ email, password })));
   };
+  
   if (profile) {
-    navigate("/dashboard");
+    navigate(-1);
   }
 
   return (
@@ -53,14 +54,14 @@ const Login = () => {
 
           <TextField
             label="Email"
-            name="username"
+            name="email"
             margin="normal"
-            type="text"
+            type="email"
             variant="outlined"
             color="success"
             placeholder="e.g admin@example.com"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             fullWidth
             required
           />

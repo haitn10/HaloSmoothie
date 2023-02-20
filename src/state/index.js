@@ -2,11 +2,11 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { baseURL } from "api";
 import axios from "axios";
 
-const profile = localStorage.getItem("profile");
+const accessToken = localStorage.getItem("accessToken");
 
 const initialState = {
   mode: "light",
-  profile: profile ? profile : null,
+  accessToken: accessToken ? accessToken : null,
   isLoggedIn: false,
 };
 
@@ -27,15 +27,14 @@ export const login = createAsyncThunk(
     if (response.status < 200 || response.status >= 300) {
       return rejectWithValue(jsonData);
     }
-    axios.default.header = {Authorziration: "Bearer " + jsonData.serviceToken}
-    // axios.default.header = {Authorziration: "Bearer " + jsonData.accessToken}
+    axios.default.header = {Authorziration: "Bearer " + jsonData.accessToken}
     console.log(axios.default.header);
     return jsonData;
   }
 );
 
 export const logout = createAsyncThunk("auth/logout", async () => {
-  await localStorage.removeItem("profile");;
+  await localStorage.removeItem("accessToken");;
 });
 
 
@@ -55,10 +54,10 @@ export const globalSlice = createSlice({
     });
 
     // Request successful
-    builder.addCase(login.fulfilled, (state, { payload: profile }) => {
+    builder.addCase(login.fulfilled, (state, { payload: data }) => {
       state.isLoggedIn = false;
-      state.profile = profile.profile;
-      localStorage.setItem("profile", JSON.stringify(profile.profile));
+      state.accessToken = data.accessToken;
+      localStorage.setItem("accessToken", JSON.stringify(data.accessToken));
     });
 
     // Request error
@@ -69,7 +68,7 @@ export const globalSlice = createSlice({
     // Request successful
     builder.addCase(logout.fulfilled, (state) => {
       state.isLoggedIn = false;
-      state.profile = null;
+      state.accessToken = null;
     });
   },
 });

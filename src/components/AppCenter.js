@@ -20,9 +20,9 @@ import Accounts from "../pages/accounts";
 import Login from "../pages/login";
 
 function AppCenter() {
-  const { mode, profile } = useSelector((state) => state.global);
+  const { mode, accessToken } = useSelector((state) => state.global);
   const theme = useMemo(() => createTheme(themeSettings(mode)), [mode]);
-  if (!profile) {
+  if (!accessToken) {
     return (
       <div className="app">
         <BrowserRouter>
@@ -37,7 +37,7 @@ function AppCenter() {
       </div>
     );
   }
-  if (profile) {
+  if (accessToken) {
     return (
       <div className="app">
         <BrowserRouter>

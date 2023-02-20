@@ -1,5 +1,5 @@
 {
-  "name": "HaloSmoothie",
+  "name": "halosmoothie",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -48,12 +48,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "tsConfig": "tsconfig.app.json",
-  "aot": true,
-  "assets": [
-    "src/favicon.ico",
-    "src/assets",
-    "src/web.config"
-  ]
+  }
 }
