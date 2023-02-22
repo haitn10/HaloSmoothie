@@ -1,183 +1,127 @@
-import { useState } from 'react';
+import { useState } from "react";
 import {
-  Box,
-  Button,
   Card,
   CardContent,
   CardHeader,
   Divider,
   Grid,
-  TextField
-} from '@mui/material';
+  TextField,
+} from "@mui/material";
 
-const states = [
-  {
-    value: 'alabama',
-    label: 'Alabama'
-  },
-  {
-    value: 'new-york',
-    label: 'New York'
-  },
-  {
-    value: 'san-francisco',
-    label: 'San Francisco'
-  }
-];
 
-export const AccountProfileDetails = (props) => {
-  const [values, setValues] = useState({
-    firstName: 'Katarina',
-    lastName: 'Smith',
-    email: 'demo@devias.io',
-    phone: '',
-    state: 'Alabama',
-    country: 'USA'
-  });
+export const AccountProfileDetails = ({info}) => {
+  const [values, setValues] = useState(info);
 
   const handleChange = (event) => {
     setValues({
       ...values,
-      [event.target.name]: event.target.value
+      [event.target.name]: event.target.value,
     });
   };
+  console.log(values);
 
   return (
-    <form
-      autoComplete="off"
-      noValidate
-      {...props}
-    >
-      <Card>
+    <form autoComplete="off" noValidate>
+      <Card sx={{ borderRadius: "24px", color: "#10654E" }}>
         <CardHeader
-          subheader="The information can be edited"
+          subheader="My information"
           title="Profile"
+          sx={{ margin: "5px 20px" }}
         />
         <Divider />
-        <CardContent>
-          <Grid
-            container
-            spacing={3}
-          >
-            <Grid
-              item
-              md={6}
-              xs={12}
-            >
+        <CardContent >
+          <Grid container spacing={3} padding={2}>
+            <Grid item lg={6} md={12}>
               <TextField
                 fullWidth
                 helperText="Please specify the first name"
-                label="First name"
+                label="First Name"
                 name="firstName"
                 onChange={handleChange}
                 required
+                color="success"
                 value={values.firstName}
                 variant="outlined"
               />
             </Grid>
-            <Grid
-              item
-              md={6}
-              xs={12}
-            >
+            <Grid item lg={6} md={12}>
               <TextField
                 fullWidth
-                label="Last name"
+                label="Last Name"
                 name="lastName"
                 onChange={handleChange}
+                color="success"
                 required
                 value={values.lastName}
                 variant="outlined"
               />
             </Grid>
-            <Grid
-              item
-              md={6}
-              xs={12}
-            >
+            <Grid item lg={6} md={12}>
               <TextField
                 fullWidth
-                label="Email Address"
+                label="Email"
                 name="email"
                 onChange={handleChange}
+                color="success"
                 required
                 value={values.email}
                 variant="outlined"
               />
             </Grid>
-            <Grid
-              item
-              md={6}
-              xs={12}
-            >
+            <Grid item lg={6} md={12}>
               <TextField
                 fullWidth
                 label="Phone Number"
                 name="phone"
                 onChange={handleChange}
-                type="number"
+                color="success"
+                type="tel"
                 value={values.phone}
                 variant="outlined"
               />
             </Grid>
-            <Grid
-              item
-              md={6}
-              xs={12}
-            >
+            <Grid item lg={6} md={12}>
               <TextField
                 fullWidth
-                label="Country"
-                name="country"
+                label="Birth"
+                name="dateOfBirth"
                 onChange={handleChange}
+                color="success"
                 required
-                value={values.country}
+                type="date"
+                value={values.dateOfBirth}
                 variant="outlined"
               />
             </Grid>
-            <Grid
-              item
-              md={6}
-              xs={12}
-            >
+            <Grid item lg={6} md={12}>
               <TextField
                 fullWidth
-                label="Select State"
-                name="state"
+                label="Address"
+                name="address"
                 onChange={handleChange}
+                color="success"
                 required
-                select
-                SelectProps={{ native: true }}
-                value={values.state}
+                type="text"
+                value={values.address}
+                variant="outlined"
+              />
+            </Grid>
+            <Grid item lg={6} md={12}>
+              <TextField
+                fullWidth
+                label="Office"
+                name="office"
+                onChange={handleChange}
+                color="success"
+                required
+                type="text"
+                value={values.office}
                 variant="outlined"
               >
-                {states.map((option) => (
-                  <option
-                    key={option.value}
-                    value={option.value}
-                  >
-                    {option.label}
-                  </option>
-                ))}
               </TextField>
             </Grid>
           </Grid>
         </CardContent>
-        <Divider />
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'flex-end',
-            p: 2
-          }}
-        >
-          <Button
-            color="primary"
-            variant="contained"
-          >
-            Save details
-          </Button>
-        </Box>
       </Card>
     </form>
   );
