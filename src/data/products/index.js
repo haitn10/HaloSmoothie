@@ -1,12 +1,9 @@
-import { ImageListItem } from "@mui/material";
-import moment from "moment";
-import Actions from "../../components/chart/Actions";
-
 const products = [
   {
     field: "id",
     headerName: "Product ID",
     width: 100,
+    align: "center"
   },
   {
     field: "name",
@@ -17,7 +14,7 @@ const products = [
     field: "image",
     headerName: "Image",
     width: 200,
-    renderCell: (params) => <ImageListItem src={params.row.photoURL} />,
+    renderCell: (params) => <img src={params.row.img} alt={`${params.row.name}`} style={{width:100}}/>,
     sortable: false,
     filterable: false,
   },
@@ -25,27 +22,23 @@ const products = [
     field: "price",
     headerName: "Price",
     flex: 1,
-    editable: true,
   },
   {
-    field: "dateimport",
-    headerName: "Date Import",
+    field: "salePrice",
+    headerName: "Sale Price",
     flex: 1,
-    renderCell: (params) => moment(params.row.dateimport).format("YYYY-MM-DD"),
+  },
+  {
+    field: "category",
+    headerName: "Category",
+    renderCell: (params) => params.row.category.name,
+    flex: 1,
   },
   {
     field: "status",
     headerName: "Status",
     flex: 0.7,
     type: "boolean",
-    editable: true,
-  },
-  {
-    field: "actions",
-    headerName: "Actions",
-    flex: 0.7,
-    type: "actions",
-    renderCell: (params) => <Actions {...{ params }} />,
   },
 ];
 

@@ -1,5 +1,3 @@
-import Actions from "../../components/chart/Actions";
-
 const cupons = [
   {
     field: "id",
@@ -29,14 +27,7 @@ const cupons = [
     sortable: true,
     type: "boolean",
     editable: true,
-  },
-  {
-    field: "actions",
-    headerName: "Actions",
-    flex: 0.7,
-    type: "actions",
-    renderCell: (params) => <Actions {...{ params }} />,
-  },
+  }
 ];
 
 export default cupons;

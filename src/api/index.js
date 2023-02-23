@@ -1,15 +1,19 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import axios from "axios";
 
 // export const baseURL = "http://localhost:3100";
 
 // export const baseURL = "http://localhost:5000";
 export const baseURL = "https://api-halosmoothie.azurewebsites.net";
 
+export const API = axios.create({
+  baseURL: `${baseURL}/api/`,
+});
+
 export const api = createApi({
-  baseQuery: fetchBaseQuery({ baseUrl: process.env.REACT_APP_BASE_URL }),
+  baseQuery: fetchBaseQuery({ baseUrl: baseURL }),
   reducerPath: "api",
   tagTypes: [
-    "User",
     "Products",
     "Customers",
     "Transactions",
@@ -20,19 +24,12 @@ export const api = createApi({
     "Dashboard",
   ],
   endpoints: (build) => ({
-    login: build.mutation({
-      query: (credentials) => ({
-        url: `login`,
-        method: "POST",
-        body: credentials,
-      }),
-    }),
-    getUser: build.query({
-      query: (id) => `general/user/${id}`,
-      providesTags: ["User"],
-    }),
     getProducts: build.query({
-      query: () => "client/products",
+      query: () => "/api/products",
+      providesTags: ["Products"],
+    }),
+    getProduct: build.query({
+      query: (id) => `/api/products/${id}`,
       providesTags: ["Products"],
     }),
     getCustomers: build.query({
@@ -71,8 +68,8 @@ export const api = createApi({
 });
 
 export const {
-  useGetUserQuery,
   useGetProductsQuery,
+  useGetProductQuery,
   useGetCustomersQuery,
   useGetTransactionsQuery,
   useGetGeographyQuery,
