@@ -1,5 +1,3 @@
-import Actions from "../../components/chart/Actions";
-
 const users = [
   {
     field: "Id",
@@ -46,14 +44,7 @@ const users = [
     headerName: "Status",
     type: "boolean",
     flex: 0.5,
-  },
-  {
-    field: "actions",
-    headerName: "Actions",
-    type: "boolean",
-    flex: 0.7,
-    renderCell: (params) => <Actions {...{ params }} />,
-  },
+  }
 ];
 
 export default users;

@@ -1,6 +1,5 @@
 import { ImageListItem } from "@mui/material";
 import moment from "moment";
-import Actions from "../../components/chart/Actions";
 
 const materials = [
   {
@@ -63,14 +62,7 @@ const materials = [
     flex: 0.7,
     type: "boolean",
     editable: true,
-  },
-  {
-    field: "actions",
-    headerName: "Actions",
-    flex: 0.7,
-    type: "actions",
-    renderCell: (params) => <Actions {...{ params }} />,
-  },
+  }
 ];
 
 export default materials;
