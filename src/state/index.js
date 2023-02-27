@@ -36,7 +36,6 @@ export const logout = createAsyncThunk("auth/logout", async () => {
   await localStorage.removeItem("accessToken");
 });
 
-
 export const globalSlice = createSlice({
   name: "global",
   initialState,
