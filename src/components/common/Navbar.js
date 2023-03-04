@@ -11,20 +11,19 @@ import {
   Toolbar,
   Typography,
 } from "@mui/material";
-import { logout } from "../../state";
-import { useDispatch } from "react-redux";
-import { useCallback } from "react";
+import { useContext } from "react";
+import { StoreContext, actions } from "store";
 
 const Navbar = ({ isSidebarOpen, setIsSidebarOpen }) => {
-  const dispatch = useDispatch();
+  const [state, dispatch] = useContext(StoreContext);
   const [anchorEl, setAnchorEl] = useState(null);
   const isOpen = Boolean(anchorEl);
   const handleClick = (event) => setAnchorEl(event.currentTarget);
   const handleClose = () => setAnchorEl(null);
 
-  const logOut = useCallback(() => {
-    dispatch(logout());
-  }, [dispatch]);
+  const handleLogOut = async () => {
+    await dispatch(actions.logOut());
+  };
 
   return (
     <AppBar sx={{ position: "static", background: "none", boxShadow: "none" }}>
@@ -74,7 +73,7 @@ const Navbar = ({ isSidebarOpen, setIsSidebarOpen }) => {
               width: "200px",
             }}
           >
-            <MenuItem onClick={logOut}>Log Out</MenuItem>
+            <MenuItem onClick={handleLogOut}>Log Out</MenuItem>
           </Menu>
         </FlexBetween>
       </Toolbar>
