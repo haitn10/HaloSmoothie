@@ -2,25 +2,14 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./styles/index.css";
 import AppCenter from "./components/AppCenter";
-import { configureStore } from "@reduxjs/toolkit";
-import globalReducer from "./state";
-import { setupListeners } from "@reduxjs/toolkit/query";
-import { Provider } from "react-redux";
-import { api } from "./api/index";
-const store = configureStore({
-  reducer: {
-    global: globalReducer,
-    [api.reducerPath]: api.reducer,
-  },
-  middleware: (getDefault) => getDefault().concat(api.middleware),
-});
-setupListeners(store.dispatch);
+import { StoreProvider } from "./store";
+
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <Provider store={store}>
+    <StoreProvider>
       <AppCenter />
-    </Provider>
+    </StoreProvider>
   </React.StrictMode>
 );
