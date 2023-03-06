@@ -1,14 +1,15 @@
 import React, { useContext } from "react";
 import { Box, Button } from "@mui/material";
-import { getAllOffices } from "api";
+import { getAllOffices, login } from "api";
 import { DataGrid } from "@mui/x-data-grid";
 import { useState } from "react";
-import { Add } from "@mui/icons-material";
+import { Add, QrCode } from "@mui/icons-material";
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { StoreContext, actions } from "store";
 import Details from "./details";
 import Actions from "components/common/Actions";
+import QRCode from "qrcode";
 
 const Offices = ({ value }) => {
   const [state, dispatch] = useContext(StoreContext);
@@ -17,7 +18,6 @@ const Offices = ({ value }) => {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [item, setItem] = useState(null);
-
   //Get all offices
   useEffect(() => {
     async function fetchMyAPI() {
@@ -27,24 +27,49 @@ const Offices = ({ value }) => {
     fetchMyAPI();
   }, [open, loading]);
 
+  const GenerateQRCode = (data) => {
+    QRCode.toDataURL(JSON.stringify(data))
+      .then((response) => {
+        const element = document.createElement("a");
+        element.href = response;
+        element.download = "qrcode.png";
+        // simulate link click
+        document.body.appendChild(element);
+        // Required for this to work in FireFox
+        element.click();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   const actionColumn = [
     {
       field: "action",
       headerAlign: "center",
       headerName: "Action",
       flexDirection: "column",
-      width: 200,
+      width: 250,
       align: "center",
       renderCell: (params) => {
         return (
-          <Actions
-            params={params}
-            setItem={setItem}
-            setLoading={setLoading}
-            setOpen={setOpen}
-            state={state}
-            item={2}
-          />
+          <>
+            <Actions
+              params={params}
+              setItem={setItem}
+              setLoading={setLoading}
+              setOpen={setOpen}
+              state={state}
+              item={2}
+            />
+            <Button
+              onClick={() => GenerateQRCode(params.row)}
+              title="Generate QR Code"
+              style={{ marginInline: 5 }}
+            >
+              <QrCode />
+            </Button>
+          </>
         );
       },
     },
