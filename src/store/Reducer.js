@@ -1,4 +1,11 @@
-import { LOG_OUT, SET_MATERIALS, SET_OFFICES, SET_PRODUCTS, SET_TOKEN } from "./Constants";
+import {
+  LOG_OUT,
+  SET_COUPONS,
+  SET_MATERIALS,
+  SET_OFFICES,
+  SET_PRODUCTS,
+  SET_TOKEN,
+} from "./Constants";
 
 const token = JSON.parse(sessionStorage.getItem("token"));
 
@@ -7,6 +14,7 @@ export const initialState = {
   products: [],
   offices: [],
   materials: [],
+  coupons: [],
 };
 
 export const reducer = (state, action) => {
@@ -26,10 +34,15 @@ export const reducer = (state, action) => {
         ...state,
         offices: action.state,
       };
-      case SET_MATERIALS:
+    case SET_MATERIALS:
       return {
         ...state,
         materials: action.state,
+      };
+    case SET_COUPONS:
+      return {
+        ...state,
+        coupons: action.state,
       };
     case LOG_OUT:
       sessionStorage.clear();
@@ -39,6 +52,7 @@ export const reducer = (state, action) => {
         products: [],
         offices: [],
         materials: [],
+        cupons: [],
       };
     default:
       return state;

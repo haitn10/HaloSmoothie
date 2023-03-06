@@ -27,7 +27,7 @@ const product = {
   price: 0,
   salePrice: 0,
   categoryId: "",
-  image: "",
+  img: "",
   descs: "",
 };
 
@@ -59,12 +59,15 @@ export const AddProduct = () => {
       const imageRef = ref(storage, `products/${images.file.name}`);
       uploadBytes(imageRef, images.file).then(() => {
         getDownloadURL(imageRef).then((url) => {
-          setValues({ ...values, image: url });
+          setValues({ ...values, img: url });
         });
       });
     }
-    setValues({ ...values, materials: material });
   }, [images]);
+
+  useEffect(() => {
+    setValues({ ...values, materials: [...material] });
+  }, [material]);
 
   const handleChange = (event) => {
     setValues({
@@ -122,8 +125,6 @@ export const AddProduct = () => {
       content: msg,
     });
   };
-
-  console.log(material);
 
   return (
     <>

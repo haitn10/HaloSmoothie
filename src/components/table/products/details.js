@@ -32,7 +32,6 @@ function Details({ item, open, setOpen, setItem, categories, materials }) {
   const [images, setImages] = useState({ file: [], filepreview: null });
   const [product, setProduct] = useState(item);
   const [material, setMaterial] = useState(product.materials);
-
   useEffect(() => {
     if (images.file.length !== 0) {
       const imageRef = ref(storage, `products/${images.file.name}`);
@@ -42,8 +41,11 @@ function Details({ item, open, setOpen, setItem, categories, materials }) {
         });
       });
     }
-    setProduct({ ...product, materials: material });
   }, [images]);
+
+  useEffect(() => {
+    setProduct({ ...product, materials: [...material] });
+  }, [material]);
 
   const handleChange = (e) => {
     setProduct({
@@ -80,7 +82,6 @@ function Details({ item, open, setOpen, setItem, categories, materials }) {
   };
   const handleAddFields = () => {
     const value = [...material];
-    console.log(value);
     if (value.length < 5) {
       setMaterial([...material, { id: "", quantity: "" }]);
     }
@@ -88,13 +89,11 @@ function Details({ item, open, setOpen, setItem, categories, materials }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(product);
     const result = await updateProduct({
       id: product.id,
       values: product,
       token: state.accessToken,
     });
-    console.log(result);
     if (result.statusCode === 200) {
       setOpen(false);
       info("success", result.message);
@@ -189,7 +188,6 @@ function Details({ item, open, setOpen, setItem, categories, materials }) {
               <Grid container spacing={3} width={700}>
                 <Grid item xs={12}>
                   <TextField
-                    onFocus
                     fullWidth
                     required
                     label="Product Name"
