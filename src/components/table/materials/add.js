@@ -9,36 +9,42 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { addOffice } from "api";
 import { useContext, useEffect, useState } from "react";
 import { storage } from "../../../firebase";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { StoreContext } from "store";
 import { message } from "antd";
-import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
-import { LocalizationProvider } from '@mui/x-date-pickers';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import moment from "moment";
+import { addMaterial } from "api";
 
-const office = {
+const material = {
   name: "",
-  address: "",
-  phone: "",
-  img: "",
+  price: "",
+  dateImport: "",
+  dateExport: "",
+  calories: "",
+  color: "#ffffff",
+  descs: "",
+  image: "",
 };
 
 const image = { file: [], filepreview: null };
 
 export const AddMaterial = () => {
   const [messageApi, contextHolder] = message.useMessage();
+  const [dateImport, setDateImport] = useState(moment());
+  const [dateExport, setDateExport] = useState(moment());
   const [state, dispatch] = useContext(StoreContext);
-  const [values, setValues] = useState(office);
+  const [values, setValues] = useState(material);
   const [images, setImages] = useState(image);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (images.file.length !== 0) {
-      const imageRef = ref(storage, `offices/${images.file.name}`);
+      const imageRef = ref(storage, `materials/${images.file.name}`);
       uploadBytes(imageRef, images.file).then(() => {
         getDownloadURL(imageRef).then((url) => {
           setValues({ ...values, img: url });
@@ -46,6 +52,14 @@ export const AddMaterial = () => {
       });
     }
   }, [images]);
+
+  useEffect(() => {
+    setValues({
+      ...values,
+      dateImport: dateImport.format("YYYY-MM-DD"),
+      dateExport: dateExport.format("YYYY-MM-DD"),
+    })
+  }, [dateExport, dateImport])
 
   const handleChange = (event) => {
     setValues({
@@ -65,11 +79,10 @@ export const AddMaterial = () => {
   const onSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    const result = await addOffice({ values, token: state.accessToken });
-    console.log(result);
+    const result = await addMaterial({ values, token: state.accessToken });
     if (result.statusCode === 200) {
       setLoading(false);
-      setValues(office);
+      setValues(material);
       setImages(image);
       info("success", result.message);
     } else {
@@ -124,8 +137,8 @@ export const AddMaterial = () => {
                       color="success"
                       label="Materials Name"
                       name="name"
-                      onChange={handleChange}
                       required
+                      onChange={handleChange}
                       value={values.name}
                       variant="outlined"
                     />
@@ -137,35 +150,32 @@ export const AddMaterial = () => {
                       label="Price"
                       name="price"
                       type="number"
-                      InputProps={{ inputProps: { min: 0, max: 200 } }}
-                      onChange={handleChange}
                       required
+                      InputProps={{ inputProps: { min: 1000 } }}
+                      onChange={handleChange}
                       value={values.price}
                       variant="outlined"
                     />
                   </Grid>
-                  <Grid item xs={12}>
-                  <TextField
-                      fullWidth
-                      color="success"
-                      label="Date Import"
-                      type="date"
-                      name="name"
-                      onChange={handleChange}
-                      required
-                      value={values.dateImport}
-                      variant="outlined"
-                    />
+                  <Grid item xs={6}>
+                    <LocalizationProvider dateAdapter={AdapterMoment}>
+                      <DatePicker
+                        label="Date Import"
+                        name="dateImport"
+                        value={dateImport}
+                        required
+                        onChange={(newValue) => setDateImport(newValue)}
+                      />
+                    </LocalizationProvider>
                   </Grid>
-                  <Grid item xs={12}>
-                    <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <DemoContainer components={['DatePicker', 'DatePicker']}>
-                        <DatePicker
-                          label="Controlled picker"
-                          value
-                          onChange
-                        />
-                    </DemoContainer>
+                  <Grid item xs={6}>
+                    <LocalizationProvider dateAdapter={AdapterMoment}>
+                      <DatePicker
+                        label="Date Export"
+                        name="dateExport"
+                        value={dateExport}
+                        onChange={(newValue) => setDateExport(newValue)}
+                      />
                     </LocalizationProvider>
                   </Grid>
                   <Grid item xs={6}>
@@ -175,10 +185,10 @@ export const AddMaterial = () => {
                       label="Calories"
                       name="calories"
                       type="number"
+                      required
                       placeholder="e.g. 10"
                       InputProps={{ inputProps: { min: 0, max: 200 } }}
                       onChange={handleChange}
-                      required
                       value={values.calories}
                       variant="outlined"
                     />
@@ -191,8 +201,8 @@ export const AddMaterial = () => {
                       placeholder="e.g. #000000"
                       name="color"
                       type="color"
-                      onChange={handleChange}
                       required
+                      onChange={handleChange}
                       value={values.color}
                       variant="outlined"
                     />
@@ -237,18 +247,18 @@ export const AddMaterial = () => {
                   </Grid>
                 </Grid>
                 <Grid item xs={12} mt={5}>
-                    <TextField
-                      multiline
-                      rows={4}
-                      color="success"
-                      fullWidth
-                      label="Description"
-                      name="descs"
-                      onChange={handleChange}
-                      value={values.descs}
-                      variant="outlined"
-                    />
-                  </Grid>
+                  <TextField
+                    multiline
+                    rows={4}
+                    color="success"
+                    fullWidth
+                    label="Description"
+                    name="descs"
+                    onChange={handleChange}
+                    value={values.descs}
+                    variant="outlined"
+                  />
+                </Grid>
                 <LoadingButton
                   fullWidth
                   type="submit"

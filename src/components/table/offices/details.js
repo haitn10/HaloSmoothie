@@ -66,7 +66,6 @@ function Details({ item, open, setOpen, setItem }) {
       values: office,
       token: state.accessToken,
     });
-    console.log(result);
     if (result.statusCode === 200) {
       setOpen(false);
       info("success", result.message);

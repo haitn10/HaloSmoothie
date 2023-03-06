@@ -26,7 +26,7 @@ const navItems = [
     icon: <DynamicFeedOutlined />,
   },
   {
-    text: "Cupons",
+    text: "Coupons",
     icon: <ConfirmationNumberOutlined />,
   },
   {

@@ -45,7 +45,7 @@ const materials = [
     align: "center",
     headerAlign: "center",
     flex: 1,
-    renderCell: (params) => moment(params.row.dateimport).format("YYYY-MM-DD"),
+    renderCell: (params) => moment(params.row.dateImport).format("YYYY-MM-DD"),
   },
   {
     field: "dateExport",
@@ -54,7 +54,7 @@ const materials = [
     align: "center",
     headerAlign: "center",
     flex: 1,
-    renderCell: (params) => moment(params.row.dateimport).format("YYYY-MM-DD"),
+    renderCell: (params) => moment(params.row.dateExport).format("YYYY-MM-DD"),
   },
   {
     field: "calories",

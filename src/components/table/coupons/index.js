@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Box, Button } from "@mui/material";
-import { getAllCupons } from "api";
+import { getAllCoupons } from "api";
 import { DataGrid } from "@mui/x-data-grid";
 import { useState } from "react";
 import { Add } from "@mui/icons-material";
@@ -10,28 +10,28 @@ import { StoreContext, actions } from "store";
 import Actions from "components/common/Actions";
 import Details from "./details";
 
-const Cupons = ({ value }) => {
+const Coupons = ({ value }) => {
   const [state, dispatch] = useContext(StoreContext);
   const navigate = useNavigate();
 
   const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [item, setItem] = useState(null);
 
   //Get all materials
   useEffect(() => {
     async function fetchMyAPI() {
-      const response = await getAllCupons({ token: state.accessToken });
-      console.log(response);
-      dispatch(actions.setMaterials(response));
+      const response = await getAllCoupons({ token: state.accessToken });
+      dispatch(actions.setCoupons(response));
     }
     fetchMyAPI();
-  }, [open]);
+  }, [open, loading]);
 
   const actionColumn = [
     {
       field: "action",
       headerName: "Action",
-      width: 200,
+      flex: 1,
       align: "center",
       headerAlign: "center",
       renderCell: (params) => {
@@ -39,9 +39,10 @@ const Cupons = ({ value }) => {
           <Actions
             params={params}
             setItem={setItem}
+            setLoading={setLoading}
             setOpen={setOpen}
             state={state}
-            items={3}
+            item={4}
           />
         );
       },
@@ -67,9 +68,9 @@ const Cupons = ({ value }) => {
           <Button
             color="success"
             variant="outlined"
-            onClick={(e) => navigate("/products/add")}
+            onClick={(e) => navigate("/coupons/add")}
           >
-            <Add /> New Materials
+            <Add /> New COUPONS
           </Button>
         </div>
 
@@ -101,7 +102,7 @@ const Cupons = ({ value }) => {
           }}
         >
           <DataGrid
-            rows={state.materials}
+            rows={state.coupons}
             columns={value.concat(actionColumn)}
             pageSize={10}
             rowHeight={100}
@@ -113,4 +114,4 @@ const Cupons = ({ value }) => {
   );
 };
 
-export default Cupons;
+export default Coupons;

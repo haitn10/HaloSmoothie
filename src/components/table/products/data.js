@@ -46,10 +46,7 @@ const products = [
   {
     field: "categoryId",
     headerName: "Category",
-    renderCell: (params) => {
-      if (params.row.categoryId === 1) return "Juice";
-      if (params.row.categoryId === 2) return "Smoothy";
-    },
+    renderCell: (params) => (params.row.category.name),
     flex: 1,
     headerAlign: "center",
     align: "center",
