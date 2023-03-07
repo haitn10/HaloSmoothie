@@ -1,83 +1,307 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import axios from "axios";
 
-// export const baseURL = "http://localhost:3100";
-
-// export const baseURL = "http://localhost:5000";
 export const baseURL = "https://api-halosmoothie.azurewebsites.net";
 
-export const api = createApi({
-  baseQuery: fetchBaseQuery({ baseUrl: process.env.REACT_APP_BASE_URL }),
-  reducerPath: "api",
-  tagTypes: [
-    "User",
-    "Products",
-    "Customers",
-    "Transactions",
-    "Geography",
-    "Sales",
-    "Admins",
-    "Performance",
-    "Dashboard",
-  ],
-  endpoints: (build) => ({
-    login: build.mutation({
-      query: (credentials) => ({
-        url: `login`,
-        method: "POST",
-        body: credentials,
-      }),
-    }),
-    getUser: build.query({
-      query: (id) => `general/user/${id}`,
-      providesTags: ["User"],
-    }),
-    getProducts: build.query({
-      query: () => "client/products",
-      providesTags: ["Products"],
-    }),
-    getCustomers: build.query({
-      query: () => "client/customers",
-      providesTags: ["Customers"],
-    }),
-    getTransactions: build.query({
-      query: ({ page, pageSize, sort, search }) => ({
-        url: "client/transactions",
-        method: "GET",
-        params: { page, pageSize, sort, search },
-      }),
-      providesTags: ["Transactions"],
-    }),
-    getGeography: build.query({
-      query: () => "client/geography",
-      providesTags: ["Geography"],
-    }),
-    getSales: build.query({
-      query: () => "sales/sales",
-      providesTags: ["Sales"],
-    }),
-    getAdmins: build.query({
-      query: () => "management/admins",
-      providesTags: ["Admins"],
-    }),
-    getUserPerformance: build.query({
-      query: (id) => `management/performance/${id}`,
-      providesTags: ["Performance"],
-    }),
-    getDashboard: build.query({
-      query: () => "general/dashboard",
-      providesTags: ["Dashboard"],
-    }),
-  }),
-});
+export const login = async (req, res, next) => {
+  return await axios
+    .post(`${baseURL}/api/auth/staff`, req)
+    .then((response) => {
+      sessionStorage.setItem("token", JSON.stringify(response.data));
+      return response;
+    })
+    .catch((err) => {
+      return err.response;
+    });
+};
 
-export const {
-  useGetUserQuery,
-  useGetProductsQuery,
-  useGetCustomersQuery,
-  useGetTransactionsQuery,
-  useGetGeographyQuery,
-  useGetSalesQuery,
-  useGetAdminsQuery,
-  useGetUserPerformanceQuery,
-  useGetDashboardQuery,
-} = api;
+//PRODUCTS API
+export const getAllProducts = async (req, res) => {
+  return await axios
+    .get(`${baseURL}/api/products`, {
+      headers: {
+        Authorization: "Bearer " + req.token,
+      },
+    })
+    .then((response) => {
+      return response.data.data;
+    })
+    .catch((err) => {
+      return err.response;
+    });
+};
+
+export const getProductsById = async (req, res) => {
+  return await axios
+    .get(`${baseURL}/api/products/${req.id}`, {
+      headers: {
+        Authorization: "Bearer " + req.token,
+      },
+    })
+    .then((response) => {
+      return response.data;
+    })
+    .catch((err) => {
+      return err.response;
+    });
+};
+
+export const addProduct = async (req, res) => {
+  return await axios
+    .post(`${baseURL}/api/products`, req.values, {
+      headers: {
+        Authorization: "Bearer " + req.token,
+      },
+    })
+    .then((response) => {
+      return response.data;
+    })
+    .catch((err) => {
+      return err.response;
+    });
+};
+export const updateProduct = async (req, res) => {
+  return await axios
+    .put(`${baseURL}/api/products/${req.id}`, req.values, {
+      headers: {
+        Authorization: "Bearer " + req.token,
+      },
+    })
+    .then((response) => {
+      return response.data;
+    })
+    .catch((err) => {
+      return err.response;
+    });
+};
+
+export const deleteProduct = async (req, res) => {
+  return await axios
+    .delete(`${baseURL}/api/products/${req.id}`, {
+      headers: {
+        Authorization: "Bearer " + req.token,
+      },
+    })
+    .then((response) => {
+      return response.data;
+    })
+    .catch((err) => {
+      return err.response;
+    });
+};
+
+///METERIALS API
+export const getAllMaterials = async (req, res) => {
+  return await axios
+    .get(`${baseURL}/api/materials`, {
+      headers: {
+        Authorization: "Bearer " + req.token,
+      },
+    })
+    .then((response) => {
+      return response.data.data;
+    })
+    .catch((err) => {
+      return err.response.data;
+    });
+};
+
+export const addMaterial = async (req, res) => {
+  return await axios
+    .post(`${baseURL}/api/materials`, req.values, {
+      headers: {
+        Authorization: "Bearer " + req.token,
+      },
+    })
+    .then((response) => {
+      return response.data;
+    })
+    .catch((err) => {
+      return err.response.data;
+    });
+};
+
+export const updatMaterial = async (req, res) => {
+  return await axios
+    .put(`${baseURL}/api/materials/${req.id}`, req.values, {
+      headers: {
+        Authorization: "Bearer " + req.token,
+      },
+    })
+    .then((response) => {
+      return response.data;
+    })
+    .catch((err) => {
+      return err.response.data;
+    });
+};
+
+export const deleteMaterial = async (req, res) => {
+  return await axios
+    .delete(`${baseURL}/api/materials/${req.id}`, {
+      headers: {
+        Authorization: "Bearer " + req.token,
+      },
+    })
+    .then((response) => {
+      return response.data;
+    })
+    .catch((err) => {
+      return err.response;
+    });
+};
+
+////OFFICES API
+export const getAllOffices = async (req, res) => {
+  return await axios
+    .get(`${baseURL}/api/offices`, {
+      headers: {
+        Authorization: "Bearer " + req.token,
+      },
+    })
+    .then((response) => {
+      return response.data.data;
+    })
+    .catch((err) => {
+      return err.response;
+    });
+};
+
+export const getOfficeById = async (req, res) => {
+  return await axios
+    .get(`${baseURL}/api/offices/${req.id}`, {
+      headers: {
+        Authorization: "Bearer " + req.token,
+      },
+    })
+    .then((response) => {
+      return response.data;
+    })
+    .catch((err) => {
+      return err.response;
+    });
+};
+
+
+export const addOffice = async (req, res) => {
+  return await axios
+    .post(`${baseURL}/api/offices`, req.values, {
+      headers: {
+        Authorization: "Bearer " + req.token,
+      },
+    })
+    .then((response) => {
+      return response.data;
+    })
+    .catch((err) => {
+      return err.response;
+    });
+};
+
+export const editOffice = async (req, res) => {
+  return await axios
+    .put(`${baseURL}/api/offices/${req.id}`, req.values, {
+      headers: {
+        Authorization: "Bearer " + req.token,
+      },
+    })
+    .then((response) => {
+      return response.data.data;
+    })
+    .catch((err) => {
+      console.log(err.response.data);
+      return err.response.data;
+    });
+};
+
+export const deleteOffice = async (req, res) => {
+  return await axios
+    .delete(`${baseURL}/api/offices/${req.id}`, {
+      headers: {
+        Authorization: "Bearer " + req.token,
+      },
+    })
+    .then((response) => {
+      return response.data;
+    })
+    .catch((err) => {
+      return err.response;
+    });
+};
+
+//CATEGORY API
+export const getCategories = async (req, res) => {
+  return await axios
+    .get(`${baseURL}/api/category`, {
+      headers: {
+        Authorization: "Bearer " + req.token,
+      },
+    })
+    .then((response) => {
+      return response.data.data;
+    })
+    .catch((err) => {
+      return err.response.data;
+    });
+};
+
+//CUPONS API
+export const getAllCoupons = async (req, res) => {
+  return await axios
+    .get(`${baseURL}/api/coupon`, {
+      headers: {
+        Authorization: "Bearer " + req.token,
+      },
+    })
+    .then((response) => {
+      return response.data.data;
+    })
+    .catch((err) => {
+      return err.response;
+    });
+};
+
+export const addCoupon = async (req, res) => {
+  return await axios
+    .post(`${baseURL}/api/coupon`, req.values, {
+      headers: {
+        Authorization: "Bearer " + req.token,
+      },
+    })
+    .then((response) => {
+      return response.data;
+    })
+    .catch((err) => {
+      return err.response;
+    });
+};
+
+export const editCoupon = async (req, res) => {
+  return await axios
+    .put(`${baseURL}/api/coupon/${req.id}`, req.values, {
+      headers: {
+        Authorization: "Bearer " + req.token,
+      },
+    })
+    .then((response) => {
+      return response.data;
+    })
+    .catch((err) => {
+      return err.response.data;
+    });
+};
+
+export const deleteCoupon = async (req, res) => {
+  return await axios
+    .delete(`${baseURL}/api/coupon/${req.id}`, {
+      headers: {
+        Authorization: "Bearer " + req.token,
+      },
+    })
+    .then((response) => {
+      return response.data;
+    })
+    .catch((err) => {
+      return err.response;
+    });
+};
+

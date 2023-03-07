@@ -1,61 +1,71 @@
 //import system
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import { useMemo } from "react";
+import { useContext } from "react";
 
 //import libararies
-import { CssBaseline, ThemeProvider, createTheme } from "@mui/material";
+import { CssBaseline } from "@mui/material";
 
 //import src
-import Dashboard from "../pages/dashboard";
 import Layout from "./common/Layout";
-import { themeSettings } from "../theme";
-import { useSelector } from "react-redux";
-import Data from "./chart/Data";
-import products from "../data/products";
-import cupons from "../data/cupons";
-import materials from "../data/materials";
-import offices from "../data/offices";
-import users from "../data/users";
-import Accounts from "../pages/accounts";
-import Login from "../pages/login";
+import Products from "./table/products";
+import Materials from "./table/materials";
+import materials from "./table/materials/data";
+import products from "./table/products/data";
+import offices from "./table/offices/data";
+import Login from "./login";
+import { StoreContext } from "store";
+import { AddProduct } from "./table/products/add";
+import { AddOffice } from "./table/offices/add";
+import Offices from "./table/offices";
+import coupons from "./table/coupons/data";
+import Users from "./table/users";
+import users from "./table/users/data";
+import Accounts from "components/accounts";
+import { AddMaterial } from "./table/materials/add";
+import { AddCoupon } from "./table/coupons/add";
+import Coupons from "./table/coupons";
 
 function AppCenter() {
-  const { mode, accessToken } = useSelector((state) => state.global);
-  const theme = useMemo(() => createTheme(themeSettings(mode)), [mode]);
-  if (!accessToken) {
+  const [state, dispatch] = useContext(StoreContext);
+
+  if (!state.accessToken) {
     return (
       <div className="app">
         <BrowserRouter>
-          <ThemeProvider theme={theme}>
             <CssBaseline />
             <Routes>
               <Route path="/*" element={<Navigate to="/login" />} exact />
               <Route path="/login" element={<Login />} />
             </Routes>
-          </ThemeProvider>
         </BrowserRouter>
       </div>
     );
   }
-  if (accessToken) {
+  if (state.accessToken) {
     return (
       <div className="app">
         <BrowserRouter>
-          <ThemeProvider theme={theme}>
-            <CssBaseline />
             <Routes>
               <Route element={<Layout />}>
-              <Route path="/*" element={<Navigate to="/dashboard" />} exact />
-                <Route path="/dashboard" element={<Dashboard />} />
-                <Route path="/products" element={<Data value={products} />} />
-                <Route path="/materials" element={<Data value={materials} />} />
-                <Route path="/offices" element={<Data value={offices} />} />
-                <Route path="/cupons" element={<Data value={cupons} />} />
-                <Route path="/users" element={<Data value={users} />} />
-                <Route path="/settings" element={<Accounts />} />
+                {/* <Route path="/*" element={<Navigate to="/dashboard" />} exact />
+                <Route path="/dashboard" element={<Dashboard />} /> */}
+                <Route path="/*" element={<Navigate to="/settings" />} exact />
+                <Route path="/products" element={<Products value={products} />} />
+                <Route path="/products/add" element={<AddProduct />} />
+                <Route path="/offices" element={<Offices value={offices} />} />
+                <Route path="/offices/add" element={<AddOffice />} />
+                <Route path="/materials" element={<Materials value={materials} />} />
+                <Route path="/materials/add" element={<AddMaterial />} />
+                <Route path="/coupons" element={<Coupons value={coupons} />} />
+                <Route path="/coupons/add" element={<AddCoupon />} />
+                <Route path="/users" element={<Users value={users} />} />
+                <Route path="/settings" element={<Accounts />} /> 
+                {/* <Route path="/products/:productsId" element={<Product />} />
+                <Route path="/products/:officeId" element={<Product />} />
+                <Route path="/products/:cuponId" element={<Product />} />
+                <Route path="/products/:userId" element={<Product />} />*/}
               </Route>
             </Routes>
-          </ThemeProvider>
         </BrowserRouter>
       </div>
     );

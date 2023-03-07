@@ -1,4 +1,3 @@
-import { useTheme } from "@emotion/react";
 import { ChevronLeft, ChevronRightOutlined } from "@mui/icons-material";
 import {
   Box,
@@ -25,7 +24,6 @@ const Sidebar = ({
   const { pathname } = useLocation();
   const [active, setActive] = useState("");
   const navigate = useNavigate();
-  const theme = useTheme();
 
   useEffect(() => {
     setActive(pathname.substring(1));
@@ -42,8 +40,8 @@ const Sidebar = ({
           sx={{
             width: drawerWidth,
             "& .MuiDrawer-paper": {
-              color: theme.palette.secondary[200],
-              backgroundColor: theme.palette.background.alt,
+              color: "#4e6c50",
+              backgroundColor: "#ffffff",
               boxSizing: "border-box",
               borderWidth: isNonMobile ? 0 : "2px",
               width: drawerWidth,
@@ -53,14 +51,14 @@ const Sidebar = ({
           <Box width="100%">
             <Box m="1.5rem 2rem 2rem 3rem">
             {isNonMobile && (
-                <Box color={theme.palette.secondary.main}>
+                <Box color="#4e6c50">
                   <Box display="flex" alignItems="center" justifyContent='center'>
                     <img src={Logo} alt="logo" width={100} height={100} />
                   </Box>
                 </Box>
               )}
               {!isNonMobile && (
-                <FlexBetween color={theme.palette.secondary.main}>
+                <FlexBetween color="#10654E">
                   <Box display="flex" alignItems="center">
                     <img src={Logo} alt="logo" width={100} height={100} />
                   </Box>
@@ -84,12 +82,12 @@ const Sidebar = ({
                       sx={{
                         backgroundColor:
                           active === lcText
-                            ? theme.palette.secondary[300]
+                            ? "#10654E"
                             : "transparent",
                         color:
                           active === lcText
-                            ? theme.palette.primary[600]
-                            : theme.palette.secondary[100],
+                            ? "#ffffff"
+                            : "#10654E",
                       }}
                     >
                       <ListItemIcon
@@ -97,8 +95,8 @@ const Sidebar = ({
                           ml: "2rem",
                           color:
                             active === lcText
-                              ? theme.palette.primary[600]
-                              : theme.palette.secondary[200],
+                              ? "#ffffff"
+                              : "#10654E",
                         }}
                       >
                         {icon}
