@@ -1,4 +1,4 @@
-const users = [
+const staffers = [
   {
     field: "Id",
     headerName: "User ID",
@@ -50,12 +50,12 @@ const users = [
     headerAlign: "center",
   },
   {
-    field: "point",
-    headerName: "Point",
+    field: "roleId",
+    headerName: "Role",
     flex: 1,
     align: "center",
     headerAlign: "center",
   },
 ];
 
-export default users;
+export default staffers;

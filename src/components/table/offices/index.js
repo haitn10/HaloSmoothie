@@ -1,11 +1,11 @@
 import React, { useContext } from "react";
 import { Box, Button } from "@mui/material";
-import { getAllOffices, login } from "api";
+import { getAllOffices } from "api";
 import { DataGrid } from "@mui/x-data-grid";
 import { useState } from "react";
 import { Add, QrCode } from "@mui/icons-material";
 import { useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { StoreContext, actions } from "store";
 import Details from "./details";
 import Actions from "components/common/Actions";
@@ -130,8 +130,9 @@ const Offices = ({ value }) => {
           <DataGrid
             rows={state.offices}
             columns={value.concat(actionColumn)}
+            pageSize={10}
             rowHeight={100}
-            rowsPerPageOptions={[10, 20]}
+            rowsPerPageOptions={[10]}
           />
         </Box>
       </Box>

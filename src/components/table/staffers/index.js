@@ -1,17 +1,19 @@
 import React, { useContext } from "react";
 import { Box, Button } from "@mui/material";
 import {
-  getAllUsers,
+  getAllStaffers,
 } from "api";
 import { DataGrid } from "@mui/x-data-grid";
 import { useState } from "react";
 import { DeleteForeverOutlined } from "@mui/icons-material";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { StoreContext, actions } from "store";
 import Details from "./details";
 
-const Staffers = ({ value }) => {
+const Users = ({ value }) => {
   const [state, dispatch] = useContext(StoreContext);
+  const navigate = useNavigate();
 
   const [open, setOpen] = useState(false);
   const [item, setItem] = useState(null);
@@ -19,8 +21,8 @@ const Staffers = ({ value }) => {
   //Get all products
   useEffect(() => {
     async function fetchMyAPI() {
-      const userList = await getAllUsers({ token: state.accessToken });
-      dispatch(actions.setUsers(userList));
+      const userList = await getAllStaffers({ token: state.accessToken });
+      dispatch(actions.setStaffers(userList));
     }
     fetchMyAPI();
   }, [open]);
@@ -101,4 +103,4 @@ const Staffers = ({ value }) => {
   );
 };
 
-export default Staffers;
+export default Users;

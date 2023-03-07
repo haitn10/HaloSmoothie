@@ -24,6 +24,8 @@ import Accounts from "components/accounts";
 import { AddMaterial } from "./table/materials/add";
 import { AddCoupon } from "./table/coupons/add";
 import Coupons from "./table/coupons";
+import staffers from "./table/staffers/data";
+import Staffers from "./table/users";
 
 function AppCenter() {
   const [state, dispatch] = useContext(StoreContext);
@@ -59,11 +61,9 @@ function AppCenter() {
                 <Route path="/coupons" element={<Coupons value={coupons} />} />
                 <Route path="/coupons/add" element={<AddCoupon />} />
                 <Route path="/users" element={<Users value={users} />} />
+                <Route path="/staffers" element={<Staffers value={staffers} />} />
+                <Route path="/staffers/add" element={<AddCoupon />} />
                 <Route path="/settings" element={<Accounts />} /> 
-                {/* <Route path="/products/:productsId" element={<Product />} />
-                <Route path="/products/:officeId" element={<Product />} />
-                <Route path="/products/:cuponId" element={<Product />} />
-                <Route path="/products/:userId" element={<Product />} />*/}
               </Route>
             </Routes>
         </BrowserRouter>

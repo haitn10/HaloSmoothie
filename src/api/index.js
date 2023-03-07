@@ -305,3 +305,35 @@ export const deleteCoupon = async (req, res) => {
     });
 };
 
+///USERS API
+export const getAllUsers = async (req, res) => {
+  return await axios
+    .get(`${baseURL}/api/users`, {
+      headers: {
+        Authorization: "Bearer " + req.token,
+      },
+    })
+    .then((response) => {
+      return response.data.data;
+    })
+    .catch((err) => {
+      return err.response;
+    });
+};
+
+
+///USERS API
+export const getAllStaffers = async (req, res) => {
+  return await axios
+    .get(`${baseURL}/api/staffers`, {
+      headers: {
+        Authorization: "Bearer " + req.token,
+      },
+    })
+    .then((response) => {
+      return response.data.data;
+    })
+    .catch((err) => {
+      return err.response;
+    });
+};

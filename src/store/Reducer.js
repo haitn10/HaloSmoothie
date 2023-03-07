@@ -4,7 +4,10 @@ import {
   SET_MATERIALS,
   SET_OFFICES,
   SET_PRODUCTS,
+  SET_STAFFS,
   SET_TOKEN,
+  SET_USER,
+  SET_USERS,
 } from "./Constants";
 
 const token = JSON.parse(sessionStorage.getItem("token"));
@@ -15,6 +18,8 @@ export const initialState = {
   offices: [],
   materials: [],
   coupons: [],
+  users: [],
+  staffs: [],
 };
 
 export const reducer = (state, action) => {
@@ -44,6 +49,16 @@ export const reducer = (state, action) => {
         ...state,
         coupons: action.state,
       };
+    case SET_USERS:
+      return {
+        ...state,
+        users: action.state,
+      };
+    case SET_STAFFS:
+      return {
+        ...state,
+        staffs: action.state,
+      };
     case LOG_OUT:
       sessionStorage.clear();
       return {
@@ -53,6 +68,8 @@ export const reducer = (state, action) => {
         offices: [],
         materials: [],
         cupons: [],
+        users: [],
+        staffs: [],
       };
     default:
       return state;

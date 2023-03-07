@@ -6,6 +6,8 @@ import {
   SET_OFFICES,
   SET_MATERIALS,
   SET_COUPONS,
+  SET_USERS,
+  SET_STAFFS,
 } from "./Constants";
 
 export const setToken = (state) => ({
@@ -30,6 +32,15 @@ export const setMaterials = (state) => ({
 
 export const setCoupons = (state) => ({
   type: SET_COUPONS,
+  state,
+});
+
+export const setUsers = (state) => ({
+  type: SET_USERS,
+  state,
+});
+export const setStaffers = (state) => ({
+  type: SET_STAFFS,
   state,
 });
 
