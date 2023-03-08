@@ -11,7 +11,7 @@ import {
 import { AccountProfile } from "./profile";
 import { useContext, useEffect, useState } from "react";
 import { StoreContext } from "store";
-import { getProfile } from "api";
+import { getProfile, updateProfile } from "api";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
 import moment from "moment";
@@ -48,16 +48,15 @@ const Accounts = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(values);
-    // const result = await updateProfile({
-    //   id: values.id,
-    //   values: values,
-    //   token: state.accessToken,
-    // });
-    // if (result.statusCode === 200) {
-    //   info("success", result.message);
-    // } else {
-    //   info("error", result.message);
-    // }
+    const result = await updateProfile({
+      values: values,
+      token: state.accessToken,
+    });
+    if (result.statusCode === 200) {
+      info("success", result.message);
+    } else {
+      info("error", result.message);
+    }
   };
 
   const info = (status, msg) => {

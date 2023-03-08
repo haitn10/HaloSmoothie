@@ -320,3 +320,18 @@ export const getProfile = async (req, res) => {
       return err.response;
     });
 };
+
+export const updateProfile = async (req, res) => {
+  return await axios
+    .put(`${baseURL}/api/auth/me`, req.values, {
+      headers: {
+        Authorization: "Bearer " + req.token,
+      },
+    })
+    .then((response) => {
+      return response.data;
+    })
+    .catch((err) => {
+      return err.response.data;
+    });
+};
