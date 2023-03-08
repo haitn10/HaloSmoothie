@@ -6,10 +6,16 @@ import {
   SET_OFFICES,
   SET_MATERIALS,
   SET_COUPONS,
+  SET_PROFILE,
 } from "./Constants";
 
 export const setToken = (state) => ({
   type: SET_TOKEN,
+  state,
+});
+
+export const setProfile = (state) => ({
+  type: SET_PROFILE,
   state,
 });
 

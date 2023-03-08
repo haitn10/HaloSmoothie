@@ -305,3 +305,18 @@ export const deleteCoupon = async (req, res) => {
     });
 };
 
+//PROFILE API
+export const getProfile = async (req, res) => {
+  return await axios
+    .get(`${baseURL}/api/auth/me`, {
+      headers: {
+        Authorization: "Bearer " + req.token,
+      },
+    })
+    .then((response) => {
+      return response.data.data;
+    })
+    .catch((err) => {
+      return err.response;
+    });
+};
