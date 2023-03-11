@@ -4,6 +4,7 @@ import {
   SET_MATERIALS,
   SET_OFFICES,
   SET_PRODUCTS,
+  SET_PROFILE,
   SET_TOKEN,
 } from "./Constants";
 
@@ -11,6 +12,7 @@ const token = JSON.parse(sessionStorage.getItem("token"));
 
 export const initialState = {
   accessToken: token ? token.accessToken : null,
+  profile: [],
   products: [],
   offices: [],
   materials: [],
@@ -23,6 +25,11 @@ export const reducer = (state, action) => {
       return {
         ...state,
         accessToken: action.state,
+      };
+      case SET_PROFILE:
+      return {
+        ...state,
+        profile: action.state,
       };
     case SET_PRODUCTS:
       return {

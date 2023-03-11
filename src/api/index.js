@@ -350,3 +350,35 @@ export const deleteMenu = async (req, res) => {
       return err.response;
     });
 };
+
+//PROFILE API
+
+export const getProfile = async (req, res) => {
+  return await axios
+    .get(`${baseURL}/api/auth/me`, {
+      headers: {
+        Authorization: "Bearer " + req.token,
+      },
+    })
+    .then((response) => {
+      return response.data.data;
+    })
+    .catch((err) => {
+      return err.response;
+    });
+};
+
+export const updateProfile = async (req, res) => {
+  return await axios
+    .put(`${baseURL}/api/auth/v2/me`, req.values, {
+      headers: {
+        Authorization: "Bearer " + req.token,
+      },
+    })
+    .then((response) => {
+      return response.data;
+    })
+    .catch((err) => {
+      return err.response;
+    });
+};
