@@ -24,11 +24,11 @@ import Accounts from "components/accounts";
 import { AddMaterial } from "./table/materials/add";
 import { AddCoupon } from "./table/coupons/add";
 import Coupons from "./table/coupons";
-import staffers from "./table/staffers/data";
-import Staffers from "./table/users";
+import Menus from "./table/menus";
+import AddMenu from "./table/menus/add";
 
 function AppCenter() {
-  const [state, dispatch] = useContext(StoreContext);
+  const [state] = useContext(StoreContext);
 
   if (!state.accessToken) {
     return (
@@ -52,6 +52,8 @@ function AppCenter() {
                 {/* <Route path="/*" element={<Navigate to="/dashboard" />} exact />
                 <Route path="/dashboard" element={<Dashboard />} /> */}
                 <Route path="/*" element={<Navigate to="/settings" />} exact />
+                <Route path="/menus" element={<Menus />} />
+                <Route path="/menus/add" element={<AddMenu />} />
                 <Route path="/products" element={<Products value={products} />} />
                 <Route path="/products/add" element={<AddProduct />} />
                 <Route path="/offices" element={<Offices value={offices} />} />

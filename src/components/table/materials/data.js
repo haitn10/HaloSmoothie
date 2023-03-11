@@ -25,7 +25,7 @@ const materials = [
       <img
         src={params.row.img}
         alt={`${params.row.name}`}
-        style={{ width: 166}}
+        style={{ width: 120}}
       />
     ),
     sortable: false,

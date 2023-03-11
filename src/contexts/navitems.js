@@ -4,6 +4,7 @@ import {
   DynamicFeedOutlined,
   HomeWorkOutlined,
   LocalMallOutlined,
+  MenuOpenOutlined,
   PersonOutlineOutlined,
   PersonPinOutlined,
   SettingsOutlined,
@@ -13,6 +14,10 @@ const navItems = [
   {
     text: "Dashboard",
     icon: <DashboardOutlined />,
+  },
+  {
+    text: "Menus",
+    icon: <MenuOpenOutlined />,
   },
   {
     text: "Products",
