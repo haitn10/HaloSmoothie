@@ -35,7 +35,7 @@ function Actions({ params, setItem, setLoading, setOpen, state, item }) {
         setLoading(true);
         info("error", result.statusText);
       }
-      setTimeout(() => setLoading(false), 500);
+      setTimeout(() => setLoading(false), 200);
     } else if (item === 2) {
       const result = await deleteOffice({ id, token: state.accessToken });
       if (result.statusCode === 200) {
@@ -46,7 +46,7 @@ function Actions({ params, setItem, setLoading, setOpen, state, item }) {
         setLoading(true);
         info("error", result.message);
       }
-      setTimeout(() => setLoading(false), 500);
+      setTimeout(() => setLoading(false), 200);
     } else if (item === 3) {
       const result = await deleteMaterial({ id, token: state.accessToken });
       if (result.statusCode === 200) {
@@ -56,7 +56,7 @@ function Actions({ params, setItem, setLoading, setOpen, state, item }) {
         setLoading(true);
         info("error", result.message);
       }
-      setTimeout(() => setLoading(false), 500);
+      setTimeout(() => setLoading(false), 200);
     } else if (item === 4) {
       const result = await deleteCoupon({ id, token: state.accessToken });
       if (result.statusCode === 200) {
@@ -66,7 +66,7 @@ function Actions({ params, setItem, setLoading, setOpen, state, item }) {
         setLoading(true);
         info("error", result.message);
       }
-      setTimeout(() => setLoading(false), 500);
+      setTimeout(() => setLoading(false), 200);
     }
   };
 
