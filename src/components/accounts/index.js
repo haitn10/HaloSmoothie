@@ -30,6 +30,7 @@ const Accounts = () => {
     }
     fetchMyAPI();
   }, []);
+  console.log(values);
 
   useEffect(() => {
     setValues({
@@ -85,7 +86,7 @@ const Accounts = () => {
               mr: 10,
             }}
           >
-            <Button color="primary" variant="contained" type="submit">
+            <Button color="success" variant="contained" type="submit">
               Save
             </Button>
           </Box>
@@ -98,8 +99,8 @@ const Accounts = () => {
                 {values !== [] ? (
                   <Card sx={{ borderRadius: "24px", color: "#10654E" }}>
                     <CardHeader
-                      subheader="My information"
                       title="Profile"
+                      subheader={`ID: ${values.id}`}
                       sx={{ margin: "5px 20px", fontWeight: 700 }}
                     />
                     <CardContent>
@@ -167,19 +168,6 @@ const Accounts = () => {
                               onChange={(newValue) => setDateOfBirth(newValue)}
                             />
                           </LocalizationProvider>
-                        </Grid>
-                        <Grid item lg={6} md={12}>
-                          <TextField
-                            fullWidth
-                            label="Office"
-                            name="office"
-                            onChange={handleChange}
-                            color="success"
-                            required
-                            type="text"
-                            value={values.office ? values.office : ""}
-                            variant="outlined"
-                          />
                         </Grid>
                         <Grid item md={12}>
                           <TextField
