@@ -305,10 +305,10 @@ export const deleteCoupon = async (req, res) => {
     });
 };
 
-//PROFILE API
-export const getProfile = async (req, res) => {
+//MENUS API
+export const getAllMenus = async (req, res) => {
   return await axios
-    .get(`${baseURL}/api/auth/me`, {
+    .get(`${baseURL}/api/menus`, {
       headers: {
         Authorization: "Bearer " + req.token,
       },
@@ -321,9 +321,9 @@ export const getProfile = async (req, res) => {
     });
 };
 
-export const updateProfile = async (req, res) => {
+export const addMenu = async (req, res) => {
   return await axios
-    .put(`${baseURL}/api/auth/me`, req.values, {
+    .post(`${baseURL}/api/menus`, req.values, {
       headers: {
         Authorization: "Bearer " + req.token,
       },
@@ -332,6 +332,21 @@ export const updateProfile = async (req, res) => {
       return response.data;
     })
     .catch((err) => {
-      return err.response.data;
+      return err.response;
+    });
+};
+
+export const deleteMenu = async (req, res) => {
+  return await axios
+    .delete(`${baseURL}/api/menus/${req.id}`, {
+      headers: {
+        Authorization: "Bearer " + req.token,
+      },
+    })
+    .then((response) => {
+      return response.data;
+    })
+    .catch((err) => {
+      return err.response;
     });
 };
