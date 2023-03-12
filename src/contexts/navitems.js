@@ -6,7 +6,6 @@ import {
   LocalMallOutlined,
   MenuOpenOutlined,
   PersonOutlineOutlined,
-  PersonPinOutlined,
   SettingsOutlined,
 } from "@mui/icons-material";
 
@@ -36,12 +35,8 @@ const navItems = [
     icon: <ConfirmationNumberOutlined />,
   },
   {
-    text: "Users",
-    icon: <PersonOutlineOutlined />,
-  },
-  {
     text: "Staffers",
-    icon: <PersonPinOutlined />,
+    icon: <PersonOutlineOutlined />,
   },
   {
     text: "Settings",

@@ -25,7 +25,7 @@ const Offices = ({ value }) => {
       dispatch(actions.setOffices(response));
     }
     fetchMyAPI();
-  }, [open, loading]);
+  }, [open, loading, state.accessToken, dispatch]);
 
   const GenerateQRCode = (data) => {
     QRCode.toDataURL(JSON.stringify(data))

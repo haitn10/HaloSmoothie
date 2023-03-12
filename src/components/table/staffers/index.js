@@ -1,31 +1,30 @@
 import React, { useContext } from "react";
-import { Box, Button } from "@mui/material";
-import {
-  getAllStaffers,
-} from "api";
+import { Box, Button, Switch } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
-import { useState } from "react";
-import { DeleteForeverOutlined } from "@mui/icons-material";
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import { StoreContext, actions } from "store";
+import { getAllStaffers } from "api";
+import { useState } from "react";
 import Details from "./details";
+import Actions from "components/common/Actions";
+import { Add } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
 
-const Users = ({ value }) => {
+const Staffers = ({ value }) => {
   const [state, dispatch] = useContext(StoreContext);
   const navigate = useNavigate();
-
   const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [item, setItem] = useState(null);
 
-  //Get all products
+  //Get all staff
   useEffect(() => {
     async function fetchMyAPI() {
-      const userList = await getAllStaffers({ token: state.accessToken });
-      dispatch(actions.setStaffers(userList));
+      const stafferList = await getAllStaffers({ token: state.accessToken });
+      dispatch(actions.setStaffers(stafferList));
     }
     fetchMyAPI();
-  }, [open]);
+  }, [dispatch, state.accessToken]);
 
   const actionColumn = [
     {
@@ -35,15 +34,17 @@ const Users = ({ value }) => {
       width: 200,
       align: "center",
       sortable: false,
+      menuable: false,
       renderCell: (params) => {
         return (
-          <Button
-            variant="outlined"
-            color="error"
-            // onClick={() => handleDelete(params.row.id)}
-          >
-            <DeleteForeverOutlined />
-          </Button>
+          <Actions
+            params={params}
+            setItem={setItem}
+            setLoading={setLoading}
+            setOpen={setOpen}
+            state={state}
+            item={5}
+          />
         );
       },
     },
@@ -57,12 +58,22 @@ const Users = ({ value }) => {
           open={open}
           setOpen={setOpen}
           setItem={setItem}
-          state={state}
         />
       ) : (
         ""
       )}
       <Box m="1.0rem 2.0rem">
+        <div
+          style={{ display: "flex", justifyContent: "flex-end", margin: 30 }}
+        >
+          <Button
+            color="success"
+            variant="outlined"
+            onClick={() => navigate("/staffers/add")}
+          >
+            <Add /> Add Staff
+          </Button>
+        </div>
         <Box
           height="80vh"
           sx={{
@@ -91,7 +102,7 @@ const Users = ({ value }) => {
           }}
         >
           <DataGrid
-            rows={state.products}
+            rows={state.staffers}
             columns={value.concat(actionColumn)}
             pageSize={10}
             rowHeight={100}
@@ -103,4 +114,4 @@ const Users = ({ value }) => {
   );
 };
 
-export default Users;
+export default Staffers;

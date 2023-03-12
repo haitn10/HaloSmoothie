@@ -9,7 +9,6 @@ import {
   Typography,
 } from "@mui/material";
 import { useEffect, useState } from "react";
-import logo from "../../images/logo.png";
 import { getDownloadURL, ref, uploadBytes } from "@firebase/storage";
 import { storage } from "../../firebase";
 

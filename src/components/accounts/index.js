@@ -18,7 +18,7 @@ import moment from "moment";
 import { message } from "antd";
 
 const Accounts = () => {
-  const [state, dispatch] = useContext(StoreContext);
+  const [state] = useContext(StoreContext);
   const [messageApi, contextHolder] = message.useMessage();
   const [values, setValues] = useState([]);
   const [dateOfBirth, setDateOfBirth] = useState(moment(values.dateOfBirth));
@@ -29,7 +29,7 @@ const Accounts = () => {
       setValues(response);
     }
     fetchMyAPI();
-  }, []);
+  }, [state.accessToken]);
   console.log(values);
 
   useEffect(() => {

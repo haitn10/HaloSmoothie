@@ -1,12 +1,12 @@
 import {
   LOG_OUT,
   SET_TOKEN,
-  SET_USER,
   SET_PRODUCTS,
   SET_OFFICES,
   SET_MATERIALS,
   SET_COUPONS,
   SET_PROFILE,
+  SET_STAFFERS,
 } from "./Constants";
 
 export const setToken = (state) => ({
@@ -39,20 +39,11 @@ export const setCoupons = (state) => ({
   state,
 });
 
-export const setUsers = (state) => ({
-  type: SET_USERS,
-  state,
-});
 export const setStaffers = (state) => ({
-  type: SET_STAFFS,
+  type: SET_STAFFERS,
   state,
 });
 
 export const logOut = () => ({
   type: LOG_OUT,
-});
-
-export const setUser = (state) => ({
-  type: SET_USER,
-  state,
 });

@@ -382,3 +382,69 @@ export const updateProfile = async (req, res) => {
       return err.response;
     });
 };
+
+
+//Staffers API
+export const getAllStaffers = async (req, res) => {
+  return await axios
+    .get(`${baseURL}/api/users`, {
+      headers: {
+        Authorization: "Bearer " + req.token,
+      },
+    })
+    .then((response) => {
+      return response.data.data;
+    })
+    .catch((err) => {
+      return err.response;
+    });
+};
+
+
+export const addStaff = async (req, res) => {
+  return await axios
+    .post(`${baseURL}/api/users`, req.values, {
+      headers: {
+        Authorization: "Bearer " + req.token,
+      },
+    })
+    .then((response) => {
+      return response.data;
+    })
+    .catch((err) => {
+      return err.response.data;
+    });
+};
+
+
+export const updateStaff = async (req, res) => {
+  return await axios
+    .put(`${baseURL}/api/users/${req.id}`, req.values, {
+      headers: {
+        Authorization: "Bearer " + req.token,
+      },
+    })
+    .then((response) => {
+      return response.data;
+    })
+    .catch((err) => {
+      return err.response.data;
+    });
+};
+
+
+export const deleteStaff = async (req, res) => {
+  return await axios
+    .delete(`${baseURL}/api/users/${req.id}`, {
+      headers: {
+        Authorization: "Bearer " + req.token,
+      },
+    })
+    .then((response) => {
+      return response.data;
+    })
+    .catch((err) => {
+      return err.response;
+    });
+};
+

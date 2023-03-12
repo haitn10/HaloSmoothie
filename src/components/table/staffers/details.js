@@ -1,4 +1,4 @@
-import { Add, Close, Remove } from "@mui/icons-material";
+import { Close } from "@mui/icons-material";
 import {
   AppBar,
   Box,
@@ -16,44 +16,56 @@ import {
   Typography,
 } from "@mui/material";
 import { message } from "antd";
-import { updateProduct } from "api";
+import { getAllOffices, updateStaff } from "api";
 import { storage } from "../../../firebase";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { StoreContext } from "store";
+import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
+import moment from "moment";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-function Details({
-  item,
-  open,
-  setOpen,
-  setItem,
-  state,
-  categories,
-  materials,
-}) {
+function Details({ item, open, setOpen, setItem }) {
   const [messageApi, contextHolder] = message.useMessage();
-  const [product, setProduct] = useState(item);
-  const [material, setMaterial] = useState(product.materials);
+  const [state] = useContext(StoreContext);
   const [images, setImages] = useState({ file: [], filepreview: null });
+  const [staff, setStaff] = useState(item);
+  const [dateOfBirth, setDateOfBirth] = useState(moment(item.dateOfBirth));
+  const [stores, setStores] = useState([]);
+
+  useEffect(() => {
+    async function fetchMyAPI() {
+      const storeList = await getAllOffices({ token: state.accessToken });
+      setStores(storeList);
+    }
+    fetchMyAPI();
+  }, [state.accessToken]);
 
   useEffect(() => {
     if (images.file.length !== 0) {
-      const imageRef = ref(storage, `products/${images.file.name}`);
+      const imageRef = ref(storage, `staff/${images.file.name}`);
       uploadBytes(imageRef, images.file).then(() => {
         getDownloadURL(imageRef).then((url) => {
-          setProduct({ ...product, img: url });
+          setStaff({ ...staff, img: url });
         });
       });
     }
-    setProduct({ ...product, materials: material });
   }, [images]);
 
+  useEffect(() => {
+    setStaff({
+      ...staff,
+      dateOfBirth: dateOfBirth.format("YYYY-MM-DD"),
+    });
+  }, [dateOfBirth]);
+
   const handleChange = (e) => {
-    setProduct({
-      ...product,
+    setStaff({
+      ...staff,
       [e.target.name]: e.target.value,
     });
   };
@@ -63,27 +75,6 @@ function Details({
     setOpen(false);
   };
 
-  // Add materials
-  const handleChangeMaterials = (index, event) => {
-    const values = [...material];
-    values[index][event.target.name] = event.target.value;
-    setMaterial(values);
-  };
-  const handleRemoveFields = (index) => {
-    const value = [...material];
-    if (value.length > 1) {
-      value.splice(index, 1);
-      setMaterial(value);
-    }
-  };
-  const handleAddFields = () => {
-    const value = [...material];
-    console.log(value);
-    if (value.length < 5) {
-      setMaterial([...material, { id: "", quantity: "" }]);
-    }
-  };
-
   const handleChangeImage = (event) => {
     setImages({
       ...images,
@@ -91,17 +82,21 @@ function Details({
       filepreview: URL.createObjectURL(event.target.files[0]),
     });
   };
+
   const handleSubmit = async (e) => {
-    e.prevenDefault();
-    const result = await updateProduct({ product, token: state.accessToken });
+    e.preventDefault();
+    const result = await updateStaff({
+      id: staff.id,
+      values: staff,
+      token: state.accessToken,
+    });
     if (result.statusCode === 200) {
-      setOpen(true);
+      setOpen(false);
       info("success", result.message);
     } else {
-      setOpen(true);
+      setOpen(false);
       info("error", result.message);
     }
-    setOpen(false);
   };
 
   const info = (status, msg) => {
@@ -113,14 +108,13 @@ function Details({
 
   return (
     <>
-    {contextHolder}
-    <Dialog
-      fullScreen
-      open={open}
-      onClose={handleClose}
-      TransitionComponent={Transition}
-    >
-      <form onSubmit={handleSubmit}>
+      {contextHolder}
+      <Dialog
+        maxWidth="xl"
+        open={open}
+        onClose={handleClose}
+        TransitionComponent={Transition}
+      >
         <AppBar sx={{ position: "relative", backgroundColor: "#eee" }}>
           <Toolbar>
             <IconButton
@@ -137,212 +131,174 @@ function Details({
               component="div"
               color="#10654E"
             >
-              Product Details
+              Staff Profile
+              <Typography variant="subtitle1" fontSize={10}>
+                ID: {staff.id}
+              </Typography>
             </Typography>
-            <Button autoFocus color="success" variant="contained" type="submit">
-              Save
-            </Button>
           </Toolbar>
         </AppBar>
-
-        <Grid
-          justifyContent="center"
-          display="flex"
-          flexDirection="row"
-          gap={3}
-          mt={8}
-        >
-          <Box alignItems="center" display="flex" flexDirection="column">
-            {images.filepreview !== null ? (
-              <img
-                src={images.filepreview}
-                style={{ maxWidth: 400, maxHeight: 400, marginRight: 20 }}
-                alt=""
-              />
-            ) : (
-              <img
-                src={product.img}
-                alt={product.name}
-                style={{ maxWidth: 400, maxHeight: 400, marginRight: 20 }}
-              />
-            )}
-            <label
-              htmlFor="upload-photo"
-              style={{ padding: 10, margin: 10 }}
-            ></label>
-            <label htmlFor="upload-photo">
-              <input
-                style={{ display: "none" }}
-                id="upload-photo"
-                name="image"
-                type="file"
-                accept="image/*"
-                onChange={(event) => handleChangeImage(event)}
-              />
-              <Button
-                color="success"
-                variant="outlined"
-                component="span"
-                aria-label="add"
-              >
-                Change Image
-              </Button>
-            </label>
-          </Box>
-          <Box>
-            <Grid container spacing={3} width={700}>
-              <Grid item xs={12}>
-                <TextField
-                  fullWidth
-                  required
-                  label="Product Name"
-                  name="name"
-                  value={product.name}
-                  onChange={handleChange}
+        <form onSubmit={handleSubmit} style={{ margin: 50 }}>
+          <Grid
+            container
+            justifyContent="center"
+            display="flex"
+            maxWidth={1500}
+            gap={2}
+          >
+            <Box alignItems="center" display="flex" flexDirection="column">
+              {images.filepreview !== null ? (
+                <img
+                  src={images.filepreview}
+                  style={{ maxWidth: 300, maxHeight: 300, marginRight: 20 }}
+                  alt=""
                 />
-              </Grid>
-              <Grid item xs={6}>
-                <TextField
-                  fullWidth
-                  required
-                  type="number"
-                  InputProps={{ inputProps: { min: 1000 } }}
-                  label="Price"
-                  name="price"
-                  value={product.price}
-                  onChange={handleChange}
+              ) : (
+                <img
+                  src={staff.image}
+                  alt={staff.name}
+                  style={{ maxWidth: 300, maxHeight: 300, marginRight: 20 }}
                 />
-              </Grid>
-              <Grid item xs={6}>
-                <TextField
-                  fullWidth
-                  required
-                  type="number"
-                  InputProps={{ inputProps: { min: 1000 } }}
-                  label="Sale Price"
-                  name="salePrice"
-                  value={product.salePrice}
-                  onChange={handleChange}
+              )}
+              <label
+                htmlFor="upload-photo"
+                style={{ padding: 10, margin: 10 }}
+              ></label>
+              <label htmlFor="upload-photo">
+                <input
+                  style={{ display: "none" }}
+                  id="upload-photo"
+                  name="image"
+                  type="file"
+                  accept="image/*"
+                  onChange={(event) => handleChangeImage(event)}
                 />
-              </Grid>
-              <Grid item xs={6}>
-                <FormControl fullWidth color="success">
-                  <InputLabel id="demo-simple-select-label" required>
-                    Category
-                  </InputLabel>
-                  <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    label="Category"
-                    value={product.category.id}
-                    name="category"
-                    onChange={handleChange}
-                  >
-                    {categories.map((item) => (
-                      <MenuItem key={item.id} value={item.id}>
-                        {item.name}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-              </Grid>
-              <Grid item xs={6}>
-                <TextField
-                  fullWidth
-                  required
-                  label="Calo"
-                  name="calories"
-                  value={product.calories}
-                  onChange={handleChange}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  multiline
-                  required
-                  rows={6}
+                <Button
                   color="success"
-                  fullWidth
-                  label="Description"
-                  name="descs"
-                  value={product.descs}
-                  onChange={handleChange}
                   variant="outlined"
-                />
-              </Grid>
-              <Grid item xs={3}></Grid>
-              <Grid
-                flexDirection="column"
-                display="flex"
-                alignItems="center"
-                justifyItems="center"
-              >
-                <Typography
-                  variant="h6"
-                  color="green"
-                  py={2}
-                  fontWeight={700}
-                  fontStyle="initial"
+                  component="span"
+                  aria-label="add"
                 >
-                  Materials Of Product
-                </Typography>
-                {material.map((inputMaterial, index) => (
-                  <Box
-                    key={index}
-                    alignItems="center"
-                    display="flex"
-                    gap={2}
-                    mb={2}
-                  >
-                    <FormControl xs={4} color="success" sx={{ width: 150 }}>
-                      <InputLabel id="demo-simple-select-label" required>
-                        Material
-                      </InputLabel>
-                      <Select
-                        labelId="demo-simple-select-label"
-                        id="demo-simple-select"
-                        value={inputMaterial.id}
-                        label="Material"
-                        name="id"
-                        required
-                        onChange={(event) =>
-                          handleChangeMaterials(index, event)
-                        }
-                      >
-                        {materials.map((item) => (
-                          <MenuItem key={item.id} value={item.id}>
-                            {item.name}
-                          </MenuItem>
-                        ))}
-                      </Select>
-                    </FormControl>
-                    <TextField
-                      color="success"
-                      label="Quantity"
-                      name="quantity"
+                  Change Image
+                </Button>
+              </label>
+            </Box>
+            <Box>
+              <Grid container spacing={3} width={700}>
+                <Grid item xs={4}>
+                  <TextField
+                    fullWidth
+                    required
+                    label="First Name"
+                    name="firstName"
+                    value={staff.firstName}
+                    onChange={handleChange}
+                  />
+                </Grid>
+                <Grid item xs={4}>
+                  <TextField
+                    fullWidth
+                    required
+                    label="Last Name"
+                    name="lastName"
+                    value={staff.lastName}
+                    onChange={handleChange}
+                  />
+                </Grid>
+                <Grid item xs={4}>
+                  <LocalizationProvider dateAdapter={AdapterMoment}>
+                    <DatePicker
+                      label="Birth Date"
+                      name="dateOfBirth"
+                      value={staff.dateOfBirth ? moment(staff.dateOfBirth) : ""}
                       required
-                      sx={{ width: 150 }}
-                      onChange={(event) => handleChangeMaterials(index, event)}
-                      InputProps={{ inputProps: { min: 1 } }}
-                      type="number"
-                      value={inputMaterial.quantity}
-                      variant="outlined"
+                      onChange={(newValue) => setDateOfBirth(newValue)}
                     />
-                    <IconButton onClick={() => handleRemoveFields(index)}>
-                      <Remove />
-                    </IconButton>
-                    <IconButton onClick={handleAddFields}>
-                      <Add />
-                    </IconButton>
-                  </Box>
-                ))}
+                  </LocalizationProvider>
+                </Grid>
+                <Grid item xs={6}>
+                  <TextField
+                    fullWidth
+                    required
+                    label="Email"
+                    name="email"
+                    value={staff.email}
+                    onChange={handleChange}
+                  />
+                </Grid>
+                <Grid item xs={4}>
+                  <TextField
+                    fullWidth
+                    required
+                    label="Phone Number"
+                    name="phone"
+                    value={staff.phone}
+                    onChange={handleChange}
+                  />
+                </Grid>
+                <Grid item xs={2}>
+                  <FormControl fullWidth color="success">
+                    <InputLabel id="demo-simple-select-label" required>
+                      Role
+                    </InputLabel>
+                    <Select
+                      labelId="demo-simple-select-label"
+                      id="demo-simple-select"
+                      value={staff.roleId}
+                      label="Role"
+                      name="roleId"
+                      onChange={handleChange}
+                    >
+                      <MenuItem value={2}>Staff</MenuItem>
+                      <MenuItem value={1}>Admin</MenuItem>
+                    </Select>
+                  </FormControl>
+                </Grid>
+                <Grid item xs={4}>
+                  <FormControl fullWidth color="success">
+                    <InputLabel id="demo-simple-select-label">Store</InputLabel>
+                    <Select
+                      labelId="demo-simple-select-label"
+                      id="demo-simple-select"
+                      value={staff.officeId}
+                      label="store"
+                      name="officeId"
+                      onChange={handleChange}
+                    >
+                      {stores.map((item) => (
+                        <MenuItem key={item.id} value={item.id}>
+                          {item.name}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                </Grid>
+                <Grid item xs={8}>
+                  <TextField
+                    fullWidth
+                    label="Address"
+                    name="address"
+                    value={staff.address}
+                    onChange={handleChange}
+                  />
+                </Grid>
+                <Grid
+                  item
+                  xs={10}
+                  display="flex"
+                  justifyContent="center"
+                  mb={10}
+                >
+                  <Button color="success" variant="contained" type="submit">
+                    Save
+                  </Button>
+                </Grid>
               </Grid>
-            </Grid>
-          </Box>
-        </Grid>
-      </form>
-    </Dialog>
-  </>
+            </Box>
+          </Grid>
+        </form>
+      </Dialog>
+    </>
   );
 }
 
