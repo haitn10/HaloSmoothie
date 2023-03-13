@@ -84,7 +84,9 @@ function AddMenu() {
 
   const handleChangePrice = (index, event) => {
     const values = [...listProducts];
-    values[index][event.target.name] = event.target.value;
+    for (const [key] of Object.entries(values)) {
+      values[key][event.target.name] = event.target.value;
+    }
     setListProducts(values);
   };
 

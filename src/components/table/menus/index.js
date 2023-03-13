@@ -58,11 +58,8 @@ const Menus = () => {
     setSearch(value === null ? "" : value);
   };
 
-  console.log(search);
-
   const handleEdit = (popupState, id) => {
     popupState.close();
-    console.log(id);
   };
 
   const handleDelete = async (popupState, id) => {
