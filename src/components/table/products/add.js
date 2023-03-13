@@ -20,6 +20,7 @@ import { storage } from "../../../firebase";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { StoreContext } from "store";
 import { message } from "antd";
+import { useNavigate } from "react-router";
 
 const product = {
   name: "",
@@ -43,6 +44,7 @@ export const AddProduct = () => {
   const [allmaterials, setAllMaterials] = useState([]);
   const [loading, setLoading] = useState(false);
   const [material, setMaterial] = useState([materialdefaults]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function fetchMyAPI() {
@@ -111,9 +113,10 @@ export const AddProduct = () => {
     const result = await addProduct({ values, token: state.accessToken });
     if (result.statusCode === 200) {
       setImages(image);
-      setMaterial([{id: "", quantity: 0}]);
+      setMaterial([{ id: "", quantity: 0 }]);
       setValues(product);
       info("success", result.message);
+      setTimeout(() => navigate("/products/"),1000);
     } else {
       info("error", result.message);
     }

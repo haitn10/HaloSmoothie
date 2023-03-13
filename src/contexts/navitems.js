@@ -23,7 +23,7 @@ const navItems = [
     icon: <LocalMallOutlined />,
   },
   {
-    text: "Offices",
+    text: "Stores",
     icon: <HomeWorkOutlined />,
   },
   {
