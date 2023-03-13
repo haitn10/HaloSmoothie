@@ -25,7 +25,7 @@ const Offices = ({ value }) => {
       dispatch(actions.setOffices(response));
     }
     fetchMyAPI();
-  }, [open, loading]);
+  }, [open, loading, state.accessToken, dispatch]);
 
   const GenerateQRCode = (data) => {
     QRCode.toDataURL(JSON.stringify(data))
@@ -130,8 +130,9 @@ const Offices = ({ value }) => {
           <DataGrid
             rows={state.offices}
             columns={value.concat(actionColumn)}
+            pageSize={10}
             rowHeight={100}
-            rowsPerPageOptions={[10, 20]}
+            rowsPerPageOptions={[10]}
           />
         </Box>
       </Box>

@@ -1,36 +1,30 @@
 import React, { useContext } from "react";
-import { Box, Button } from "@mui/material";
-import { getAllMaterials, getAllProducts, getCategories } from "api";
+import { Box, Button, Switch } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
-import { useState } from "react";
-import { Add } from "@mui/icons-material";
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import { StoreContext, actions } from "store";
-import Actions from "../../common/Actions";
+import { getAllStaffers } from "api";
+import { useState } from "react";
 import Details from "./details";
+import Actions from "components/common/Actions";
+import { Add } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
 
-const Users = ({ value }) => {
+const Staffers = ({ value }) => {
   const [state, dispatch] = useContext(StoreContext);
   const navigate = useNavigate();
-
   const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [item, setItem] = useState(null);
-  const [category, setCategory] = useState({});
-  const [material, setMaterial] = useState([]);
 
-  //Get all products
+  //Get all staff
   useEffect(() => {
     async function fetchMyAPI() {
-      const proList = await getAllProducts({ token: state.accessToken });
-      const cateList = await getCategories({ token: state.accessToken });
-      const mateList = await getAllMaterials({ token: state.accessToken });
-      dispatch(actions.setPoducts(proList));
-      setCategory(cateList);
-      setMaterial(mateList);
+      const stafferList = await getAllStaffers({ token: state.accessToken });
+      dispatch(actions.setStaffers(stafferList));
     }
     fetchMyAPI();
-  }, [open]);
+  }, [dispatch, state.accessToken]);
 
   const actionColumn = [
     {
@@ -39,15 +33,20 @@ const Users = ({ value }) => {
       headerAlign: "center",
       width: 200,
       align: "center",
-      renderCell: (params) => (
-        <Actions
-          params={params}
-          setItem={setItem}
-          setOpen={setOpen}
-          state={state}
-          items={1}
-        />
-      ),
+      sortable: false,
+      menuable: false,
+      renderCell: (params) => {
+        return (
+          <Actions
+            params={params}
+            setItem={setItem}
+            setLoading={setLoading}
+            setOpen={setOpen}
+            state={state}
+            item={5}
+          />
+        );
+      },
     },
   ];
 
@@ -59,9 +58,6 @@ const Users = ({ value }) => {
           open={open}
           setOpen={setOpen}
           setItem={setItem}
-          state={state}
-          categories={category}
-          materials={material}
         />
       ) : (
         ""
@@ -73,12 +69,11 @@ const Users = ({ value }) => {
           <Button
             color="success"
             variant="outlined"
-            onClick={(e) => navigate("/products/add")}
+            onClick={() => navigate("/staffers/add")}
           >
-            <Add /> New Product
+            <Add /> Add Staff
           </Button>
         </div>
-
         <Box
           height="80vh"
           sx={{
@@ -107,7 +102,7 @@ const Users = ({ value }) => {
           }}
         >
           <DataGrid
-            rows={state.products}
+            rows={state.staffers}
             columns={value.concat(actionColumn)}
             pageSize={10}
             rowHeight={100}
@@ -119,4 +114,4 @@ const Users = ({ value }) => {
   );
 };
 
-export default Users;
+export default Staffers;

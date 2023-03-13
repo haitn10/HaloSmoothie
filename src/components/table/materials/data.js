@@ -1,5 +1,4 @@
-import moment from "moment";
-
+import { Box, Tooltip } from "@mui/material";
 const materials = [
   {
     field: "id",
@@ -25,7 +24,7 @@ const materials = [
       <img
         src={params.row.img}
         alt={`${params.row.name}`}
-        style={{ width: 120}}
+        style={{ width: 120 }}
       />
     ),
     sortable: false,
@@ -39,26 +38,8 @@ const materials = [
     flex: 1,
   },
   {
-    field: "dateImport",
-    headerName: "Date Import",
-    type: "date",
-    align: "center",
-    headerAlign: "center",
-    flex: 1,
-    renderCell: (params) => moment(params.row.dateImport).format("YYYY-MM-DD"),
-  },
-  {
-    field: "dateExport",
-    headerName: "Date Export",
-    type: "date",
-    align: "center",
-    headerAlign: "center",
-    flex: 1,
-    renderCell: (params) => moment(params.row.dateExport).format("YYYY-MM-DD"),
-  },
-  {
     field: "calories",
-    headerName: "calories",
+    headerName: "Calo",
     type: "number",
     align: "center",
     headerAlign: "center",
@@ -67,11 +48,15 @@ const materials = [
   {
     field: "color",
     headerName: "Color",
-    type: "string",
+    renderCell: (params) => (
+      <Tooltip title={params.row.color}>
+        <Box bgcolor={params.row.color} sx={{ height: 20, width: 60 }} />
+      </Tooltip>
+    ),
     align: "center",
     headerAlign: "center",
     flex: 1,
-  }
+  },
 ];
 
 export default materials;

@@ -35,7 +35,7 @@ const navItems = [
     icon: <ConfirmationNumberOutlined />,
   },
   {
-    text: "Users",
+    text: "Staffers",
     icon: <PersonOutlineOutlined />,
   },
   {
