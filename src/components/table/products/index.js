@@ -34,8 +34,6 @@ const Products = ({ value }) => {
     fetchMyAPI();
   }, [open, loading]);
 
-  console.log(category);
-
   const actionColumn = [
     {
       field: "action",

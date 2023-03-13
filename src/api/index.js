@@ -70,7 +70,7 @@ export const updateProduct = async (req, res) => {
       return response.data;
     })
     .catch((err) => {
-      return err.response.data;
+      return err.response;
     });
 };
 
@@ -85,7 +85,7 @@ export const deleteProduct = async (req, res) => {
       return response.data;
     })
     .catch((err) => {
-      return err.response.data;
+      return err.response;
     });
 };
 
@@ -105,14 +105,48 @@ export const getAllMaterials = async (req, res) => {
     });
 };
 
-export const deleteMaterial = async (id) => {
+export const addMaterial = async (req, res) => {
   return await axios
-    .delete(`${baseURL}/api/products/${id}`)
+    .post(`${baseURL}/api/materials`, req.values, {
+      headers: {
+        Authorization: "Bearer " + req.token,
+      },
+    })
     .then((response) => {
-      return response.data.data;
+      return response.data;
     })
     .catch((err) => {
       return err.response.data;
+    });
+};
+
+export const updatMaterial = async (req, res) => {
+  return await axios
+    .put(`${baseURL}/api/materials/${req.id}`, req.values, {
+      headers: {
+        Authorization: "Bearer " + req.token,
+      },
+    })
+    .then((response) => {
+      return response.data;
+    })
+    .catch((err) => {
+      return err.response.data;
+    });
+};
+
+export const deleteMaterial = async (req, res) => {
+  return await axios
+    .delete(`${baseURL}/api/materials/${req.id}`, {
+      headers: {
+        Authorization: "Bearer " + req.token,
+      },
+    })
+    .then((response) => {
+      return response.data;
+    })
+    .catch((err) => {
+      return err.response;
     });
 };
 
@@ -126,22 +160,6 @@ export const getAllOffices = async (req, res) => {
     })
     .then((response) => {
       return response.data.data;
-    })
-    .catch((err) => {
-      console.log(err);
-      return err.response.data.data;
-    });
-};
-
-export const deleteOffice = async (req, res) => {
-  return await axios
-    .delete(`${baseURL}/api/offices/${req.id}`, {
-      headers: {
-        Authorization: "Bearer " + req.token,
-      },
-    })
-    .then((response) => {
-      return response.data;
     })
     .catch((err) => {
       return err.response;
@@ -162,6 +180,7 @@ export const getOfficeById = async (req, res) => {
       return err.response;
     });
 };
+
 
 export const addOffice = async (req, res) => {
   return await axios
@@ -194,6 +213,21 @@ export const editOffice = async (req, res) => {
     });
 };
 
+export const deleteOffice = async (req, res) => {
+  return await axios
+    .delete(`${baseURL}/api/offices/${req.id}`, {
+      headers: {
+        Authorization: "Bearer " + req.token,
+      },
+    })
+    .then((response) => {
+      return response.data;
+    })
+    .catch((err) => {
+      return err.response;
+    });
+};
+
 //CATEGORY API
 export const getCategories = async (req, res) => {
   return await axios
@@ -210,11 +244,10 @@ export const getCategories = async (req, res) => {
     });
 };
 
-
 //CUPONS API
-export const getAllCupons = async (req, res) => {
+export const getAllCoupons = async (req, res) => {
   return await axios
-    .get(`${baseURL}/api/cupons`, {
+    .get(`${baseURL}/api/coupon`, {
       headers: {
         Authorization: "Bearer " + req.token,
       },
@@ -223,6 +256,129 @@ export const getAllCupons = async (req, res) => {
       return response.data.data;
     })
     .catch((err) => {
+      return err.response;
+    });
+};
+
+export const addCoupon = async (req, res) => {
+  return await axios
+    .post(`${baseURL}/api/coupon`, req.values, {
+      headers: {
+        Authorization: "Bearer " + req.token,
+      },
+    })
+    .then((response) => {
+      return response.data;
+    })
+    .catch((err) => {
+      return err.response;
+    });
+};
+
+export const editCoupon = async (req, res) => {
+  return await axios
+    .put(`${baseURL}/api/coupon/${req.id}`, req.values, {
+      headers: {
+        Authorization: "Bearer " + req.token,
+      },
+    })
+    .then((response) => {
+      return response.data;
+    })
+    .catch((err) => {
       return err.response.data;
+    });
+};
+
+export const deleteCoupon = async (req, res) => {
+  return await axios
+    .delete(`${baseURL}/api/coupon/${req.id}`, {
+      headers: {
+        Authorization: "Bearer " + req.token,
+      },
+    })
+    .then((response) => {
+      return response.data;
+    })
+    .catch((err) => {
+      return err.response;
+    });
+};
+
+//MENUS API
+export const getAllMenus = async (req, res) => {
+  return await axios
+    .get(`${baseURL}/api/menus`, {
+      headers: {
+        Authorization: "Bearer " + req.token,
+      },
+    })
+    .then((response) => {
+      return response.data.data;
+    })
+    .catch((err) => {
+      return err.response;
+    });
+};
+
+export const addMenu = async (req, res) => {
+  return await axios
+    .post(`${baseURL}/api/menus`, req.values, {
+      headers: {
+        Authorization: "Bearer " + req.token,
+      },
+    })
+    .then((response) => {
+      return response.data;
+    })
+    .catch((err) => {
+      return err.response;
+    });
+};
+
+export const deleteMenu = async (req, res) => {
+  return await axios
+    .delete(`${baseURL}/api/menus/${req.id}`, {
+      headers: {
+        Authorization: "Bearer " + req.token,
+      },
+    })
+    .then((response) => {
+      return response.data;
+    })
+    .catch((err) => {
+      return err.response;
+    });
+};
+
+//PROFILE API
+
+export const getProfile = async (req, res) => {
+  return await axios
+    .get(`${baseURL}/api/auth/me`, {
+      headers: {
+        Authorization: "Bearer " + req.token,
+      },
+    })
+    .then((response) => {
+      return response.data.data;
+    })
+    .catch((err) => {
+      return err.response;
+    });
+};
+
+export const updateProfile = async (req, res) => {
+  return await axios
+    .put(`${baseURL}/api/auth/v2/me`, req.values, {
+      headers: {
+        Authorization: "Bearer " + req.token,
+      },
+    })
+    .then((response) => {
+      return response.data;
+    })
+    .catch((err) => {
+      return err.response;
     });
 };

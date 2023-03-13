@@ -17,15 +17,18 @@ import { StoreContext } from "store";
 import { AddProduct } from "./table/products/add";
 import { AddOffice } from "./table/offices/add";
 import Offices from "./table/offices";
-import Cupons from "./table/cupons";
-import cupons from "./table/cupons/data";
+import coupons from "./table/coupons/data";
 import Users from "./table/users";
 import users from "./table/users/data";
 import Accounts from "components/accounts";
 import { AddMaterial } from "./table/materials/add";
+import { AddCoupon } from "./table/coupons/add";
+import Coupons from "./table/coupons";
+import Menus from "./table/menus";
+import AddMenu from "./table/menus/add";
 
 function AppCenter() {
-  const [state, dispatch] = useContext(StoreContext);
+  const [state] = useContext(StoreContext);
 
   if (!state.accessToken) {
     return (
@@ -49,13 +52,16 @@ function AppCenter() {
                 {/* <Route path="/*" element={<Navigate to="/dashboard" />} exact />
                 <Route path="/dashboard" element={<Dashboard />} /> */}
                 <Route path="/*" element={<Navigate to="/settings" />} exact />
+                <Route path="/menus" element={<Menus />} />
+                <Route path="/menus/add" element={<AddMenu />} />
                 <Route path="/products" element={<Products value={products} />} />
                 <Route path="/products/add" element={<AddProduct />} />
                 <Route path="/offices" element={<Offices value={offices} />} />
                 <Route path="/offices/add" element={<AddOffice />} />
                 <Route path="/materials" element={<Materials value={materials} />} />
                 <Route path="/materials/add" element={<AddMaterial />} />
-                <Route path="/cupons" element={<Cupons value={cupons} />} />
+                <Route path="/coupons" element={<Coupons value={coupons} />} />
+                <Route path="/coupons/add" element={<AddCoupon />} />
                 <Route path="/users" element={<Users value={users} />} />
                 <Route path="/settings" element={<Accounts />} /> 
                 {/* <Route path="/products/:productsId" element={<Product />} />

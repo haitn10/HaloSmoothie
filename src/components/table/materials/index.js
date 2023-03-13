@@ -22,7 +22,6 @@ const Materials = ({ value }) => {
   useEffect(() => {
     async function fetchMyAPI() {
       const response = await getAllMaterials({ token: state.accessToken });
-      console.log(response);
       dispatch(actions.setMaterials(response));
     }
     fetchMyAPI();

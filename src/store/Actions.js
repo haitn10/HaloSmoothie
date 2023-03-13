@@ -1,7 +1,21 @@
-import { LOG_OUT, SET_TOKEN, SET_USER, SET_PRODUCTS, SET_OFFICES, SET_MATERIALS } from "./Constants";
+import {
+  LOG_OUT,
+  SET_TOKEN,
+  SET_USER,
+  SET_PRODUCTS,
+  SET_OFFICES,
+  SET_MATERIALS,
+  SET_COUPONS,
+  SET_PROFILE,
+} from "./Constants";
 
-export const setToken= (state) => ({
+export const setToken = (state) => ({
   type: SET_TOKEN,
+  state,
+});
+
+export const setProfile = (state) => ({
+  type: SET_PROFILE,
   state,
 });
 
@@ -20,12 +34,16 @@ export const setMaterials = (state) => ({
   state,
 });
 
+export const setCoupons = (state) => ({
+  type: SET_COUPONS,
+  state,
+});
+
 export const logOut = () => ({
   type: LOG_OUT,
 });
 
-
 export const setUser = (state) => ({
   type: SET_USER,
   state,
-})
+});

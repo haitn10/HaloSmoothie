@@ -1,7 +1,7 @@
 import { Create, DeleteForeverOutlined } from "@mui/icons-material";
 import { Button } from "@mui/material";
 import { message } from "antd";
-import { deleteMaterial, deleteOffice, deleteProduct } from "api";
+import { deleteCoupon, deleteMaterial, deleteOffice, deleteProduct } from "api";
 
 function Actions({ params, setItem, setLoading, setOpen, state, item }) {
   const [messageApi, contextHolder] = message.useMessage();
@@ -17,6 +17,9 @@ function Actions({ params, setItem, setLoading, setOpen, state, item }) {
     } else if (item === 3) {
       setOpen(true);
       setItem(state.materials.filter((row) => row.id === id));
+    } else if (item === 4) {
+      setOpen(true);
+      setItem(state.coupons.filter((row) => row.id === id));
     }
   };
 
@@ -28,20 +31,22 @@ function Actions({ params, setItem, setLoading, setOpen, state, item }) {
         setLoading(true);
         info("success", result.message);
       } else {
+        console.log(result);
         setLoading(true);
-        info("error", result.message);
+        info("error", result.statusText);
       }
-      setTimeout(() => setLoading(false), 500);
+      setTimeout(() => setLoading(false), 200);
     } else if (item === 2) {
       const result = await deleteOffice({ id, token: state.accessToken });
       if (result.statusCode === 200) {
         setLoading(true);
         info("success", result.message);
       } else {
+        console.log(result);
         setLoading(true);
         info("error", result.message);
       }
-      setTimeout(() => setLoading(false), 500);
+      setTimeout(() => setLoading(false), 200);
     } else if (item === 3) {
       const result = await deleteMaterial({ id, token: state.accessToken });
       if (result.statusCode === 200) {
@@ -51,7 +56,17 @@ function Actions({ params, setItem, setLoading, setOpen, state, item }) {
         setLoading(true);
         info("error", result.message);
       }
-      setTimeout(() => setLoading(false), 500);
+      setTimeout(() => setLoading(false), 200);
+    } else if (item === 4) {
+      const result = await deleteCoupon({ id, token: state.accessToken });
+      if (result.statusCode === 200) {
+        setLoading(true);
+        info("success", result.message);
+      } else {
+        setLoading(true);
+        info("error", result.message);
+      }
+      setTimeout(() => setLoading(false), 200);
     }
   };
 

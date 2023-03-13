@@ -1,6 +1,7 @@
 import { Close } from "@mui/icons-material";
 import {
   AppBar,
+  Box,
   Button,
   Dialog,
   Grid,
@@ -21,13 +22,12 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-function Details({ item, open, setOpen, setItem }) {
+function Details({ item, openDetails, setOpen, setItem }) {
   const [messageApi, contextHolder] = message.useMessage();
   const [state, dispatch] = useContext(StoreContext);
   const [images, setImages] = useState({ file: [], filepreview: null });
   const [office, setOffice] = useState(item);
-  console.log(item);
-
+  
   useEffect(() => {
     if (images.file.length !== 0) {
       const imageRef = ref(storage, `offices/${images.file.name}`);
@@ -66,7 +66,6 @@ function Details({ item, open, setOpen, setItem }) {
       values: office,
       token: state.accessToken,
     });
-    console.log(result);
     if (result.statusCode === 200) {
       setOpen(false);
       info("success", result.message);
@@ -88,7 +87,7 @@ function Details({ item, open, setOpen, setItem }) {
     {contextHolder}
     <Dialog
       maxWidth="xl"
-      open={open}
+      open={openDetails}
       onClose={handleClose}
       TransitionComponent={Transition}
     >
@@ -112,7 +111,7 @@ function Details({ item, open, setOpen, setItem }) {
           </Typography>
         </Toolbar>
       </AppBar>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} style={{margin:50}}>
         <Grid
           container
           mt={5}
@@ -128,7 +127,7 @@ function Details({ item, open, setOpen, setItem }) {
             flexDirection="column"
             paddingLeft={5}
           >
-            <Grid xs={10} mb={5} display="flex">
+            <Box alignItems="center" display="flex" flexDirection="column" gap={2}>
               {images.filepreview !== null ? (
                 <img
                   src={images.filepreview}
@@ -142,8 +141,6 @@ function Details({ item, open, setOpen, setItem }) {
                   style={{ maxWidth: 400, maxHeight: 400, marginRight: 20 }}
                 />
               )}
-            </Grid>
-            <Grid md={10} xs={10} mb={5} justifyContent="center" display="flex">
               <label>
                 <input
                   style={{ display: "none" }}
@@ -162,7 +159,7 @@ function Details({ item, open, setOpen, setItem }) {
                   Change Image
                 </Button>
               </label>
-            </Grid>
+            </Box>
           </Grid>
           <Grid md={6} xs={12}>
             <Grid xs={10} mb={5} justifyContent="center" display="flex">

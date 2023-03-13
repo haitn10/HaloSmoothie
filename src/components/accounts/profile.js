@@ -1,72 +1,90 @@
 import {
-    Avatar,
-    Box,
-    Button,
-    Card,
-    CardActions,
-    CardContent,
-    Divider,
-    Typography
-  } from '@mui/material';
-  
-  const user = {
-    avatar: '/static/images/avatars/avatar_6.png',
-    city: 'Los Angeles',
-    country: 'USA',
-    jobTitle: 'Senior Developer',
-    name: 'Katarina Smith',
-    timezone: 'GTM-7'
+  Avatar,
+  Box,
+  Button,
+  Card,
+  CardActions,
+  CardContent,
+  Divider,
+  Typography,
+} from "@mui/material";
+import { useEffect, useState } from "react";
+import logo from "../../images/logo.png";
+import { getDownloadURL, ref, uploadBytes } from "@firebase/storage";
+import { storage } from "../../firebase";
+
+export const AccountProfile = ({ info, setValues }) => {
+  const [images, setImages] = useState({ file: [], filepreview: null });
+
+  useEffect(() => {
+    if (images.file.length !== 0) {
+      const imageRef = ref(storage, `profile/${images.file.name}`);
+      uploadBytes(imageRef, images.file).then(() => {
+        getDownloadURL(imageRef).then((url) => {
+          setValues({ ...info, img: url });
+        });
+      });
+    }
+  }, [images]);
+
+  const handleChangeImage = (event) => {
+    setImages({
+      ...images,
+      file: event.target.files[0],
+      filepreview: URL.createObjectURL(event.target.files[0]),
+    });
   };
-  
-  export const AccountProfile = (props) => (
-    <Card {...props}>
-      <CardContent>
+
+  return (
+    <Card sx={{ borderRadius: "24px", color: "#10654E" }}>
+      <CardContent sx={{ padding: "32px" }}>
         <Box
           sx={{
-            alignItems: 'center',
-            display: 'flex',
-            flexDirection: 'column'
+            alignItems: "center",
+            display: "flex",
+            flexDirection: "column",
           }}
         >
           <Avatar
-            src={user.avatar}
+            src={images.filepreview !== null ? images.filepreview : info.image}
             sx={{
               height: 64,
               mb: 2,
-              width: 64
+              width: 64,
             }}
           />
-          <Typography
-            color="textPrimary"
-            gutterBottom
-            variant="h5"
-          >
-            {user.name}
+          {/* {images.filepreview !== null ? (
+            <Typography variant="p" color="red"></Typography>
+          ) : null} */}
+
+          <Typography gutterBottom variant="h5" align="center">
+            {`${info.firstName} ${info.lastName}`}
           </Typography>
-          <Typography
-            color="textSecondary"
-            variant="body2"
-          >
-            {`${user.city} ${user.country}`}
-          </Typography>
-          <Typography
-            color="textSecondary"
-            variant="body2"
-          >
-            {user.timezone}
+
+          <Typography variant="body2" align="center">
+            {info.address}
           </Typography>
         </Box>
       </CardContent>
       <Divider />
       <CardActions>
         <Button
-          color="primary"
+          sx={{ color: "#10654E" }}
           fullWidth
           variant="text"
+          component="label"
         >
-          Upload picture
+          Change Image
+          <input
+            hidden
+            accept="image/*"
+            multiple
+            type="file"
+            name="image"
+            onChange={handleChangeImage}
+          />
         </Button>
       </CardActions>
     </Card>
   );
-  
+};

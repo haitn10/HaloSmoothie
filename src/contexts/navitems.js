@@ -4,6 +4,7 @@ import {
   DynamicFeedOutlined,
   HomeWorkOutlined,
   LocalMallOutlined,
+  MenuOpenOutlined,
   PersonOutlineOutlined,
   SettingsOutlined,
 } from "@mui/icons-material";
@@ -12,6 +13,10 @@ const navItems = [
   {
     text: "Dashboard",
     icon: <DashboardOutlined />,
+  },
+  {
+    text: "Menus",
+    icon: <MenuOpenOutlined />,
   },
   {
     text: "Products",
@@ -26,7 +31,7 @@ const navItems = [
     icon: <DynamicFeedOutlined />,
   },
   {
-    text: "Cupons",
+    text: "Coupons",
     icon: <ConfirmationNumberOutlined />,
   },
   {
