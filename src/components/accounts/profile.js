@@ -20,11 +20,12 @@ export const AccountProfile = ({ info, setValues }) => {
       const imageRef = ref(storage, `profile/${images.file.name}`);
       uploadBytes(imageRef, images.file).then(() => {
         getDownloadURL(imageRef).then((url) => {
-          setValues({ ...info, img: url });
+          setValues({ ...info, image: url });
         });
       });
     }
   }, [images]);
+  console.log(info);
 
   const handleChangeImage = (event) => {
     setImages({
@@ -52,14 +53,9 @@ export const AccountProfile = ({ info, setValues }) => {
               width: 64,
             }}
           />
-          {/* {images.filepreview !== null ? (
-            <Typography variant="p" color="red"></Typography>
-          ) : null} */}
-
           <Typography gutterBottom variant="h5" align="center">
             {`${info.firstName} ${info.lastName}`}
           </Typography>
-
           <Typography variant="body2" align="center">
             {info.address}
           </Typography>

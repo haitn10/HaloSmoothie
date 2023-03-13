@@ -30,7 +30,6 @@ const Accounts = () => {
     }
     fetchMyAPI();
   }, [state.accessToken]);
-  console.log(values);
 
   useEffect(() => {
     setValues({
@@ -105,7 +104,7 @@ const Accounts = () => {
                     />
                     <CardContent>
                       <Grid container spacing={3} padding={2}>
-                        <Grid item lg={6} md={12}>
+                        <Grid item lg={6} sm={12}>
                           <TextField
                             fullWidth
                             helperText="Please specify the first name"
@@ -118,7 +117,7 @@ const Accounts = () => {
                             variant="outlined"
                           />
                         </Grid>
-                        <Grid item lg={6} md={12}>
+                        <Grid item lg={6} sm={12}>
                           <TextField
                             fullWidth
                             label="Last Name"
@@ -130,7 +129,7 @@ const Accounts = () => {
                             variant="outlined"
                           />
                         </Grid>
-                        <Grid item lg={6} md={12}>
+                        <Grid item lg={4} sm={12}>
                           <TextField
                             fullWidth
                             label="Email"
@@ -142,7 +141,7 @@ const Accounts = () => {
                             variant="outlined"
                           />
                         </Grid>
-                        <Grid item lg={6} md={12}>
+                        <Grid item lg={4} sm={6}>
                           <TextField
                             fullWidth
                             label="Phone Number"
@@ -154,7 +153,7 @@ const Accounts = () => {
                             variant="outlined"
                           />
                         </Grid>
-                        <Grid item lg={6} md={12}>
+                        <Grid item lg={4} sm={6}>
                           <LocalizationProvider dateAdapter={AdapterMoment}>
                             <DatePicker
                               label="Birth Date"
@@ -169,7 +168,7 @@ const Accounts = () => {
                             />
                           </LocalizationProvider>
                         </Grid>
-                        <Grid item md={12}>
+                        <Grid item sm={12}>
                           <TextField
                             fullWidth
                             label="Address"
