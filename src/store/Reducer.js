@@ -5,6 +5,7 @@ import {
   SET_OFFICES,
   SET_PRODUCTS,
   SET_PROFILE,
+  SET_STAFFERS,
   SET_TOKEN,
 } from "./Constants";
 
@@ -17,6 +18,7 @@ export const initialState = {
   offices: [],
   materials: [],
   coupons: [],
+  staffers: [],
 };
 
 export const reducer = (state, action) => {
@@ -26,7 +28,7 @@ export const reducer = (state, action) => {
         ...state,
         accessToken: action.state,
       };
-      case SET_PROFILE:
+    case SET_PROFILE:
       return {
         ...state,
         profile: action.state,
@@ -51,6 +53,11 @@ export const reducer = (state, action) => {
         ...state,
         coupons: action.state,
       };
+    case SET_STAFFERS:
+      return {
+        ...state,
+        staffers: action.state,
+      };
     case LOG_OUT:
       sessionStorage.clear();
       return {
@@ -60,6 +67,7 @@ export const reducer = (state, action) => {
         offices: [],
         materials: [],
         cupons: [],
+        staffers: [],
       };
     default:
       return state;

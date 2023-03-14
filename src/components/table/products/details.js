@@ -32,6 +32,8 @@ function Details({ item, open, setOpen, setItem, categories, materials }) {
   const [images, setImages] = useState({ file: [], filepreview: null });
   const [product, setProduct] = useState(item);
   const [material, setMaterial] = useState(product.materials);
+  let price = 0;
+
   useEffect(() => {
     if (images.file.length !== 0) {
       const imageRef = ref(storage, `products/${images.file.name}`);
@@ -185,25 +187,104 @@ function Details({ item, open, setOpen, setItem, categories, materials }) {
               </label>
             </Box>
             <Box>
-              <Grid container spacing={3} width={700}>
-                <Grid item xs={12}>
-                  <TextField
-                    fullWidth
-                    required
-                    label="Product Name"
-                    name="name"
-                    value={product.name}
-                    onChange={handleChange}
-                  />
-                </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  fullWidth
+                  required
+                  label="Product Name"
+                  name="name"
+                  value={product.name}
+                  onChange={handleChange}
+                />
+              </Grid>
+              <br />
+              <hr />
+              <Grid
+                flexDirection="column"
+                display="flex"
+                alignItems="center"
+                justifyItems="center"
+              >
+                <Typography
+                  variant="h6"
+                  color="green"
+                  py={2}
+                  fontWeight={700}
+                  fontStyle="initial"
+                >
+                  Materials Of Product
+                </Typography>
+                {material.map((inputMaterial, index) => (
+                  <Box
+                    key={index}
+                    alignItems="center"
+                    display="flex"
+                    gap={2}
+                    mb={2}
+                  >
+                    <FormControl xs={4} color="success" sx={{ width: 150 }}>
+                      <InputLabel id="demo-simple-select-label" required>
+                        Material
+                      </InputLabel>
+                      <Select
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        value={inputMaterial.id}
+                        label="Material"
+                        name="id"
+                        required
+                        onChange={(event) =>
+                          handleChangeMaterials(index, event)
+                        }
+                      >
+                        {materials.map((item) => {
+                          if (item.id === inputMaterial.id) {
+                            price += item.price * inputMaterial.quantity;
+                          }
+                          return (
+                            <MenuItem key={item.id} value={item.id}>
+                              {item.name}
+                            </MenuItem>
+                          );
+                        })}
+                      </Select>
+                    </FormControl>
+                    <TextField
+                      color="success"
+                      label="Quantity (pieces)"
+                      name="quantity"
+                      required
+                      sx={{ width: 150 }}
+                      onChange={(event) => handleChangeMaterials(index, event)}
+                      InputProps={{ inputProps: { min: 1, max: 15 } }}
+                      type="number"
+                      value={inputMaterial.quantity}
+                      variant="outlined"
+                    />
+                    <IconButton onClick={() => handleRemoveFields(index)}>
+                      <Remove />
+                    </IconButton>
+                    <IconButton onClick={handleAddFields}>
+                      <Add />
+                    </IconButton>
+                  </Box>
+                ))}
+                <Typography>
+                  Total: {Intl.NumberFormat("vi-VN").format(price)} VND
+                </Typography>
+              </Grid>
+              <br />
+              <hr />
+              <Grid container spacing={3} width={700} mt={2}>
                 <Grid item xs={6}>
                   <TextField
                     fullWidth
                     required
                     type="number"
-                    InputProps={{ inputProps: { min: 1000 } }}
+                    inputProps={{ min: 1000, max: 500000 }}
                     label="Price"
                     name="price"
+                    helperText="(VND/glass)"
                     value={product.price}
                     onChange={handleChange}
                   />
@@ -213,9 +294,10 @@ function Details({ item, open, setOpen, setItem, categories, materials }) {
                     fullWidth
                     required
                     type="number"
-                    InputProps={{ inputProps: { min: 1000 } }}
+                    inputProps={{ min: 1000, max: 500000 }}
                     label="Sale Price"
                     name="salePrice"
+                    helperText="(VND/glass)"
                     value={product.salePrice}
                     onChange={handleChange}
                   />
@@ -245,8 +327,11 @@ function Details({ item, open, setOpen, setItem, categories, materials }) {
                   <TextField
                     fullWidth
                     required
-                    label="Calo"
+                    label="Calories"
                     name="calories"
+                    type="number"
+                    inputProps={{ min: 0, max: 10000 }}
+                    helperText="(calo/glass)"
                     value={product.calories}
                     onChange={handleChange}
                   />
@@ -265,74 +350,7 @@ function Details({ item, open, setOpen, setItem, categories, materials }) {
                   />
                 </Grid>
                 <Grid item xs={3}></Grid>
-                <Grid
-                  flexDirection="column"
-                  display="flex"
-                  alignItems="center"
-                  justifyItems="center"
-                >
-                  <Typography
-                    variant="h6"
-                    color="green"
-                    py={2}
-                    fontWeight={700}
-                    fontStyle="initial"
-                  >
-                    Materials Of Product
-                  </Typography>
-                  {material.map((inputMaterial, index) => (
-                    <Box
-                      key={index}
-                      alignItems="center"
-                      display="flex"
-                      gap={2}
-                      mb={2}
-                    >
-                      <FormControl xs={4} color="success" sx={{ width: 150 }}>
-                        <InputLabel id="demo-simple-select-label" required>
-                          Material
-                        </InputLabel>
-                        <Select
-                          labelId="demo-simple-select-label"
-                          id="demo-simple-select"
-                          value={inputMaterial.id}
-                          label="Material"
-                          name="id"
-                          required
-                          onChange={(event) =>
-                            handleChangeMaterials(index, event)
-                          }
-                        >
-                          {materials.map((item) => (
-                            <MenuItem key={item.id} value={item.id}>
-                              {item.name}
-                            </MenuItem>
-                          ))}
-                        </Select>
-                      </FormControl>
-                      <TextField
-                        color="success"
-                        label="Quantity"
-                        name="quantity"
-                        required
-                        sx={{ width: 150 }}
-                        onChange={(event) =>
-                          handleChangeMaterials(index, event)
-                        }
-                        InputProps={{ inputProps: { min: 1 } }}
-                        type="number"
-                        value={inputMaterial.quantity}
-                        variant="outlined"
-                      />
-                      <IconButton onClick={() => handleRemoveFields(index)}>
-                        <Remove />
-                      </IconButton>
-                      <IconButton onClick={handleAddFields}>
-                        <Add />
-                      </IconButton>
-                    </Box>
-                  ))}
-                </Grid>
+
                 <Grid
                   item
                   xs={10}
@@ -340,11 +358,7 @@ function Details({ item, open, setOpen, setItem, categories, materials }) {
                   justifyContent="center"
                   mb={10}
                 >
-                  <Button
-                    color="success"
-                    variant="contained"
-                    type="submit"
-                  >
+                  <Button color="success" variant="contained" type="submit">
                     Save
                   </Button>
                 </Grid>

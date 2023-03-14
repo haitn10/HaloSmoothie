@@ -25,7 +25,13 @@ import {
   Typography,
 } from "@mui/material";
 import { green, grey, orange, red } from "@mui/material/colors";
-import { deleteMenu, getAllMenus, getAllOffices } from "api";
+import {
+  deleteMenu,
+  getAllMenus,
+  getAllOffices,
+  getAllProducts,
+  getMenuById,
+} from "api";
 import React, { Fragment, useContext, useEffect } from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -34,6 +40,7 @@ import { FixedSizeList } from "react-window";
 import renderRow from "./renderRow";
 import { message } from "antd";
 import PopupState, { bindMenu, bindTrigger } from "material-ui-popup-state";
+import Details from "./details";
 
 const Menus = () => {
   const navigate = useNavigate();
@@ -41,28 +48,33 @@ const Menus = () => {
   const [state] = useContext(StoreContext);
   const [search, setSearch] = useState("");
   const [offices, setOffices] = useState([]);
+  const [products, setProducts] = useState([]);
   const [menus, setMenus] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [menu, setMenu] = useState([]);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     async function fetchMyAPI() {
       const response = await getAllMenus({ token: state.accessToken });
       const response2 = await getAllOffices({ token: state.accessToken });
+      const response3 = await getAllProducts({ token: state.accessToken });
       setMenus(response);
       setOffices(response2);
+      setProducts(response3);
     }
     fetchMyAPI();
-  }, [state.accessToken, loading]);
+  }, [open, state.accessToken, loading]);
 
   const handleSearch = (event, value) => {
     setSearch(value === null ? "" : value);
   };
 
-  console.log(search);
-
-  const handleEdit = (popupState, id) => {
+  const handleEdit = async (popupState, id) => {
+    const menuAPI = await getMenuById({ id: id, token: state.accessToken });
     popupState.close();
-    console.log(id);
+    setMenu(menuAPI);
+    setOpen(true);
   };
 
   const handleDelete = async (popupState, id) => {
@@ -89,6 +101,19 @@ const Menus = () => {
   return (
     <>
       {contextHolder}
+      {menu ? (
+        <Details
+          menu={menu}
+          open={open}
+          offices={offices}
+          products={products}
+          token={state.accessToken}
+          setOpen={setOpen}
+          setMenu={setMenu}
+        />
+      ) : (
+        ""
+      )}
       <Box m="1.0rem 2.0rem">
         <Box
           style={{

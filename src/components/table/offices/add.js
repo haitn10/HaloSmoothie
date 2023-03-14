@@ -108,7 +108,7 @@ export const AddOffice = () => {
             fontWeight={700}
             fontStyle="initial"
           >
-            ADD OFFICES
+            ADD STORE
           </Typography>
           <Card sx={{ maxWidth: 500, my: 2 }}>
             <CardContent>
@@ -118,7 +118,7 @@ export const AddOffice = () => {
                     <TextField
                       fullWidth
                       color="success"
-                      label="Office Name"
+                      label="Store Name"
                       name="name"
                       onChange={handleChange}
                       InputProps={{ inputProps: { min: 0, max: 200 } }}
@@ -152,7 +152,7 @@ export const AddOffice = () => {
                   </Grid>
                   <Grid
                     item
-                    xs={5}
+                    xs={4}
                     alignItems="center"
                     display="flex"
                     justifyContent="center"
@@ -161,7 +161,7 @@ export const AddOffice = () => {
                       htmlFor="upload-photo"
                       style={{ padding: 10, margin: 10 }}
                     >
-                      Add Image
+                      Image
                     </label>
                     <label htmlFor="upload-photo">
                       <input
@@ -183,7 +183,7 @@ export const AddOffice = () => {
                       </Fab>
                     </label>
                   </Grid>
-                  <Grid item xs={7}>
+                  <Grid item xs={8}>
                     {images.filepreview !== null ? (
                       <img src={images.filepreview} height={150} alt="" />
                     ) : null}

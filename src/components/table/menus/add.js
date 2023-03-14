@@ -19,9 +19,7 @@ import {
 } from "@mui/material";
 import { message } from "antd";
 import { addMenu, getAllOffices, getAllProducts } from "api";
-import { list } from "firebase/storage";
 import React from "react";
-import { Fragment } from "react";
 import { useContext } from "react";
 import { useState } from "react";
 import { useEffect } from "react";
@@ -42,14 +40,12 @@ const menu = {
 
 function AddMenu() {
   const [messageApi, contextHolder] = message.useMessage();
-  const [state, dispatch] = useContext(StoreContext);
+  const [state] = useContext(StoreContext);
   const [values, setValues] = useState(menu);
   const [offices, setOffices] = useState([]);
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [listProducts, setListProducts] = useState([]);
-  const [saleProduct, setSaleProducts] = useState("");
-
   useEffect(() => {
     async function fetchMyAPI() {
       const offcices = await getAllOffices({ token: state.accessToken });
@@ -58,7 +54,7 @@ function AddMenu() {
       setProducts(products);
     }
     fetchMyAPI();
-  }, []);
+  }, [state.accessToken]);
 
   useEffect(() => {
     setValues({
@@ -87,7 +83,9 @@ function AddMenu() {
 
   const handleChangePrice = (index, event) => {
     const values = [...listProducts];
-    values[index][event.target.name] = event.target.value;
+    for (const [key] of Object.entries(values)) {
+      values[key][event.target.name] = event.target.value;
+    }
     setListProducts(values);
   };
 

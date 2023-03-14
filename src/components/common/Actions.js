@@ -1,7 +1,7 @@
 import { Create, DeleteForeverOutlined } from "@mui/icons-material";
 import { Button } from "@mui/material";
 import { message } from "antd";
-import { deleteCoupon, deleteMaterial, deleteOffice, deleteProduct } from "api";
+import { deleteCoupon, deleteMaterial, deleteOffice, deleteProduct, deleteStaff } from "api";
 
 function Actions({ params, setItem, setLoading, setOpen, state, item }) {
   const [messageApi, contextHolder] = message.useMessage();
@@ -20,6 +20,9 @@ function Actions({ params, setItem, setLoading, setOpen, state, item }) {
     } else if (item === 4) {
       setOpen(true);
       setItem(state.coupons.filter((row) => row.id === id));
+    } else if (item === 5) {
+      setOpen(true);
+      setItem(state.staffers.filter((row) => row.id === id));
     }
   };
 
@@ -59,6 +62,16 @@ function Actions({ params, setItem, setLoading, setOpen, state, item }) {
       setTimeout(() => setLoading(false), 200);
     } else if (item === 4) {
       const result = await deleteCoupon({ id, token: state.accessToken });
+      if (result.statusCode === 200) {
+        setLoading(true);
+        info("success", result.message);
+      } else {
+        setLoading(true);
+        info("error", result.message);
+      }
+      setTimeout(() => setLoading(false), 200);
+    } else if (item === 5) {
+      const result = await deleteStaff({ id, token: state.accessToken });
       if (result.statusCode === 200) {
         setLoading(true);
         info("success", result.message);

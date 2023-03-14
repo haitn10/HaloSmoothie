@@ -23,7 +23,7 @@ const navItems = [
     icon: <LocalMallOutlined />,
   },
   {
-    text: "Offices",
+    text: "Stores",
     icon: <HomeWorkOutlined />,
   },
   {
@@ -35,7 +35,7 @@ const navItems = [
     icon: <ConfirmationNumberOutlined />,
   },
   {
-    text: "Users",
+    text: "Staffers",
     icon: <PersonOutlineOutlined />,
   },
   {

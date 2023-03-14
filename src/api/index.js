@@ -56,7 +56,7 @@ export const addProduct = async (req, res) => {
       return response.data;
     })
     .catch((err) => {
-      return err.response;
+      return err.response.data;
     });
 };
 export const updateProduct = async (req, res) => {
@@ -70,7 +70,7 @@ export const updateProduct = async (req, res) => {
       return response.data;
     })
     .catch((err) => {
-      return err.response;
+      return err.response.data;
     });
 };
 
@@ -85,7 +85,7 @@ export const deleteProduct = async (req, res) => {
       return response.data;
     })
     .catch((err) => {
-      return err.response;
+      return err.response.data;
     });
 };
 
@@ -197,7 +197,7 @@ export const addOffice = async (req, res) => {
     });
 };
 
-export const editOffice = async (req, res) => {
+export const updateOffice = async (req, res) => {
   return await axios
     .put(`${baseURL}/api/offices/${req.id}`, req.values, {
       headers: {
@@ -205,10 +205,9 @@ export const editOffice = async (req, res) => {
       },
     })
     .then((response) => {
-      return response.data.data;
+      return response.data;
     })
     .catch((err) => {
-      console.log(err.response.data);
       return err.response.data;
     });
 };
@@ -271,7 +270,7 @@ export const addCoupon = async (req, res) => {
       return response.data;
     })
     .catch((err) => {
-      return err.response;
+      return err.response.data;
     });
 };
 
@@ -301,7 +300,7 @@ export const deleteCoupon = async (req, res) => {
       return response.data;
     })
     .catch((err) => {
-      return err.response;
+      return err.response.data;
     });
 };
 
@@ -309,6 +308,21 @@ export const deleteCoupon = async (req, res) => {
 export const getAllMenus = async (req, res) => {
   return await axios
     .get(`${baseURL}/api/menus`, {
+      headers: {
+        Authorization: "Bearer " + req.token,
+      },
+    })
+    .then((response) => {
+      return response.data.data;
+    })
+    .catch((err) => {
+      return err.response;
+    });
+};
+
+export const getMenuById = async (req, res) => {
+  return await axios
+    .get(`${baseURL}/api/menus/${req.id}`, {
       headers: {
         Authorization: "Bearer " + req.token,
       },
@@ -333,6 +347,21 @@ export const addMenu = async (req, res) => {
     })
     .catch((err) => {
       return err.response;
+    });
+};
+
+export const updateMenu = async (req, res) => {
+  return await axios
+    .put(`${baseURL}/api/menus/${req.id}`, req.values, {
+      headers: {
+        Authorization: "Bearer " + req.token,
+      },
+    })
+    .then((response) => {
+      return response.data;
+    })
+    .catch((err) => {
+      return err.response.data;
     });
 };
 
@@ -379,6 +408,72 @@ export const updateProfile = async (req, res) => {
       return response.data;
     })
     .catch((err) => {
+      return err.response.data;
+    });
+};
+
+
+//Staffers API
+export const getAllStaffers = async (req, res) => {
+  return await axios
+    .get(`${baseURL}/api/users`, {
+      headers: {
+        Authorization: "Bearer " + req.token,
+      },
+    })
+    .then((response) => {
+      return response.data.data;
+    })
+    .catch((err) => {
       return err.response;
     });
 };
+
+
+export const addStaff = async (req, res) => {
+  return await axios
+    .post(`${baseURL}/api/users`, req.values, {
+      headers: {
+        Authorization: "Bearer " + req.token,
+      },
+    })
+    .then((response) => {
+      return response.data;
+    })
+    .catch((err) => {
+      return err.response.data;
+    });
+};
+
+
+export const updateStaff = async (req, res) => {
+  return await axios
+    .put(`${baseURL}/api/users/${req.id}`, req.values, {
+      headers: {
+        Authorization: "Bearer " + req.token,
+      },
+    })
+    .then((response) => {
+      return response.data;
+    })
+    .catch((err) => {
+      return err.response.data;
+    });
+};
+
+
+export const deleteStaff = async (req, res) => {
+  return await axios
+    .delete(`${baseURL}/api/users/${req.id}`, {
+      headers: {
+        Authorization: "Bearer " + req.token,
+      },
+    })
+    .then((response) => {
+      return response.data;
+    })
+    .catch((err) => {
+      return err.response;
+    });
+};
+

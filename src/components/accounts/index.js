@@ -18,7 +18,7 @@ import moment from "moment";
 import { message } from "antd";
 
 const Accounts = () => {
-  const [state, dispatch] = useContext(StoreContext);
+  const [state] = useContext(StoreContext);
   const [messageApi, contextHolder] = message.useMessage();
   const [values, setValues] = useState([]);
   const [dateOfBirth, setDateOfBirth] = useState(moment(values.dateOfBirth));
@@ -29,8 +29,7 @@ const Accounts = () => {
       setValues(response);
     }
     fetchMyAPI();
-  }, []);
-  console.log(values);
+  }, [state.accessToken]);
 
   useEffect(() => {
     setValues({
@@ -48,11 +47,11 @@ const Accounts = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(values);
     const result = await updateProfile({
       values: values,
       token: state.accessToken,
     });
+    console.log(result);
     if (result.statusCode === 200) {
       info("success", result.message);
     } else {
@@ -105,56 +104,60 @@ const Accounts = () => {
                     />
                     <CardContent>
                       <Grid container spacing={3} padding={2}>
-                        <Grid item lg={6} md={12}>
+                        <Grid item lg={6} sm={12}>
                           <TextField
                             fullWidth
                             helperText="Please specify the first name"
                             label="First Name"
                             name="firstName"
                             onChange={handleChange}
+                            inputProps={{ maxLength: 25 }}
                             required
                             color="success"
                             value={values.firstName ? values.firstName : ""}
                             variant="outlined"
                           />
                         </Grid>
-                        <Grid item lg={6} md={12}>
+                        <Grid item lg={6} sm={12}>
                           <TextField
                             fullWidth
                             label="Last Name"
                             name="lastName"
                             onChange={handleChange}
                             color="success"
+                            inputProps={{ maxLength: 20 }}
                             required
                             value={values.lastName ? values.lastName : ""}
                             variant="outlined"
                           />
                         </Grid>
-                        <Grid item lg={6} md={12}>
+                        <Grid item lg={4} sm={12}>
                           <TextField
                             fullWidth
                             label="Email"
                             name="email"
                             onChange={handleChange}
                             color="success"
+                            inputProps={{ maxLength: 35 }}
                             required
                             value={values.email ? values.email : ""}
                             variant="outlined"
                           />
                         </Grid>
-                        <Grid item lg={6} md={12}>
+                        <Grid item lg={4} sm={6}>
                           <TextField
                             fullWidth
                             label="Phone Number"
                             name="phone"
                             onChange={handleChange}
                             color="success"
+                            inputProps={{ maxLength: 10 }}
                             type="tel"
                             value={values.phone ? values.phone : ""}
                             variant="outlined"
                           />
                         </Grid>
-                        <Grid item lg={6} md={12}>
+                        <Grid item lg={4} sm={6}>
                           <LocalizationProvider dateAdapter={AdapterMoment}>
                             <DatePicker
                               label="Birth Date"
@@ -169,13 +172,14 @@ const Accounts = () => {
                             />
                           </LocalizationProvider>
                         </Grid>
-                        <Grid item md={12}>
+                        <Grid item sm={12}>
                           <TextField
                             fullWidth
                             label="Address"
                             name="address"
                             onChange={handleChange}
                             color="success"
+                            inputProps={{ maxLength: 120 }}
                             required
                             type="text"
                             value={values.address ? values.address : ""}
