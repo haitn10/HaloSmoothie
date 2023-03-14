@@ -123,6 +123,7 @@ export const AddMaterial = () => {
                       label="Materials Name"
                       name="name"
                       required
+                      inputProps={{ maxLength: 25 }}
                       onChange={handleChange}
                       value={values.name}
                       variant="outlined"
@@ -148,7 +149,8 @@ export const AddMaterial = () => {
                       name="price"
                       required
                       type="number"
-                      InputProps={{ inputProps: { min: 1000 } }}
+                      helperText="(VND/100g)"
+                      InputProps={{ inputProps: { min: 1000, max: 500000 } }}
                       onChange={handleChange}
                       value={values.price}
                       variant="outlined"
@@ -163,6 +165,7 @@ export const AddMaterial = () => {
                       type="number"
                       required
                       placeholder="e.g. 10"
+                      helperText="(Calo/100g)"
                       InputProps={{ inputProps: { min: 0, max: 280 } }}
                       onChange={handleChange}
                       value={values.calories}

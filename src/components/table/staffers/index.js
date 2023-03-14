@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Box, Button, Switch } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { useEffect } from "react";
 import { StoreContext, actions } from "store";
@@ -24,7 +24,9 @@ const Staffers = ({ value }) => {
       dispatch(actions.setStaffers(stafferList));
     }
     fetchMyAPI();
-  }, [dispatch, state.accessToken]);
+  }, [loading, open, dispatch, state.accessToken]);
+
+  console.log(state.staffers);
 
   const actionColumn = [
     {

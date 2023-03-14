@@ -125,6 +125,7 @@ function Details({ item, open, setOpen, setItem }) {
                     label="Date Import"
                     name="dateImport"
                     value={exp}
+                    minDate={moment(Date.now())}
                     onChange={(newValue) => setExp(newValue)}
                   />
                 </LocalizationProvider>
@@ -132,9 +133,10 @@ function Details({ item, open, setOpen, setItem }) {
                 <TextField
                   required
                   type="number"
-                  InputProps={{ inputProps: { min: 0 } }}
+                  InputProps={{ inputProps: { min: 0, max: 100 } }}
                   label="Discount Number"
                   name="discount"
+                  helperText="Maximum 100 discounts"
                   value={coupon.discount}
                   onChange={handleChange}
                 />

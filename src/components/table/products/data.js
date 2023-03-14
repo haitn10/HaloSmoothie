@@ -16,7 +16,7 @@ const products = [
   {
     field: "image",
     headerName: "Image",
-    width: 200,
+    width: 150,
     renderCell: (params) => (
       <img
         src={params.row.img}
@@ -31,15 +31,21 @@ const products = [
   },
   {
     field: "price",
-    headerName: "Price",
+    headerName: "Price (VND/glass)",
     flex: 1,
+    renderCell: (params) => (
+      Intl.NumberFormat("vi-VN").format(params.row.price)
+    ),
     headerAlign: "center",
     align: "center",
   },
   {
     field: "salePrice",
-    headerName: "Sale Price",
+    headerName: "Sale Price (VND/glass)",
     flex: 1,
+    renderCell: (params) => (
+      Intl.NumberFormat("vi-VN").format(params.row.salePrice)
+    ),
     headerAlign: "center",
     align: "center",
   },
