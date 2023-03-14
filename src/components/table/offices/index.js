@@ -94,7 +94,7 @@ const Offices = ({ value }) => {
           <Button
             color="success"
             variant="outlined"
-            onClick={(e) => navigate("/offices/add")}
+            onClick={(e) => navigate("/stores/add")}
           >
             <Add /> New Offices
           </Button>
