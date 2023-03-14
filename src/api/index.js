@@ -321,6 +321,21 @@ export const getAllMenus = async (req, res) => {
     });
 };
 
+export const getMenuById = async (req, res) => {
+  return await axios
+    .get(`${baseURL}/api/menus/${req.id}`, {
+      headers: {
+        Authorization: "Bearer " + req.token,
+      },
+    })
+    .then((response) => {
+      return response.data.data;
+    })
+    .catch((err) => {
+      return err.response;
+    });
+};
+
 export const addMenu = async (req, res) => {
   return await axios
     .post(`${baseURL}/api/menus`, req.values, {
@@ -333,6 +348,21 @@ export const addMenu = async (req, res) => {
     })
     .catch((err) => {
       return err.response;
+    });
+};
+
+export const updateMenu = async (req, res) => {
+  return await axios
+    .put(`${baseURL}/api/menus/${req.id}`, req.values, {
+      headers: {
+        Authorization: "Bearer " + req.token,
+      },
+    })
+    .then((response) => {
+      return response.data;
+    })
+    .catch((err) => {
+      return err.response.data;
     });
 };
 
