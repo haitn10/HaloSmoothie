@@ -56,7 +56,7 @@ export const addProduct = async (req, res) => {
       return response.data;
     })
     .catch((err) => {
-      return err.response;
+      return err.response.data;
     });
 };
 export const updateProduct = async (req, res) => {
@@ -70,7 +70,7 @@ export const updateProduct = async (req, res) => {
       return response.data;
     })
     .catch((err) => {
-      return err.response;
+      return err.response.data;
     });
 };
 
@@ -85,7 +85,7 @@ export const deleteProduct = async (req, res) => {
       return response.data;
     })
     .catch((err) => {
-      return err.response;
+      return err.response.data;
     });
 };
 
@@ -197,7 +197,7 @@ export const addOffice = async (req, res) => {
     });
 };
 
-export const editOffice = async (req, res) => {
+export const updateOffice = async (req, res) => {
   return await axios
     .put(`${baseURL}/api/offices/${req.id}`, req.values, {
       headers: {
@@ -205,10 +205,9 @@ export const editOffice = async (req, res) => {
       },
     })
     .then((response) => {
-      return response.data.data;
+      return response.data;
     })
     .catch((err) => {
-      console.log(err.response.data);
       return err.response.data;
     });
 };
@@ -271,7 +270,7 @@ export const addCoupon = async (req, res) => {
       return response.data;
     })
     .catch((err) => {
-      return err.response;
+      return err.response.data;
     });
 };
 
@@ -301,7 +300,7 @@ export const deleteCoupon = async (req, res) => {
       return response.data;
     })
     .catch((err) => {
-      return err.response;
+      return err.response.data;
     });
 };
 
@@ -409,7 +408,7 @@ export const updateProfile = async (req, res) => {
       return response.data;
     })
     .catch((err) => {
-      return err.response;
+      return err.response.data;
     });
 };
 

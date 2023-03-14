@@ -191,6 +191,7 @@ function Details({ item, open, setOpen, setItem }) {
                     required
                     label="First Name"
                     name="firstName"
+                    inputProps={{ maxLength: 20 }}
                     value={staff.firstName}
                     onChange={handleChange}
                   />
@@ -201,6 +202,7 @@ function Details({ item, open, setOpen, setItem }) {
                     required
                     label="Last Name"
                     name="lastName"
+                    inputProps={{ maxLength: 20 }}
                     value={staff.lastName}
                     onChange={handleChange}
                   />
@@ -208,35 +210,47 @@ function Details({ item, open, setOpen, setItem }) {
                 <Grid item xs={4}>
                   <LocalizationProvider dateAdapter={AdapterMoment}>
                     <DatePicker
+                      required
                       label="Birth Date"
                       name="dateOfBirth"
                       value={staff.dateOfBirth ? moment(staff.dateOfBirth) : ""}
-                      required
                       onChange={(newValue) => setDateOfBirth(newValue)}
                     />
                   </LocalizationProvider>
                 </Grid>
-                <Grid item xs={6}>
+                <Grid item xs={5}>
                   <TextField
                     fullWidth
                     required
                     label="Email"
                     name="email"
+                    inputProps={{ maxLength: 45 }}
                     value={staff.email}
                     onChange={handleChange}
                   />
                 </Grid>
                 <Grid item xs={4}>
-                  <TextField
-                    fullWidth
-                    required
-                    label="Phone Number"
-                    name="phone"
-                    value={staff.phone}
-                    onChange={handleChange}
-                  />
+                  <FormControl fullWidth color="success">
+                    <InputLabel id="demo-simple-select-label" required>
+                      Store
+                    </InputLabel>
+                    <Select
+                      labelId="demo-simple-select-label"
+                      id="demo-simple-select"
+                      value={staff.officeId}
+                      label="store"
+                      name="officeId"
+                      onChange={handleChange}
+                    >
+                      {stores.map((item) => (
+                        <MenuItem key={item.id} value={item.id}>
+                          {item.name}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
                 </Grid>
-                <Grid item xs={2}>
+                <Grid item xs={3}>
                   <FormControl fullWidth color="success">
                     <InputLabel id="demo-simple-select-label" required>
                       Role
@@ -255,27 +269,19 @@ function Details({ item, open, setOpen, setItem }) {
                   </FormControl>
                 </Grid>
                 <Grid item xs={4}>
-                  <FormControl fullWidth color="success">
-                    <InputLabel id="demo-simple-select-label">Store</InputLabel>
-                    <Select
-                      labelId="demo-simple-select-label"
-                      id="demo-simple-select"
-                      value={staff.officeId}
-                      label="store"
-                      name="officeId"
-                      onChange={handleChange}
-                    >
-                      {stores.map((item) => (
-                        <MenuItem key={item.id} value={item.id}>
-                          {item.name}
-                        </MenuItem>
-                      ))}
-                    </Select>
-                  </FormControl>
+                  <TextField
+                    fullWidth
+                    label="Phone Number"
+                    name="phone"
+                    inputProps={{ maxLength: 10 }}
+                    value={staff.phone}
+                    onChange={handleChange}
+                  />
                 </Grid>
                 <Grid item xs={8}>
                   <TextField
                     fullWidth
+                    inputProps={{ maxLength: 120 }}
                     label="Address"
                     name="address"
                     value={staff.address}

@@ -142,13 +142,7 @@ function Details({ item, open, setOpen, setItem }) {
                   />
                 )}
               </Grid>
-              <Grid
-                md={10}
-                xs={10}
-                mb={5}
-                justifyContent="center"
-                display="flex"
-              >
+              <Grid xs={10} mb={5} justifyContent="center" display="flex">
                 <label>
                   <input
                     style={{ display: "none" }}
@@ -169,7 +163,7 @@ function Details({ item, open, setOpen, setItem }) {
                 </label>
               </Grid>
             </Grid>
-            <Grid md={6} xs={12}>
+            <Grid item md={6} xs={12}>
               <Grid
                 xs={10}
                 mb={5}
@@ -210,9 +204,10 @@ function Details({ item, open, setOpen, setItem }) {
                   color="success"
                   label="Price"
                   name="price"
+                  helperText="(VND/100gam)"
                   type="number"
                   required
-                  InputProps={{ inputProps: { min: 1000 } }}
+                  InputProps={{ inputProps: { min: 1000, max: 500000 } }}
                   onChange={handleChange}
                   value={material.price}
                   variant="outlined"
@@ -223,9 +218,10 @@ function Details({ item, open, setOpen, setItem }) {
                   label="Calories"
                   name="calories"
                   type="number"
+                  helperText="(Calo/100gam)"
                   required
                   placeholder="e.g. 10"
-                  InputProps={{ inputProps: { min: 0, max: 200 } }}
+                  InputProps={{ inputProps: { min: 0, max: 280 } }}
                   onChange={handleChange}
                   value={material.calories}
                   variant="outlined"

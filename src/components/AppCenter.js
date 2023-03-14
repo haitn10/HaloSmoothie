@@ -57,8 +57,8 @@ function AppCenter() {
               <Route path="/menus/add" element={<AddMenu />} />
               <Route path="/products" element={<Products value={products} />} />
               <Route path="/products/add" element={<AddProduct />} />
-              <Route path="/offices" element={<Offices value={offices} />} />
-              <Route path="/offices/add" element={<AddOffice />} />
+              <Route path="/stores" element={<Offices value={offices} />} />
+              <Route path="/stores/add" element={<AddOffice />} />
               <Route
                 path="/materials"
                 element={<Materials value={materials} />}

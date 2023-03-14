@@ -32,14 +32,17 @@ const materials = [
   },
   {
     field: "price",
-    headerName: "Price",
+    headerName: "Price (VND/100g)",
     align: "center",
+    renderCell: (params) => (
+      Intl.NumberFormat("vi-VN").format(params.row.price)
+    ),
     headerAlign: "center",
     flex: 1,
   },
   {
     field: "calories",
-    headerName: "Calo",
+    headerName: "Calo (calo/100g)",
     type: "number",
     align: "center",
     headerAlign: "center",

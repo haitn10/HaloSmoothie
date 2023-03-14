@@ -45,6 +45,7 @@ export const AddProduct = () => {
   const [loading, setLoading] = useState(false);
   const [material, setMaterial] = useState([materialdefaults]);
   const navigate = useNavigate();
+  let price = 0;
 
   useEffect(() => {
     async function fetchMyAPI() {
@@ -116,7 +117,7 @@ export const AddProduct = () => {
       setMaterial([{ id: "", quantity: 0 }]);
       setValues(product);
       info("success", result.message);
-      setTimeout(() => navigate("/products/"),1000);
+      setTimeout(() => navigate("/products/"), 1000);
     } else {
       info("error", result.message);
     }
@@ -161,29 +162,109 @@ export const AddProduct = () => {
           <Card sx={{ maxWidth: 500, my: 2 }}>
             <CardContent>
               <form onSubmit={onSubmit}>
-                <Grid container spacing={3}>
-                  <Grid item md={6} xs={12} required>
-                    <TextField
-                      fullWidth
-                      helperText="Name of product"
-                      color="success"
-                      label="Product Name"
-                      name="name"
-                      onChange={handleChange}
-                      required
-                      value={values.name}
-                      variant="outlined"
-                    />
-                  </Grid>
+                <Grid item md={6} xs={12} required>
+                  <TextField
+                    fullWidth
+                    color="success"
+                    label="Product Name"
+                    name="name"
+                    inputProps={{ maxLength: 30 }}
+                    onChange={handleChange}
+                    required
+                    value={values.name}
+                    variant="outlined"
+                  />
+                </Grid>
+                <br />
+                <hr />
+                <Grid
+                  flexDirection="column"
+                  display="flex"
+                  alignItems="center"
+                  justifyItems="center"
+                >
+                  <Typography
+                    variant="h6"
+                    color="green"
+                    py={2}
+                    fontWeight={700}
+                    fontStyle="initial"
+                  >
+                    Materials Of Product
+                  </Typography>
+                  {material.map((inputMaterial, index) => (
+                    <Box
+                      key={index}
+                      alignItems="center"
+                      display="flex"
+                      gap={2}
+                      mb={2}
+                    >
+                      <FormControl xs={4} color="success" sx={{ width: 150 }}>
+                        <InputLabel id="demo-simple-select-label" required>
+                          Material
+                        </InputLabel>
+                        <Select
+                          labelId="demo-simple-select-label"
+                          id="demo-simple-select"
+                          value={inputMaterial.id}
+                          label="Material"
+                          name="id"
+                          required
+                          onChange={(event) =>
+                            handleChangeMaterials(index, event)
+                          }
+                        >
+                          {allmaterials.map((item) => {
+                            if (item.id === inputMaterial.id) {
+                              price += item.price * inputMaterial.quantity;
+                            }
+                            return (
+                              <MenuItem key={item.id} value={item.id}>
+                                {item.name}
+                              </MenuItem>
+                            );
+                          })}
+                        </Select>
+                      </FormControl>
+                      <TextField
+                        color="success"
+                        label="Quantity (pieces)"
+                        name="quantity"
+                        required
+                        sx={{ width: 150 }}
+                        onChange={(event) =>
+                          handleChangeMaterials(index, event)
+                        }
+                        InputProps={{ inputProps: { min: 1, max: 15 } }}
+                        type="number"
+                        value={inputMaterial.quantity}
+                        variant="outlined"
+                      />
+                      <IconButton onClick={() => handleRemoveFields(index)}>
+                        <Remove />
+                      </IconButton>
+                      <IconButton onClick={handleAddFields}>
+                        <Add />
+                      </IconButton>
+                    </Box>
+                  ))}
+                  <Typography>
+                    Total: {Intl.NumberFormat("vi-VN").format(price)} VND
+                  </Typography>
+                </Grid>
+                <br />
+                <hr />
+                <Grid container spacing={3} mt={1}>
                   <Grid item md={6} xs={12}>
                     <TextField
                       fullWidth
-                      helperText="Calories of the product"
+                      helperText="Calo/glass"
                       color="success"
-                      label="Calo"
+                      label="Calories"
                       name="calories"
                       onChange={handleChange}
-                      InputProps={{ inputProps: { min: 0, max: 200 } }}
+                      inputProps={{ min: 0, max: 1000 }}
                       required
                       type="number"
                       value={values.calories}
@@ -199,7 +280,8 @@ export const AddProduct = () => {
                       onChange={handleChange}
                       required
                       type="number"
-                      InputProps={{ inputProps: { min: 1000 } }}
+                      helperText="VND/glass"
+                      inputProps={{ min: 1000, max: 500000 }}
                       value={values.price}
                       variant="outlined"
                     />
@@ -210,14 +292,15 @@ export const AddProduct = () => {
                       color="success"
                       label="sale Price"
                       name="salePrice"
+                      helperText="VND/glass"
                       onChange={handleChange}
-                      InputProps={{ inputProps: { min: 1000 } }}
+                      inputProps={{ min: 1000, max: 500000 }}
                       type="number"
                       value={values.salePrice}
                       variant="outlined"
                     />
                   </Grid>
-                  <Grid item xs={12}>
+                  <Grid item md={6} xs={12}>
                     <FormControl fullWidth color="success">
                       <InputLabel id="demo-simple-select-label" required>
                         Category
@@ -289,76 +372,6 @@ export const AddProduct = () => {
                       variant="outlined"
                     />
                   </Grid>
-                </Grid>
-                <br />
-                <hr />
-                <Grid
-                  flexDirection="column"
-                  display="flex"
-                  alignItems="center"
-                  justifyItems="center"
-                >
-                  <Typography
-                    variant="h6"
-                    color="green"
-                    py={2}
-                    fontWeight={700}
-                    fontStyle="initial"
-                  >
-                    Materials Of Product
-                  </Typography>
-                  {material.map((inputMaterial, index) => (
-                    <Box
-                      key={index}
-                      alignItems="center"
-                      display="flex"
-                      gap={2}
-                      mb={2}
-                    >
-                      <FormControl xs={4} color="success" sx={{ width: 150 }}>
-                        <InputLabel id="demo-simple-select-label" required>
-                          Material
-                        </InputLabel>
-                        <Select
-                          labelId="demo-simple-select-label"
-                          id="demo-simple-select"
-                          value={inputMaterial.id}
-                          label="Material"
-                          name="id"
-                          required
-                          onChange={(event) =>
-                            handleChangeMaterials(index, event)
-                          }
-                        >
-                          {allmaterials.map((item) => (
-                            <MenuItem key={item.id} value={item.id}>
-                              {item.name}
-                            </MenuItem>
-                          ))}
-                        </Select>
-                      </FormControl>
-                      <TextField
-                        color="success"
-                        label="Quantity"
-                        name="quantity"
-                        required
-                        sx={{ width: 150 }}
-                        onChange={(event) =>
-                          handleChangeMaterials(index, event)
-                        }
-                        InputProps={{ inputProps: { min: 1 } }}
-                        type="number"
-                        value={inputMaterial.quantity}
-                        variant="outlined"
-                      />
-                      <IconButton onClick={() => handleRemoveFields(index)}>
-                        <Remove />
-                      </IconButton>
-                      <IconButton onClick={handleAddFields}>
-                        <Add />
-                      </IconButton>
-                    </Box>
-                  ))}
                 </Grid>
                 <LoadingButton
                   fullWidth

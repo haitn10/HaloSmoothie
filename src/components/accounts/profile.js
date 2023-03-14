@@ -25,7 +25,6 @@ export const AccountProfile = ({ info, setValues }) => {
       });
     }
   }, [images]);
-  console.log(info);
 
   const handleChangeImage = (event) => {
     setImages({

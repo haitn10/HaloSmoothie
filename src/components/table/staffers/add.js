@@ -150,6 +150,7 @@ export const AddStaff = () => {
                       label="First Name"
                       name="firstName"
                       onChange={handleChange}
+                      inputProps={{ maxLength: 20 }}
                       required
                       value={values.firstName}
                       variant="outlined"
@@ -162,6 +163,7 @@ export const AddStaff = () => {
                       label="Last Name"
                       name="lastName"
                       onChange={handleChange}
+                      inputProps={{ maxLength: 20 }}
                       required
                       value={values.lastName}
                       variant="outlined"
@@ -174,6 +176,7 @@ export const AddStaff = () => {
                       label="Email"
                       name="email"
                       onChange={handleChange}
+                      inputProps={{ maxLength: 45 }}
                       required
                       type="email"
                       value={values.email}
@@ -186,9 +189,11 @@ export const AddStaff = () => {
                       color="success"
                       label="Password"
                       name="password"
+                      helperText="(3-20 characters)"
                       required
                       onChange={handleChange}
                       type="password"
+                      inputProps={{ minLength: 3, maxLength: 20 }}
                       value={values.password}
                       variant="outlined"
                     />
@@ -198,8 +203,10 @@ export const AddStaff = () => {
                       fullWidth
                       color="success"
                       label="Address"
+                      helperText="(Maximum 120 characters)"
                       name="address"
                       onChange={handleChange}
+                      inputProps={{ maxLength: 120 }}
                       value={values.address}
                       variant="outlined"
                     />
@@ -211,27 +218,29 @@ export const AddStaff = () => {
                       label="Phone Number"
                       name="phone"
                       onChange={handleChange}
+                      inputProps={{ maxLength: 10 }}
                       type="tel"
                       value={values.phone}
                       variant="outlined"
                     />
                   </Grid>
                   <Grid item md={6} xs={12}>
-                    <LocalizationProvider dateAdapter={AdapterMoment}>
+                    <LocalizationProvider dateAdapter={AdapterMoment} required>
                       <DatePicker
+                        required
                         label="Birth Date"
                         name="dateOfBirth"
                         value={
                           values.dateOfBirth ? moment(values.dateOfBirth) : ""
                         }
-                        required
+                        maxDate={moment(Date.now())}
                         onChange={(newValue) => setDateOfBirth(newValue)}
                       />
                     </LocalizationProvider>
                   </Grid>
                   <Grid item md={6} xs={12}>
                     <FormControl fullWidth color="success">
-                      <InputLabel id="demo-simple-select-label">
+                      <InputLabel id="demo-simple-select-label" required>
                         Store
                       </InputLabel>
                       <Select

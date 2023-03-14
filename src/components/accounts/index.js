@@ -47,11 +47,11 @@ const Accounts = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(values);
     const result = await updateProfile({
       values: values,
       token: state.accessToken,
     });
+    console.log(result);
     if (result.statusCode === 200) {
       info("success", result.message);
     } else {
@@ -111,6 +111,7 @@ const Accounts = () => {
                             label="First Name"
                             name="firstName"
                             onChange={handleChange}
+                            inputProps={{ maxLength: 25 }}
                             required
                             color="success"
                             value={values.firstName ? values.firstName : ""}
@@ -124,6 +125,7 @@ const Accounts = () => {
                             name="lastName"
                             onChange={handleChange}
                             color="success"
+                            inputProps={{ maxLength: 20 }}
                             required
                             value={values.lastName ? values.lastName : ""}
                             variant="outlined"
@@ -136,6 +138,7 @@ const Accounts = () => {
                             name="email"
                             onChange={handleChange}
                             color="success"
+                            inputProps={{ maxLength: 35 }}
                             required
                             value={values.email ? values.email : ""}
                             variant="outlined"
@@ -148,6 +151,7 @@ const Accounts = () => {
                             name="phone"
                             onChange={handleChange}
                             color="success"
+                            inputProps={{ maxLength: 10 }}
                             type="tel"
                             value={values.phone ? values.phone : ""}
                             variant="outlined"
@@ -175,6 +179,7 @@ const Accounts = () => {
                             name="address"
                             onChange={handleChange}
                             color="success"
+                            inputProps={{ maxLength: 120 }}
                             required
                             type="text"
                             value={values.address ? values.address : ""}

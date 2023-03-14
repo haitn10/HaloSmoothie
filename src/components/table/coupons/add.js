@@ -16,6 +16,7 @@ import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import moment from "moment";
 import { addCoupon } from "api";
+import { useNavigate } from "react-router-dom";
 
 const coupon = {
   code: "",
@@ -26,6 +27,7 @@ const coupon = {
 export const AddCoupon = () => {
   const [messageApi, contextHolder] = message.useMessage();
   const [exp, setExp] = useState(moment());
+  const navagate = useNavigate();
   const [state, dispatch] = useContext(StoreContext);
   const [values, setValues] = useState(coupon);
   const [loading, setLoading] = useState(false);
@@ -52,6 +54,7 @@ export const AddCoupon = () => {
       setLoading(false);
       setValues(coupon);
       info("success", result.message);
+      setTimeout(() => navagate("/coupons"), 1000);
     } else {
       setLoading(false);
       info("error", result.message);
@@ -117,6 +120,7 @@ export const AddCoupon = () => {
                         name="dateImport"
                         value={exp}
                         required
+                        minDate={moment(Date.now())}
                         onChange={(newValue) => setExp(newValue)}
                       />
                     </LocalizationProvider>
@@ -129,7 +133,8 @@ export const AddCoupon = () => {
                       name="discount"
                       type="number"
                       required
-                      InputProps={{ inputProps: { min: 0 } }}
+                      InputProps={{ inputProps: { min: 0, max: 100 } }}
+                      helperText="Maximum 100 discounts"
                       onChange={handleChange}
                       value={values.discount}
                       variant="outlined"

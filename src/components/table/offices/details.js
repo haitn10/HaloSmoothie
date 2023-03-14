@@ -12,7 +12,7 @@ import {
   Typography,
 } from "@mui/material";
 import { message } from "antd";
-import { editOffice } from "api";
+import { updateOffice } from "api";
 import { storage } from "../../../firebase";
 import { getDownloadURL,  ref, uploadBytes } from "firebase/storage";
 import React, { useContext, useEffect, useState } from "react";
@@ -60,12 +60,12 @@ function Details({ item, open, setOpen, setItem }) {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(office);
-    const result = await editOffice({
+    const result = await updateOffice({
       id: office.id,
       values: office,
       token: state.accessToken,
     });
+    console.log(result);
     if (result.statusCode === 200) {
       setOpen(false);
       info("success", result.message);
@@ -185,7 +185,6 @@ function Details({ item, open, setOpen, setItem }) {
             <Grid xs={10} mb={5} justifyContent="center" display="flex">
               <TextField
                 fullWidth
-                required
                 label="Phone Number"
                 name="phone"
                 value={office.phone}
