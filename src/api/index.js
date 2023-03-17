@@ -477,3 +477,36 @@ export const deleteStaff = async (req, res) => {
     });
 };
 
+// CHART API
+
+export const getDataChart = async (req, res) => {
+  return await axios
+    .get(`${baseURL}/api/chart/day`, {
+      headers: {
+        Authorization: "Bearer " + req.token,
+      },
+    })
+    .then((response) => {
+      return response.data.data;
+    })
+    .catch((err) => {
+      return err.response;
+    });
+};
+
+export const getTotal = async (req, res) => {
+  return await axios
+    .get(`${baseURL}/api/chart/statistical`, {
+      headers: {
+        Authorization: "Bearer " + req.token,
+      },
+    })
+    .then((response) => {
+      return response.data.data;
+    })
+    .catch((err) => {
+      return err.response;
+    });
+};
+
+

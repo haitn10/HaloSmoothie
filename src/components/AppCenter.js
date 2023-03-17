@@ -27,6 +27,7 @@ import AddMenu from "./table/menus/add";
 import Staffers from "./table/staffers";
 import staffers from "./table/staffers/data";
 import { AddStaff } from "./table/staffers/add";
+import Dashboard from "./dashboard";
 
 function AppCenter() {
   const [state] = useContext(StoreContext);
@@ -50,8 +51,8 @@ function AppCenter() {
         <BrowserRouter>
           <Routes>
             <Route element={<Layout />}>
-              {/* <Route path="/*" element={<Navigate to="/dashboard" />} exact />
-                <Route path="/dashboard" element={<Dashboard />} /> */}
+              {/* <Route path="/*" element={<Navigate to="/dashboard" />} exact />*/}
+                <Route path="/dashboard" element={<Dashboard />} /> 
               <Route path="/*" element={<Navigate to="/settings" />} exact />
               <Route path="/menus" element={<Menus />} />
               <Route path="/menus/add" element={<AddMenu />} />

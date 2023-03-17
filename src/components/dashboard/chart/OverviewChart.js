@@ -1,12 +1,10 @@
 import React, { useMemo } from "react";
 import { ResponsiveLine } from "@nivo/line";
-import { useTheme } from "@mui/material";
-// import { useGetSalesQuery } from "state/api";
 
 const OverviewChart = ({ isDashboard = false, view }) => {
-  const theme = useTheme();
-  const  data = []
-  const  isLoading= true 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const data = [{ month: 1, totalSales: 2, totalUnits: 2 }];
+  const isLoading = true;
 
   const [totalSalesLine, totalUnitsLine] = useMemo(() => {
     if (!data) return [];
@@ -14,12 +12,12 @@ const OverviewChart = ({ isDashboard = false, view }) => {
     const { monthlyData } = data;
     const totalSalesLine = {
       id: "totalSales",
-      color: theme.palette.secondary.main,
+      color: "#ffffff",
       data: [],
     };
     const totalUnitsLine = {
       id: "totalUnits",
-      color: theme.palette.secondary[600],
+      color: "#ffffff",
       data: [],
     };
 
@@ -54,32 +52,32 @@ const OverviewChart = ({ isDashboard = false, view }) => {
         axis: {
           domain: {
             line: {
-              stroke: theme.palette.secondary[200],
+              stroke: "#4e6c50",
             },
           },
           legend: {
             text: {
-              fill: theme.palette.secondary[200],
+              fill: "#4e6c50",
             },
           },
           ticks: {
             line: {
-              stroke: theme.palette.secondary[200],
+              stroke: "#4e6c50",
               strokeWidth: 1,
             },
             text: {
-              fill: theme.palette.secondary[200],
+              fill: "#4e6c50",
             },
           },
         },
         legends: {
           text: {
-            fill: theme.palette.secondary[200],
+            fill: "#4e6c50",
           },
         },
         tooltip: {
           container: {
-            color: theme.palette.primary.main,
+            color: "#ffffff",
           },
         },
       }}
