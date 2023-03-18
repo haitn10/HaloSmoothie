@@ -21,7 +21,7 @@ import {
   Typography,
 } from "@mui/material";
 import { message } from "antd";
-import { updateMenu } from "api";
+import { getMenuById, updateMenu } from "api";
 import React, { useEffect, useState } from "react";
 
 const times = [
@@ -35,13 +35,20 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-function Details({ menu, open, offices, products, token, setOpen, setMenu }) {
+function Details({ id, open, offices, products, token, setOpen, setId }) {
   const [messageApi, contextHolder] = message.useMessage();
-  const [menuItem, setMenuItem] = useState(menu);
-  const [listProducts, setListProducts] = useState(menu.menuProducts);
+  const [menuItem, setMenuItem] = useState([]);
+  const [listProducts, setListProducts] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  console.log(listProducts);
+  useEffect(() => {
+    async function fetchMyAPI() {
+      const menuAPI = await getMenuById({ id: id, token: token });
+      setMenuItem(menuAPI);
+      setListProducts(menuAPI.menuProducts);
+    }
+    fetchMyAPI();
+  }, [id, token]);
 
   useEffect(() => {
     setMenuItem({
@@ -51,15 +58,15 @@ function Details({ menu, open, offices, products, token, setOpen, setMenu }) {
   }, [listProducts]);
 
   const handleChange = (event) => {
-    setMenu({
-      ...menu,
+    setMenuItem({
+      ...menuItem,
       [event.target.name]: event.target.value,
     });
   };
 
   const handleClose = () => {
     setOpen(false);
-    setMenu(null);
+    setId("");
   };
 
   const handleToggle = (value) => () => {
@@ -73,12 +80,21 @@ function Details({ menu, open, offices, products, token, setOpen, setMenu }) {
     setListProducts(product);
   };
 
-  const handleChangePrice = (event) => {
+  const handleChangePrice = (index, event) => {
     const values = [...listProducts];
     for (const [key] of Object.entries(values)) {
-      values[key][event.target.name] = event.target.value;
+      if (values[key].id === index)
+        values[key][event.target.name] = Number(event.target.value);
     }
-    setMenu(values);
+    setListProducts(values);
+  };
+
+  const showPrice = (id) => {
+    const data = listProducts.find((item) => item.id === id);
+    if (data !== undefined) {
+      return data.salePrice;
+    }
+    return;
   };
 
   const handleSubmit = async (e) => {
@@ -133,7 +149,7 @@ function Details({ menu, open, offices, products, token, setOpen, setMenu }) {
               color="#10654E"
             >
               Menu Details
-              <Typography fontSize={10}>ID: {menu.id}</Typography>
+              <Typography fontSize={10}>ID: {menuItem.id}</Typography>
             </Typography>
           </Toolbar>
         </AppBar>
@@ -150,7 +166,7 @@ function Details({ menu, open, offices, products, token, setOpen, setMenu }) {
                 color="success"
                 type="text"
                 name="name"
-                value={menuItem.name}
+                value={menuItem.name ? menuItem.name : ""}
                 onChange={handleChange}
                 placeholder="e.g. Smoothie Healty"
               />
@@ -166,7 +182,7 @@ function Details({ menu, open, offices, products, token, setOpen, setMenu }) {
                 <Select
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
-                  value={menuItem.officeId}
+                  value={menuItem.officeId ? menuItem.officeId : ""}
                   label="Office"
                   name="officeId"
                   onChange={handleChange}
@@ -190,7 +206,7 @@ function Details({ menu, open, offices, products, token, setOpen, setMenu }) {
                 <Select
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
-                  value={menuItem.sessionId}
+                  value={menuItem.sessionId ? menuItem.sessionId : ""}
                   label="Category"
                   name="sessionId"
                   onChange={handleChange}
@@ -220,14 +236,14 @@ function Details({ menu, open, offices, products, token, setOpen, setMenu }) {
                               ) === -1
                             : false
                         }
+                        value={listProducts ? showPrice(value.id) : ""}
                         name="salePrice"
                         type="number"
                         variant="standard"
                         placeholder="Sale Price"
                         required
                         inputProps={{ min: 1000 }}
-                        value={listProducts ? listProducts.salePrice : ""}
-                        onChange={(event) => handleChangePrice(index, event)}
+                        onChange={(event) => handleChangePrice(value.id, event)}
                       />
                     }
                   >
