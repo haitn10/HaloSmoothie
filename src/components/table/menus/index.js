@@ -51,7 +51,7 @@ const Menus = () => {
   const [products, setProducts] = useState([]);
   const [menus, setMenus] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [menu, setMenu] = useState([]);
+  const [Id, setId] = useState("");
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -71,9 +71,8 @@ const Menus = () => {
   };
 
   const handleEdit = async (popupState, id) => {
-    const menuAPI = await getMenuById({ id: id, token: state.accessToken });
     popupState.close();
-    setMenu(menuAPI);
+    setId(id);
     setOpen(true);
   };
 
@@ -101,15 +100,15 @@ const Menus = () => {
   return (
     <>
       {contextHolder}
-      {menu ? (
+      {Id ? (
         <Details
-          menu={menu}
+          id={Id}
           open={open}
           offices={offices}
           products={products}
           token={state.accessToken}
           setOpen={setOpen}
-          setMenu={setMenu}
+          setId={setId}
         />
       ) : (
         ""
