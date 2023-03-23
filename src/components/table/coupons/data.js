@@ -30,6 +30,13 @@ const coupons = [
     align: "center",
     headerAlign: "center",
   },
+  {
+    field: "quantity",
+    headerName: "Quantity",
+    flex: 1,
+    align: "center",
+    headerAlign: "center",
+  },
 ];
 
 export default coupons;

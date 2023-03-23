@@ -32,7 +32,7 @@ const Offices = ({ value }) => {
       .then((response) => {
         const element = document.createElement("a");
         element.href = response;
-        element.download = "qrcode.png";
+        element.download = `office-${data.id}.png`;
         // simulate link click
         document.body.appendChild(element);
         // Required for this to work in FireFox
@@ -96,7 +96,7 @@ const Offices = ({ value }) => {
             variant="outlined"
             onClick={(e) => navigate("/stores/add")}
           >
-            <Add /> New Offices
+            <Add /> New Store
           </Button>
         </div>
 

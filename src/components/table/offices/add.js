@@ -15,6 +15,7 @@ import { storage } from "../../../firebase";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { StoreContext } from "store";
 import { message } from "antd";
+import { useNavigate } from "react-router-dom";
 
 const office = {
   name: "",
@@ -31,6 +32,7 @@ export const AddOffice = () => {
   const [values, setValues] = useState(office);
   const [images, setImages] = useState(image);
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (images.file.length !== 0) {
@@ -68,6 +70,7 @@ export const AddOffice = () => {
       setValues(office);
       setImages(image);
       info("success", result.message);
+      setTimeout(() => navigate("/stores"), 1000);
     } else {
       setLoading(false);
       info("error", result.message);
@@ -200,7 +203,7 @@ export const AddOffice = () => {
                   loadingPosition="start"
                   startIcon={<Save />}
                 >
-                  Add Product
+                  Add Store
                 </LoadingButton>
               </form>
             </CardContent>

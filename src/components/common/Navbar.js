@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import FlexBetween from "./FlexBetween";
 import { Menu as MenuIcon, ArrowDropDownOutlined } from "@mui/icons-material";
 import {
@@ -13,6 +13,7 @@ import {
 } from "@mui/material";
 import { useContext } from "react";
 import { StoreContext, actions } from "store";
+import { getProfile } from "api";
 
 const Navbar = ({ isSidebarOpen, setIsSidebarOpen }) => {
   const [state, dispatch] = useContext(StoreContext);
@@ -20,6 +21,15 @@ const Navbar = ({ isSidebarOpen, setIsSidebarOpen }) => {
   const isOpen = Boolean(anchorEl);
   const handleClick = (event) => setAnchorEl(event.currentTarget);
   const handleClose = () => setAnchorEl(null);
+  const [profile, setProfile] = useState([]);
+
+  useEffect(() => {
+    async function fetchMyAPI() {
+      const profile = await getProfile({ token: state.accessToken });
+      setProfile(profile);
+    }
+    fetchMyAPI();
+  },[])
 
   const handleLogOut = async () => {
     await dispatch(actions.logOut());
@@ -52,10 +62,10 @@ const Navbar = ({ isSidebarOpen, setIsSidebarOpen }) => {
                 fontSize="0.85rem"
                 sx={{ color: "#4e6c50" }}
               >
-                Administrator
+                {profile.firstName + " " + profile.lastName}
               </Typography>
               <Typography fontSize="0.75rem" sx={{ color: "#4e6c50" }}>
-                #a123
+                #{profile.id}
               </Typography>
             </Box>
             <ArrowDropDownOutlined

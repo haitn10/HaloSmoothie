@@ -181,7 +181,6 @@ export const getOfficeById = async (req, res) => {
     });
 };
 
-
 export const addOffice = async (req, res) => {
   return await axios
     .post(`${baseURL}/api/offices`, req.values, {
@@ -412,7 +411,6 @@ export const updateProfile = async (req, res) => {
     });
 };
 
-
 //Staffers API
 export const getAllStaffers = async (req, res) => {
   return await axios
@@ -429,7 +427,6 @@ export const getAllStaffers = async (req, res) => {
     });
 };
 
-
 export const addStaff = async (req, res) => {
   return await axios
     .post(`${baseURL}/api/users`, req.values, {
@@ -444,7 +441,6 @@ export const addStaff = async (req, res) => {
       return err.response.data;
     });
 };
-
 
 export const updateStaff = async (req, res) => {
   return await axios
@@ -461,7 +457,6 @@ export const updateStaff = async (req, res) => {
     });
 };
 
-
 export const deleteStaff = async (req, res) => {
   return await axios
     .delete(`${baseURL}/api/users/${req.id}`, {
@@ -477,3 +472,65 @@ export const deleteStaff = async (req, res) => {
     });
 };
 
+// CHART API
+
+export const getDataChart = async (req, res) => {
+  return await axios
+    .get(`${baseURL}/api/chart/date`, {
+      headers: {
+        Authorization: "Bearer " + req.token,
+      },
+      params: { startDate: req.startDate, endDate: req.endDate },
+    })
+    .then((response) => {
+      return response.data;
+    })
+    .catch((err) => {
+      return err.response;
+    });
+};
+
+export const getTotal = async (req, res) => {
+  return await axios
+    .get(`${baseURL}/api/chart/statistical`, {
+      headers: {
+        Authorization: "Bearer " + req.token,
+      },
+    })
+    .then((response) => {
+      return response.data.data;
+    })
+    .catch((err) => {
+      return err.response;
+    });
+};
+
+export const getDataByCategory = async (req, res) => {
+  return await axios
+    .get(`${baseURL}/api/chart/category`, {
+      headers: {
+        Authorization: "Bearer " + req.token,
+      },
+    })
+    .then((response) => {
+      return response.data.data;
+    })
+    .catch((err) => {
+      return err.response;
+    });
+};
+
+export const getDataByStore = async (req, res) => {
+  return await axios
+    .get(`${baseURL}/api/chart/office`, {
+      headers: {
+        Authorization: "Bearer " + req.token,
+      },
+    })
+    .then((response) => {
+      return response.data.data;
+    })
+    .catch((err) => {
+      return err.response;
+    });
+};

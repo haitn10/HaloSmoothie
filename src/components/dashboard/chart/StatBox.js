@@ -1,9 +1,8 @@
 import React from "react";
-import { Box, Typography, useTheme } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import FlexBetween from "../../common/FlexBetween";
 
-const StatBox = ({ title, value, increase, icon, description }) => {
-  const theme = useTheme();
+const StatBox = ({ title, value, icon }) => {
   return (
     <Box
       gridColumn="span 2"
@@ -13,32 +12,23 @@ const StatBox = ({ title, value, increase, icon, description }) => {
       justifyContent="space-between"
       p="1.25rem 1rem"
       flex="1 1 100%"
-      backgroundColor={theme.palette.background.alt}
+      backgroundColor="#fff"
       borderRadius="0.55rem"
     >
+      <Typography variant="h6" sx={{ color: "#10654E" }}>
+        {title}
+      </Typography>
+
       <FlexBetween>
-        <Typography variant="h6" sx={{ color: theme.palette.secondary[100]}}>
-          {title}
+        <Typography
+          marginX={2}
+          variant="h2"
+          fontWeight="600"
+          sx={{ color: "#10654E" }}
+        >
+          {value}
         </Typography>
         {icon}
-      </FlexBetween>
-
-      <Typography
-        variant="h5"
-        fontWeight="600"
-        sx={{ color: theme.palette.secondary[200] }}
-      >
-        {value}
-      </Typography>
-      <FlexBetween gap="1rem">
-        <Typography
-          variant="h5"
-          fontStyle="italic"
-          sx={{ color: theme.palette.secondary.light }}
-        >
-          {increase}
-        </Typography>
-        <Typography>{description}</Typography>
       </FlexBetween>
     </Box>
   );
