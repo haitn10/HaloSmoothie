@@ -22,6 +22,7 @@ const coupon = {
   code: "",
   exp: "",
   discount: "",
+  quantity: "",
 };
 
 export const AddCoupon = () => {
@@ -108,16 +109,16 @@ export const AddCoupon = () => {
                       label="Coupon Code"
                       name="code"
                       required
+                      InputProps={{ inputProps: { maxLength: 50 } }}
                       onChange={handleChange}
                       value={values.code}
                       variant="outlined"
                     />
                   </Grid>
-                  <Grid item xs={6}>
+                  <Grid item md={5} xs={6}>
                     <LocalizationProvider dateAdapter={AdapterMoment}>
                       <DatePicker
-                        label="Date Import"
-                        name="dateImport"
+                        label="Date Export"
                         value={exp}
                         required
                         minDate={moment(Date.now())}
@@ -125,18 +126,33 @@ export const AddCoupon = () => {
                       />
                     </LocalizationProvider>
                   </Grid>
-                  <Grid item xs={6}>
+                  <Grid item md={3} xs={6}>
                     <TextField
                       fullWidth
                       color="success"
-                      label="Discount Amount"
+                      label="Discount"
                       name="discount"
                       type="number"
                       required
                       InputProps={{ inputProps: { min: 0, max: 100 } }}
-                      helperText="Maximum 100 discounts"
+                      helperText="Max: 100%"
                       onChange={handleChange}
                       value={values.discount}
+                      variant="outlined"
+                    />
+                  </Grid>
+                  <Grid item md={4} xs={12}>
+                    <TextField
+                      fullWidth
+                      color="success"
+                      label="Quantity"
+                      name="quantity"
+                      type="number"
+                      required
+                      InputProps={{ inputProps: { min: 0, max: 100 } }}
+                      helperText="Max: 100 coupons"
+                      onChange={handleChange}
+                      value={values.quantity}
                       variant="outlined"
                     />
                   </Grid>

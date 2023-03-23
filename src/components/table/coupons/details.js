@@ -134,10 +134,20 @@ function Details({ item, open, setOpen, setItem }) {
                   required
                   type="number"
                   InputProps={{ inputProps: { min: 0, max: 100 } }}
-                  label="Discount Number"
+                  label="Discount"
                   name="discount"
-                  helperText="Maximum 100 discounts"
+                  helperText="Max: 100%"
                   value={coupon.discount}
+                  onChange={handleChange}
+                />
+                <TextField
+                  required
+                  type="number"
+                  InputProps={{ inputProps: { min: 0, max: 100 } }}
+                  label="Quantity"
+                  name="quantity"
+                  helperText="Max: 100 coupons"
+                  value={coupon.quantity}
                   onChange={handleChange}
                 />
               </Grid>

@@ -2,14 +2,14 @@ const offices = [
   {
     field: "id",
     headerAlign: "center",
-    headerName: "Offices ID",
+    headerName: "Store ID",
     width: 90,
     align: "center",
   },
   {
     field: "name",
     headerAlign: "center",
-    headerName: "Offices Name",
+    headerName: "Store Name",
     flex: 0.5,
   },
   {

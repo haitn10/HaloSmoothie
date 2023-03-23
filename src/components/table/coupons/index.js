@@ -70,7 +70,7 @@ const Coupons = ({ value }) => {
             variant="outlined"
             onClick={(e) => navigate("/coupons/add")}
           >
-            <Add /> New COUPONS
+            <Add /> New Coupon
           </Button>
         </div>
 

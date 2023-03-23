@@ -23,6 +23,7 @@ import React from "react";
 import { useContext } from "react";
 import { useState } from "react";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { StoreContext } from "store";
 
 const times = [
@@ -46,6 +47,9 @@ function AddMenu() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [listProducts, setListProducts] = useState([]);
+  const navigate = useNavigate();
+
+
   useEffect(() => {
     async function fetchMyAPI() {
       const offcices = await getAllOffices({ token: state.accessToken });
@@ -97,6 +101,7 @@ function AddMenu() {
       setListProducts([]);
       setValues(menu);
       info("success", result.message);
+      setTimeout(() => navigate("/menus"), 1000);
     } else {
       info("error", result.message);
     }

@@ -7,18 +7,18 @@ import {
 import { Box, Typography, useMediaQuery } from "@mui/material";
 import React from "react";
 import StatBox from "./chart/StatBox";
-import { DataGrid } from "@mui/x-data-grid";
 import BreakdownChart from "./chart/BreakdownChart";
 import { useContext } from "react";
 import { StoreContext } from "store";
 import ChartProfit from "./chart/ChartProfit";
+import BarChart from "./chart/BarChart";
 import { useEffect } from "react";
 import { getTotal } from "api";
 import { useState } from "react";
 
 const Dashboard = () => {
   const isNonMediumScreens = useMediaQuery("(min-width: 1200px)");
-  const [state, dispatch] = useContext(StoreContext);
+  const [state] = useContext(StoreContext);
   const [total, setTotal] = useState([]);
 
   useEffect(() => {
@@ -29,7 +29,6 @@ const Dashboard = () => {
     fetchApi();
   }, [state.accessToken]);
 
-  console.log(total);
   return (
     <Box m="1.5rem 2.5rem">
       <Box
@@ -46,12 +45,12 @@ const Dashboard = () => {
         <StatBox
           title="Total Users"
           value={total.totalUser}
-          icon={<Person sx={{ color: "#4e6c50", fontSize: "26px" }} />}
+          icon={<Person sx={{ color: "#10654E", fontSize: "26px" }} />}
         />
         <StatBox
           title="Total Stores"
           value={total.totalOffice}
-          icon={<Store sx={{ color: "#4e6c50", fontSize: "26px" }} />}
+          icon={<Store sx={{ color: "#10654E", fontSize: "26px" }} />}
         />
         <Box
           gridColumn="span 8"
@@ -59,44 +58,50 @@ const Dashboard = () => {
           backgroundColor={"#fff"}
           p="1rem"
           borderRadius="0.55rem"
-        ></Box>
+        >
+          <Typography variant="h6" color="#10654E">
+            Number of products by category
+          </Typography>
+          <BarChart />
+        </Box>
         <StatBox
           title="Total Products"
           value={total.totalProduct}
-          icon={<Category sx={{ color: "#4e6c50", fontSize: "26px" }} />}
+          icon={<Category sx={{ color: "#10654E", fontSize: "26px" }} />}
         />
         <StatBox
           title="Total Cupons"
           value={total.totalCoupon}
           icon={
-            <ConfirmationNumber sx={{ color: "#4e6c50", fontSize: "26px" }} />
+            <ConfirmationNumber sx={{ color: "#10654E", fontSize: "26px" }} />
           }
         />
 
         {/* ROW 2 */}
         <Box
-          gridColumn="span 8"
+          gridColumn="span 7"
           gridRow="span 3"
           backgroundColor={"#fff"}
           p="1rem"
           borderRadius="0.55rem"
+          display="flex"
+          justifyContent="flex-end"
         >
           <ChartProfit />
         </Box>
         <Box
-          gridColumn="span 4"
+          gridColumn="span 5"
           gridRow="span 3"
-          backgroundColor={"#333"}
+          backgroundColor="#fff"
           p="1.5rem"
           borderRadius="0.55rem"
         >
-          <Typography variant="h6" sx={"#333"}>
-            Sales By Category
+          <Typography variant="h6" color="#10654E">
+            Revenue Stores
           </Typography>
           <BreakdownChart isDashboard={true} />
-          <Typography p="0 0.6rem" fontSize="0.8rem" sx={"#333"}>
-            Breakdown of real states and information via category for revenue
-            made for this year and total sales.
+          <Typography p="0 0.6rem" fontSize="0.8rem">
+            Chart shows sales information of all stores in the year.
           </Typography>
         </Box>
       </Box>

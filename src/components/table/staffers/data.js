@@ -8,7 +8,7 @@ const staffers = [
     renderCell: (params) => (
       <>
         <Avatar
-          src={params.row.image}
+          src={params.row.img}
           alt={`${params.row.name}`}
           style={{ width: 40, height: 40, margin: 8 }}
         />

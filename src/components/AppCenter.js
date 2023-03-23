@@ -51,19 +51,15 @@ function AppCenter() {
         <BrowserRouter>
           <Routes>
             <Route element={<Layout />}>
-              {/* <Route path="/*" element={<Navigate to="/dashboard" />} exact />*/}
-                <Route path="/dashboard" element={<Dashboard />} /> 
-              <Route path="/*" element={<Navigate to="/settings" />} exact />
+              <Route path="/*" element={<Navigate to="/dashboard" />} exact />
+              <Route path="/dashboard" element={<Dashboard />} /> 
               <Route path="/menus" element={<Menus />} />
               <Route path="/menus/add" element={<AddMenu />} />
               <Route path="/products" element={<Products value={products} />} />
               <Route path="/products/add" element={<AddProduct />} />
               <Route path="/stores" element={<Offices value={offices} />} />
               <Route path="/stores/add" element={<AddOffice />} />
-              <Route
-                path="/materials"
-                element={<Materials value={materials} />}
-              />
+              <Route path="/materials" element={<Materials value={materials} />} />
               <Route path="/materials/add" element={<AddMaterial />} />
               <Route path="/coupons" element={<Coupons value={coupons} />} />
               <Route path="/coupons/add" element={<AddCoupon />} />

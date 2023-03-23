@@ -117,7 +117,7 @@ export const AddProduct = () => {
       setMaterial([{ id: "", quantity: 0 }]);
       setValues(product);
       info("success", result.message);
-      setTimeout(() => navigate("/products/"), 1000);
+      setTimeout(() => navigate("/products"), 1000);
     } else {
       info("error", result.message);
     }
