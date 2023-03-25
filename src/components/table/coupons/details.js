@@ -109,6 +109,9 @@ function Details({ item, open, setOpen, setItem }) {
                   fullWidth
                   label="Coupon Code"
                   name="code"
+                  required
+                  InputProps={{ inputProps: { maxLength: 10 } }}
+                  helperText="Max 10 characters"
                   value={coupon.code}
                   onChange={handleChange}
                 />
