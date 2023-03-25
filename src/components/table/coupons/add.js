@@ -109,7 +109,8 @@ export const AddCoupon = () => {
                       label="Coupon Code"
                       name="code"
                       required
-                      InputProps={{ inputProps: { maxLength: 50 } }}
+                      InputProps={{ inputProps: { maxLength: 10 } }}
+                      helperText="Max 10 characters"
                       onChange={handleChange}
                       value={values.code}
                       variant="outlined"
